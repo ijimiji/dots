@@ -1,0 +1,8 @@
+#!/bin/sh
+
+while [ ! -f "$chosen" ]; do
+    chosen=$(ls -a | dmenu -i)
+    [ -d "$chosen" ] && cd "$chosen"
+    [ -f "$chosen" ] && echo "$(pwd)/$chosen"
+done
+

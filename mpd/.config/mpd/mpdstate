@@ -1,0 +1,27 @@
+sw_volume: 98
+audio_device_state:1:PULSE
+audio_device_state:1:my_fifo
+state: pause
+current: 7
+time: 50.985000
+random: 0
+repeat: 1
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:Property of Mongolia/Когда погаснет свет/Property of Mongolia - Когда погаснет свет - When the - 01 Стробоскоп - Stroboscopes.flac
+1:Property of Mongolia/Когда погаснет свет/Property of Mongolia - Когда погаснет свет - When the - 02 Когда погаснет свет - When the lights go out.flac
+2:Property of Mongolia/Когда погаснет свет/Property of Mongolia - Когда погаснет свет - When the - 03 Дым - Smoke.flac
+3:Property of Mongolia/Когда погаснет свет/Property of Mongolia - Когда погаснет свет - When the - 04 Беги из города - Run from the city.flac
+4:Property of Mongolia/Когда погаснет свет/Property of Mongolia - Когда погаснет свет - When the - 05 Крепче.Сильней - Tighter. Harder.flac
+5:Property of Mongolia/Когда погаснет свет/Property of Mongolia - Когда погаснет свет - When the - 06 Самолеты ошибочно принимают за звезды - Planes mistaken for stars.flac
+6:Kashtanka/Взаимность/Kashtanka - Взаимность.mp3
+7:Kashtanka/Взаимность/Kashtanka - Живи.mp3
+8:Kashtanka/Взаимность/Kashtanka - И сердцем не старей.mp3
+9:Kashtanka/Взаимность/Kashtanka - Медленно и внутривенно.mp3
+10:Kashtanka/Взаимность/Kashtanka - Не покидай меня.mp3
+11:Kashtanka/Взаимность/Kashtanka - Храни секреты даже от друзей.mp3
+playlist_end

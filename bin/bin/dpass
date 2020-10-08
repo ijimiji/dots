@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#dmenu -p "$1" <&- && echo
+dmenu -P -p "Password:" <&-

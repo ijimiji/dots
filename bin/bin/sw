@@ -1,0 +1,3 @@
+#!/bin/sh
+[ ! -s ~/.config/mpd/mpd.pid ] && mpd &
+exec sway

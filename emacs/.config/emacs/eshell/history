@@ -1,0 +1,17 @@
+cd ..
+python3 bot.py
+ls
+nix-shell --pure shell.nix 
+sudo !!
+sudo nix-shell --pure shell.nix
+sudo yay -S archlinux-nix
+ls
+cd ~
+cd prj/
+ls 
+ls
+cd site/
+ls
+rm -rf *
+ls
+git init

@@ -1,0 +1,9 @@
+* Default
+** aorst
+ - path :: ~/dotfiles/.config/emacs
+** .config
+ - path :: ~/.config
+** org
+ - path :: ~/org
+** site
+ - path :: ~/prj/site

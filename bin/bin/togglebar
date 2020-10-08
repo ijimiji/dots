@@ -1,0 +1,19 @@
+#!/bin/sh
+
+bar(){
+    while true; do
+	echo " | `setxkbmap -query | grep layout | sed 's/layout:     //'` | `date +"%H:%M %d-%m-%y %a"` |"
+	sleep 60
+    done
+}
+	  
+	  
+[ -z `pidof lemonbar` ] && bar | lemonbar \
+			       -f iosevka-20 \
+			       -B "#ff2e3440" \
+			       -F "#ffebcb8b" \
+			       -p > /dev/null 2>&1 & 
+			       
+
+[ ! -z `pidof lemonbar` ] && kill -9 `pidof lemonbar` > /dev/null 2>&1
+			       

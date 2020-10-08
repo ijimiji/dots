@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [[ ! -d ~/book ]]
+then
+  mkdir ~/book
+fi
+
+if [[ ! -f ~/book/FB2_2_txt.xsl ]]
+then
+  curl https://raw.githubusercontent.com/kmrov/fb2_2_rtf/master/FB2_2_txt.xsl -o ~/book/FB2_2_txt.xsl
+fi
+
+zcat $1 | xsltproc FB2_2_txt.xsl -|less -s

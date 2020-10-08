@@ -1,0 +1,145 @@
+(fset 'yes-or-no-p 'y-or-n-p)
+(require 'package)
+(setq package-enable-at-startup nil)
+(setq package-check-signature nil)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+;; Use-package definitions
+;;
+;;
+;;
+
+(use-package doom-themes
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
+  :config
+  (load-theme 'doom-dark+ t))
+
+
+(scroll-bar-mode 0)
+(use-package which-key
+  :config
+  (which-key-mode t)
+  (setq which-key-show-early-on-C-h t)
+  (setq which-key-idle-delay 0.5)
+  (setq which-key-idle-secondary-delay 0.5)
+  :ensure t)
+
+(use-package tex-site
+  :ensure auctex
+  :mode ("\\.tex\\'" . latex-mode)
+  :config
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq-default TeX-master nil)
+  (add-hook 'LaTeX-mode-hook
+            (lambda ()
+              (turn-on-reftex)
+              (setq reftex-plug-into-AUCTeX t)
+              (reftex-isearch-minor-mode)
+              (setq TeX-PDF-mode t)
+              (setq TeX-source-correlate-method 'synctex)
+              (setq TeX-source-correlate-start-server t)))
+
+;; Update PDF buffers after successful LaTeX runs
+(add-hook 'TeX-after-TeX-LaTeX-command-finished-hook
+           #'TeX-revert-document-buffer)
+
+;; to use pdfview with auctex
+(add-hook 'LaTeX-mode-hook 'pdf-tools-install)
+
+;; to use pdfview with auctex
+(setq TeX-view-program-selection '((output-pdf "pdf-tools"))
+       TeX-source-correlate-start-server t)
+(setq TeX-view-program-list '(("pdf-tools" "TeX-pdf-tools-sync-view"))))
+
+
+(use-package mpdel
+  :ensure t)
+
+(use-package company
+  :ensure t
+  :config
+  (global-company-mode)
+  (setq company-idle-delay 0.0)
+  (setq company-minimum-prefix-length 1))
+
+(use-package helm
+  :ensure t
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+	 ("S-C-s" . helm-occur)
+	 ("S-C-r" . helm-occur)
+         ("C-x b" . helm-buffers-list)
+	 ("C-x C-b" . helm-recentf)))
+
+(use-package multiple-cursors
+  :ensure t
+  :config
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-unset-key (kbd "C-<down-mouse-1>"))
+  (global-set-key (kbd "C-<mouse-1>") 'mc/add-cursor-on-click)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
+(use-package avy
+  :ensure t
+  :config
+  (global-set-key (kbd "C-:") 'avy-goto-char)
+  (global-set-key (kbd "C-'") 'avy-goto-char-2)
+  )
+
+;; (use-package color-theme-sanityinc-tomorrow
+;;   :config
+;;   (load-theme 'sanityinc-tomorrow-blue t)
+;;   :ensure t)
+
+(use-package speed-type
+  :ensure t
+  :config
+  (defun typing ()
+    (interactive)
+    (speed-type-text)))
+(blink-cursor-mode 0)
+(global-set-key "\C-x\C-a" 'org-agenda)
+(global-unset-key (kbd "C-z"))
+
+(add-to-list 'auto-mode-alist '(".fb2$" . bread-mode))
+
+(defun bread-mode()
+  (interactive)
+  (sgml-mode)
+  (sgml-tags-invisible 0)
+  (longlines-mode)
+  (view-mode))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auto-save-file-name-transforms `((".*" "~/.emacs.d/backup/" t)))
+ '(backup-directory-alist '(("" . "~/.emacs.d/backup")))
+ '(cursor-type t)
+ '(display-line-numbers 'visual)
+ '(inhibit-startup-screen t)
+ '(menu-bar-mode nil)
+ '(org-agenda-files '("~/org/ct.org"))
+ '(package-selected-packages
+   '(doom-themes auctex avy speed-type moody emms color-theme-sanityinc-tomorrow monokai-theme monokai quelpa rainbow-blocks-bg rainbow-blocks papercolor one-themes mpdel company helm multiple-cursors which-key whichkey rainbow-mode use-package nord-theme))
+ '(show-paren-delay 0)
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:slant normal :weight normal :height 200 :width normal :family "Iosevka")))))

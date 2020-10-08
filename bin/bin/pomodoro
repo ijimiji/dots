@@ -1,0 +1,35 @@
+#!/bin/sh
+EXIT=Yes
+CHOICE=$(echo -e "Yes\nNo" | dmenu -i -p "Run pomodoro session?")
+REST=8
+
+sound(){
+	pacmd play-file /usr/share/sounds/freedesktop/stereo/bell.oga 0 > /dev/null
+	sleep 1
+	pacmd play-file /usr/share/sounds/freedesktop/stereo/bell.oga 0 > /dev/null
+	sleep 1
+	pacmd play-file /usr/share/sounds/freedesktop/stereo/bell.oga 0 > /dev/null
+}
+rest(){
+	notify-send "Pomodoro" "Rest for $REST minutes"
+	sleep $(($REST*60))
+	notify-send "Pomodoro" "Rest is over"
+}
+	
+case "$CHOICE" in
+	Yes)
+    	while [ ! "$EXIT" == "No" ]; do
+    		DUR=$(echo -e "12\n20\n24"|dmenu -i -p "Select duration")
+    		notify-send "Pomodoro" "Started session"
+    		sleep $((60*$DUR/4)) && notify-send "Pomodoro" "$(($DUR/4*3)) minutes left"
+    		sleep $((60*$DUR/4)) && notify-send "Pomodoro" "$(($DUR/4*2)) minutes left"
+    		sleep $((60*$DUR/4)) && notify-send "Pomodoro" "$(($DUR/4*1)) minutes left"
+    		sleep $((60*$DUR/4)) && notify-send "Pomodoro" "Session is over" && sound
+    		rest
+			EXIT=$(echo -e "Yes\nNo"|dmenu -i -p "Take another session?") 
+		done
+		;;
+	No)
+		echo "Pass"
+		;;
+esac

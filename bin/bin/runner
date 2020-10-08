@@ -1,0 +1,33 @@
+#!/bin/sh
+[ -f ~/bin/var ] && source ~/bin/var
+
+if [ -n "$1" ]
+then
+    OPT="$1"
+else
+    OPT=$(ls /usr/bin | dmenu)
+fi
+
+case "$OPT" in
+    hello)
+        notify-send "Hello" "World"
+        ;;
+    nnn*)
+		exec "$TERMINAL" -e nnn
+        ;;
+
+    ncmpcpp)
+		exec "$TERMINAL" -e ncmpcpp
+        ;;
+    cmus)
+		exec "$TERMINAL" -e cmus
+        ;;
+    kak)
+		exec "$TERMINAL" -e kak
+        ;;
+    *)
+        exec "$OPT"
+        ;;
+esac
+
+

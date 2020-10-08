@@ -1,0 +1,56 @@
+#!/bin/sh
+[ -f ~/bin/var ] && source ~/bin/var
+
+if [ -d "$1" ]
+then 
+  exec "$TERMINAL" -e nnn "$1"
+elif [ -f "$1" ]
+then 
+  case "$1" in
+    *.torrent)
+      exec "$TORRENT" "$1"
+      ;;
+    *.htm*)
+      exec "$WEB" "$1"
+      ;;
+    *.ppt*)
+      exec libreoffice "$1"
+      ;;
+    *.jpg)
+      exec "$IMG" "$1"
+      ;;
+    *.png)
+      exec "$IMG" "$1"
+      ;;
+    *.jpeg)
+      exec "$IMG" "$1"
+      ;;
+    *.jpg)
+      exec "$IMG" "$1"
+      ;;
+    *.mp4)
+      exec "$PLAYER" "$1"
+      ;;
+    *.avi)
+      exec "$PLAYER" "$1"
+      ;;
+    *.mkv)
+      exec "$PLAYER" "$1"
+      ;;
+    *.pdf)
+      exec "$VIEWER" "$1"
+      ;;
+  esac
+else 
+  case "$1" in
+    magnet:*)
+      exec "$TORRENT" "$1"
+      ;;
+    tg:*)
+      exec telegram-desktop -- "$1"
+      ;;
+    http*)
+      exec "$WEB" "$1"
+      ;;
+  esac
+fi

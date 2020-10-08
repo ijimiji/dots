@@ -1,0 +1,22 @@
+#!/bin/sh
+choice=$(echo -e "Suspend\nPoweroff\nExit Sway\nReboot"| fzfmenu)
+
+if [[ "$choice" == "Poweroff" ]]
+then
+        poweroff
+fi
+
+if [[ "$choice" == "Exit Sway" ]]
+then
+        killall sway
+fi
+
+if [[ "$choice" == "Suspend" ]]
+then
+        systemctl suspend
+fi
+
+if [[ "$choice" == "Reboot" ]]
+then
+        reboot
+fi

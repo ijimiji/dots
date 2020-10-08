@@ -1,0 +1,13 @@
+#!/bin/sh
+
+export SUDO_ASKPASS=/home/jahor/bin/dpass
+export TERMINAL=alacritty
+export EDITOR=kak
+export VISUAL=kak
+export NNN_COLORS='3222'
+export WEB=chromium
+export IMG=feh
+export TORRENT=qbittorrent
+export VIEWER=zathura
+export PLAYER=mpv
+export GREP_COLORS='ms=0;33'

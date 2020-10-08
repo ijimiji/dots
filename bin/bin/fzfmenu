@@ -1,0 +1,6 @@
+cat /dev/stdin > /tmp/fzfmenuin
+
+alacritty -t fzfmenu --class "alacritty-menu" -e bash -c 'cat /tmp/fzfmenuin | fzf  > /tmp/fzfmenuout'
+
+echo $(cat /tmp/fzfmenuout)
+

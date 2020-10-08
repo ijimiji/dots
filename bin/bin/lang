@@ -1,0 +1,19 @@
+#!/bin/bash
+
+choice=$(echo -e "Eng\nRus\nBel"| dmenu -m 0 -c -l 5)
+
+if [ "$choice" == "Eng" ]
+then
+  setxkbmap -layout us #-option "ctrl:swapcaps"
+fi
+
+if [ "$choice" == "Rus" ]
+then
+  setxkbmap -layout ru #-option "ctrl:swapcaps"
+fi
+
+if [ "$choice" == "Bel" ]
+then
+  setxkbmap -layout by #-option "ctrl:swapcaps"
+fi
+

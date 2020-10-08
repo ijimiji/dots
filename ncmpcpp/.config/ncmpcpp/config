@@ -1,0 +1,35 @@
+mpd_host = "localhost"
+mpd_port = "6600"
+
+lyrics_directory  = ~/.config/ncmpcpp/lyrics
+ncmpcpp_directory  = ~/.config/ncmpcpp/
+
+mpd_music_dir = ~/mus
+
+startup_screen = playlist
+
+#startup_slave_screen = visualizer
+
+visualizer_in_stereo = yes
+visualizer_type = spectrum
+song_window_title_format = "ncmpcpp: {%a - %t}|{%f}"
+
+regular_expressions = extended
+
+song_columns_list_format = "(2)[yellow]{}(48) [yellow]{tr}(48) [green]{al}
+(2)[green]{}"
+
+now_playing_prefix = "$b"
+#now_playing_suffix = "$8$/b"
+
+
+header_visibility = "no" 
+titles_visibility = "no"
+autocenter_mode = "yes"
+statusbar_visibility = "no"
+
+
+
+
+message_delay_time= "1"
+progressbar_look = "..."

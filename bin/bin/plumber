@@ -1,0 +1,33 @@
+#!/bin/sh
+[ -f ~/bin/var ] && source ~/bin/var
+
+OPT=$(echo -e "D\nF\nG\nS" | dmenu)
+clip=$(xsel -b)
+prim=$(xsel -p)
+
+case "$OPT" in
+    D)
+        file=$(echo "$prim" | sed "s/.*\///")
+		curl "$prim" > ~/dwn/"$file"
+  		[ -n "$file" ] && notify-send "File downloaded:" "$file"
+		$TERMINAL -e nnn ~/dwn
+  		;;
+esac
+
+if [[ "$OPT" == "G" ]]
+then
+  dir=$(echo "$prim" | sed "s/.*\///")
+  git clone "$prim" ~/git/"$dir" 
+  $TERMINAL -e nnn ~/git/"$dir"
+fi
+
+if [[ "$OPT" == "F" ]]
+then
+  $TERMINAL -e "nvim $prim"
+fi
+
+if [[ "$OPT" == "S" ]]
+then
+  xdg-open "https://google.com/search?q=$prim"
+fi
+

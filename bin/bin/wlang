@@ -1,0 +1,19 @@
+#!/bin/sh
+
+choice=$(echo -e "Eng\nRus\nBel"| fzfmenu)
+
+if [[ "$choice" == "Eng" ]]
+then
+  setxkbmap -layout us #-option "ctrl:swapcaps"
+fi
+
+if [[ "$choice" == "Rus" ]]
+then
+  setxkbmap -layout ru #-option "ctrl:swapcaps"
+fi
+
+if [[ "$choice" == "Bel" ]]
+then
+  setxkbmap -layout by #-option "ctrl:swapcaps"
+fi
+
