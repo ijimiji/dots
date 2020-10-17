@@ -48,7 +48,7 @@
 (when (and window-system
              (not (version< emacs-version "27")))
     (use-package tab-line
-      :hook (after-init . global-tab-line-mode)
+      ;;:hook (after-init . global-tab-line-mode)
       :config
       (defun tab-line-close-tab (&optional e)
         "Close the selected tab.
@@ -198,7 +198,7 @@
 (setq-default indent-tabs-mode nil)
 
 (when (member "Iosevka" (font-family-list))
-  (set-face-attribute 'default nil :font "Iosevka 14"))
+  (set-face-attribute 'default nil :font "Iosevka 25"))
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -266,28 +266,28 @@
   (setq which-key-idle-secondary-delay 0)
   :ensure t)
 
-;; ;; Tomorrow
-;; (use-package color-theme-sanityinc-tomorrow
-;; :config
-;; (load-theme 'sanityinc-tomorrow-blue t))
+;; Tomorrow
+  ;; (use-package color-theme-sanityinc-tomorrow
+  ;; :config
+  ;; (load-theme 'sanityinc-tomorrow-blue t))
 
-;; Spacemacs
+ ;; Spacemacs
 
-;; (use-package spacemacs-theme
-;;   :defer t
-;;   :init (load-theme 'spacemacs-dark t))
+ ;; (use-package spacemacs-theme
+ ;;   :defer t
+ ;;   :init (load-theme 'spacemacs-dark t))
 (use-package doom-themes
-  :init (load-theme 'doom-nord t)
-  :config
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  (setq doom-themes-enable-bold t)
-  (setq doom-themes-treemacs-enable-variable-pitch nil)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config)
+ :config
+ (load-theme 'doom-one t)
+ ;; Enable flashing mode-line on errors
+ (doom-themes-visual-bell-config)
+ (setq doom-themes-enable-bold t)
+ (setq doom-themes-treemacs-enable-variable-pitch nil)
+ ;; Corrects (and improves) org-mode's native fontification.
+ (doom-themes-org-config)
 
-  ;; Enable custom treemacs theme (all-the-icons must be installed!)
-  (doom-themes-treemacs-config))
+ ;; Enable custom treemacs theme (all-the-icons must be installed!)
+ (doom-themes-treemacs-config))
 
 (use-package hydra)
 
@@ -335,7 +335,7 @@
   (company-minimum-prefix-length 0)
   (company-tooltip-align-annotations t)
   (company-frontends '(company-pseudo-tooltip-unless-just-one-frontend
-                       company-preview-frontend
+                       ;; company-preview-frontend
                        company-echo-metadata-frontend))
   (company-backends '(company-capf company-files))
   (company-tooltip-minimum-width 30)
@@ -441,57 +441,91 @@
 
 (use-package flycheck)
 
-(setq lsp-keymap-prefix (kbd "C-l"))
-
-(use-package lsp-mode
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (python-mode . lsp)
-         (c++-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp
+(use-package lsp-mode :commands lsp :ensure t
   :custom
+  (ccls-executable "~/std/ccls/Release/ccls")
 
-  (ccls-executable "ccls")
-  (lsp-prefer-flymake nil)
-  (lsp-prefer-capf t)
-  :config
-  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+      (ccls-initialization-options
+          '(:clang (:extraArgs ["-isystem/Library/Developer/CommandLineTools/usr/include/c++/v1"
+                                "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+                                "-isystem/usr/local/include"
+                                "-isystem/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include"
+                                "-isystem/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"
+                                "-isystem/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include"
+                                "-isystem/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"]
+                    :resourceDir "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0")))
+      :hook
+      ((c++-mode c-mode) . lsp)
   )
 
 
-(use-package lsp-ui
-  :after lsp-mode
-  :commands lsp-ui-mode
-  :bind (:map lsp-ui-mode-map
-              ("M-." . lsp-ui-peek-find-definitions)
-              ("M-/" . lsp-ui-peek-find-references))
-  :custom
-  (lsp-ui-doc-border (face-attribute 'mode-line-inactive :background))
-  (lsp-ui-sideline-enable nil)
-  (lsp-ui-imenu-enable nil)
 
-  (lsp-ui-doc-delay 0 "higher than eldoc delay")
-  :config
-  (lsp-ui-mode))
+  ;; (use-package lsp-ui :commands lsp-ui-mode :ensure t)
+  ;; (use-package company-lsp
+  ;;   :ensure t
+  ;;   :commands company-lsp
+  ;;   :config (push 'company-lsp company-backends)) 
 
 
+;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;; (setq lsp-keymap-prefix "s-l")
+
+;; (use-package lsp-mode
+;;     :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;             (c++-mode . lsp)
+;;             ;; if you want which-key integration
+;;             (lsp-mode . lsp-enable-which-key-integration))
+;;     :custom 
+;;     (lsp-clients-clangd-executable "clangd")
+
+;;     :commands lsp)
+
+;; ;; optionally
+;; (use-package lsp-ui :commands lsp-ui-mode)
+;; ;; if you are helm user
+;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
+;; ;; if you are ivy user
+;; (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 
+  ;; (use-package ccls
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq ccls-executable "ccls")
+  ;;   (setq lsp-prefer-flymake nil)
+  ;;   (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
 
-;; if you are ivy user
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
-;; optionally if you want to use debugger
-(use-package dap-mode)
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+  ;;   (setq ccls-initialization-options
+  ;;         '(:clang (:extraArgs ["-isystem/Library/Developer/CommandLineTools/usr/include/c++/v1"
+  ;;                               "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+  ;;                               "-isystem/usr/local/include"
+  ;;                               "-isystem/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include"
+  ;;                               "-isystem/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"
+  ;;                               "-isystem/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include"
+  ;;                               "-isystem/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"]
+  ;;                   :resourceDir "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0")))
 
-;; optional if you want which-key integration
-(use-package which-key
-  :config
-  (which-key-mode))
+
+  ;;   :hook ((c-mode c++-mode objc-mode) .
+  ;;          (lambda () (require 'ccls) (lsp))))
+
+      ;; if you are ivy user
+      ;; (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+      ;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+
+      ;; optional if you want which-key integration
+      (use-package which-key
+        :config
+        (which-key-mode))
 
 (use-package minions
   :commands minions-mode
   :init (minions-mode 1))
+
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
