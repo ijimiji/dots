@@ -19,5 +19,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
-source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+syntax_highligting=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+autosuggestions=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f $syntax_highligting ] && source $syntax_highligting
+[ -f $autosuggestions ] && source $autosuggestions

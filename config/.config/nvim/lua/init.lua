@@ -1,4 +1,4 @@
-local _2afile_2a = ".config/nvim/fnl/init.fnl"
+local _2afile_2a = "/home/jahor/.config/nvim/fnl/init.fnl"
 local unpack = (table.unpack or _G.unpack)
 local fmt = string.format
 local function nnoremap(from, to)

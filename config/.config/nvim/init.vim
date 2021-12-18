@@ -95,6 +95,7 @@ end
 -- Install packages
 require "paq" {
     "joshdick/onedark.vim";
+    "arcticicestudio/nord-vim";
     "savq/paq-nvim";
     "nvim-lua/plenary.nvim";
     "gelguy/wilder.nvim";
@@ -139,11 +140,21 @@ require "paq" {
     "windwp/nvim-autopairs";
     }
 EOF
-colorscheme onedark
-" hi! link DiagnosticError String
-" hi! link DiagnosticWarn Include
-" hi! link DiagnosticHint Conditional
-" hi! link DiagnosticInfo Constant
+
+colorscheme nord
+" Fix for nord theme
+hi! link DiagnosticError CocErrorSign
+hi! link DiagnosticWarn Todo
+hi! link DiagnosticHint Conditional
+hi! link DiagnosticInfo Constant
+
+hi! link Conditional Number
+hi! link String Todo
+hi! link SpecialChar Number
+hi! link Type Character
+hi! link Function DiagnosticError
+
+
 
 highlight! default link CmpItemKindMatch          Boolean
 highlight! default link CmpItemKindMatchFuzzy     Boolean
