@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Usage:   ./camera %file_name%
+# Example: ./camera monkey.mp4
+
+# Note:    $1 is simply a first Bash argument
+
+# Notice:  If it fails to open /dev/video0
+# run      sudo modprobe v4l2loopback
+
+ffmpeg -stream_loop 1000 -re -i $1 -map 0:v -f v4l2 /dev/video0

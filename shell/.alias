@@ -1,0 +1,4 @@
+alias ls='exa'
+alias l='exa -l'
+alias gvim='neovide --multigrid >/dev/null 2>&1'
+alias nvimrc='nvim ~/.config/nvim/init.lua'

@@ -1,0 +1,14 @@
+configuration {
+    font: "FantasqueSansMono Nerd Font 20";
+    terminal: "alacritty";
+    timeout {
+        action: "kb-cancel";
+        delay:  0;
+    }
+    filebrowser {
+        directories-first: true;
+        sorting-method:    "name";
+    }
+}
+//@theme "/usr/share/rofi/themes/gruvbox-light.rasi"
+@theme "/usr/share/rofi/themes/solarized_alternate.rasi"

@@ -1,0 +1,25 @@
+#!/bin/sh
+choice=$(echo -e "Area\nRoot\nGif"| dmenu)
+
+if [[ "$choice" == "Area" ]]
+then
+    name=$(date +%s).png
+    sleep 0.5
+    maim -s ~/pic/$name
+    cat ~/pic/$name | xclip -se c -t image/png
+fi
+
+if [[ "$choice" == "Root" ]]
+then
+#        notify-send "Screenshot taken!" "Saving root window"
+#        sleep 1
+    name=$(date +%s).png
+    sleep 0.5
+    maim ~/pic/$name
+    cat ~/pic/$name | xclip -se c -t image/png
+fi
+
+if [[ "$choice" == "Gif" ]]
+then
+        peek
+fi
