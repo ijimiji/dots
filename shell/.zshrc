@@ -23,3 +23,4 @@ syntax_highligting=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-hig
 autosuggestions=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f $syntax_highligting ] && source $syntax_highligting
 [ -f $autosuggestions ] && source $autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=2'

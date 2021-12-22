@@ -85,3 +85,7 @@ config/.config/awesome/'
 config/.config/awesome/bk.lua
 config/.config/awesome/old.fnl
 config/.config/emacs/early-init.el~
+config/.config/mpd/mpd.db
+config/.config/mpd/mpd.log
+config/.config/mpd/mpd.pid
+config/.config/mpd/mpdstate

@@ -1,5 +1,5 @@
 #!/bin/sh
-choice=$(echo -e "Area\nRoot\nGif"| dmenu)
+choice=$(echo -e "Area\nRoot\nGif"| rofi -dmenu -p "Screenshot?")
 
 if [[ "$choice" == "Area" ]]
 then
