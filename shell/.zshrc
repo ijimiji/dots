@@ -13,7 +13,7 @@ bindkey -e
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 PROMPT="%F{green}[%f%F{yellow}%n%f%F{red}@%f%F{blue}%m%f %F{red}%~%f%F{green}]%f "
-RPROMPT="%F{red}$0%f"
+#RPROMPT="%F{red}$0%f"
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000

@@ -11,4 +11,5 @@ configuration {
     }
 }
 //@theme "/usr/share/rofi/themes/gruvbox-light.rasi"
-@theme "/usr/share/rofi/themes/solarized_alternate.rasi"
+//@theme "/usr/share/rofi/themes/solarized_alternate.rasi"
+@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
