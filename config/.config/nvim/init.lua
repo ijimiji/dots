@@ -13,7 +13,8 @@ end
 
 ensure("wbthomason", "packer.nvim")
 ensure("lewis6991", "impatient.nvim")
--- ensure("Olical", "aniseed")
+
+
 
 require("impatient")
 require("rc")

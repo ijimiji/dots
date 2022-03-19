@@ -1,33 +1,9 @@
-require("packer").startup(function()
-    use "wbthomason/packer.nvim"
-    use "lewis6991/impatient.nvim"
-    use "shaunsingh/nord.nvim"
-    use "nvim-lua/plenary.nvim"
-    use "lervag/vimtex"
-    use "tpope/vim-fugitive"
-    use "neovim/nvim-lspconfig"
+return function(plugins)
 
-    use "RishabhRD/nvim-lsputils"
-    use "RishabhRD/popfix"
-    use "tami5/lspsaga.nvim"
+    require("packer").startup(function()
+        for _, plugin in ipairs(plugins) do
+            use(plugin)
+        end
+    end)
 
-    use "williamboman/nvim-lsp-installer"
-    use "kosayoda/nvim-lightbulb"
-    use "onsails/lspkind-nvim"
-    use "rcarriga/nvim-notify"
-    use "windwp/nvim-autopairs"
-    use "hrsh7th/nvim-cmp"
-    use "ijimiji/cmp-cmdline"
-    use "hrsh7th/cmp-nvim-lsp"
-    use "hrsh7th/cmp-buffer"
-    use "hrsh7th/cmp-path"
-    use "hrsh7th/cmp-vsnip"
-    use "hrsh7th/vim-vsnip"
-    use "rafamadriz/friendly-snippets"
-    use "nvim-treesitter/nvim-treesitter"
-    use "junegunn/vim-easy-align"
-    use "tpope/vim-surround"
-    use "ryvnf/readline.vim"
-    use "numToStr/Comment.nvim"
-    use "chemzqm/vim-jsx-improve"
-end)
+end

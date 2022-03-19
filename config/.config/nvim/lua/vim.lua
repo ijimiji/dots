@@ -1,12 +1,11 @@
 vim.cmd [[
-"set rulerformat=%25(%=%#Type#%l:%v%#Normal#\ %#Todo#*%t*%)
-"set laststatus=0
 set autochdir
+set cursorline
+set number
+set relativenumber
 set signcolumn=number
 set background=dark
 set termguicolors
-set relativenumber 
-set number
 set mouse=a
 set expandtab
 set shiftwidth=4
