@@ -26,7 +26,7 @@ plugins = {
 ---------------------------------------------------------------------------------
     "rcarriga/nvim-notify",
     "toppair/reach.nvim",
-    "nvim-lualine/lualine.nvim",
+    -- "nvim-lualine/lualine.nvim",
 ---------------------------------------------------------------------------------
     "hrsh7th/nvim-cmp",
     "ijimiji/cmp-cmdline",
@@ -60,7 +60,7 @@ require("plugins.mapx")()
 ---------------------------------------------------------------------------------
 require("plugins.ui.reach")()
 require("plugins.ui.which-key")()
-require("plugins.ui.lualine")()
+require("plugins.ui.lualine")(false)
 ---------------------------------------------------------------------------------
 servers    = {"clangd", "texlab", "pyright"}
 require("plugins.lsp.signs")(require("misc.icons.unicode"))
