@@ -14,7 +14,5 @@ end
 ensure("wbthomason", "packer.nvim")
 ensure("lewis6991", "impatient.nvim")
 
-
-
 require("impatient")
 require("rc")

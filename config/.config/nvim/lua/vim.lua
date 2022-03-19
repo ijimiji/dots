@@ -28,6 +28,17 @@ let mapleader=" "
 
 augroup highlight_yank
     autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank{higroup="Visual", timeout=250}
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
 augroup END
+
+nnoremap n nzzzv
+nnoremap N Nzzzv
+inoremap , ,<C-g>u
+inoremap . .<C-g>u
+noremap L g$
+noremap H ^"
+noremap  Y y$
+vnoremap > >gv
+vnoremap < <gv
+tnoremap <esc> <C-\><C-n>
 ]]
