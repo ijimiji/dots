@@ -11,7 +11,7 @@ plugins = {
     "b0o/mapx.nvim",
     "ryvnf/readline.vim",
     "folke/which-key.nvim",
---------------------------------------------------------------------------------- "shaunsingh/nord.nvim",
+---------------------------------------------------------------------------------
     "RRethy/nvim-base16",
     "lervag/vimtex",
     "tpope/vim-fugitive",
@@ -26,7 +26,7 @@ plugins = {
 ---------------------------------------------------------------------------------
     "rcarriga/nvim-notify",
     "toppair/reach.nvim",
-    -- "nvim-lualine/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
 ---------------------------------------------------------------------------------
     "hrsh7th/nvim-cmp",
     "ijimiji/cmp-cmdline",
@@ -62,7 +62,7 @@ require("plugins.ui.reach")()
 require("plugins.ui.which-key")()
 require("plugins.ui.lualine")(false)
 ---------------------------------------------------------------------------------
-servers    = {"clangd", "texlab", "pyright"}
+servers = {"clangd", "texlab", "pyright"}
 require("plugins.lsp.signs")(require("misc.icons.unicode"))
 require("plugins.lsp.installer")(
     servers, 
