@@ -13,7 +13,6 @@ bindkey -e
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 PROMPT="%F{green}[%f%F{yellow}%n%f%F{red}@%f%F{blue}%m%f %F{red}%~%f%F{green}]%f "
-#RPROMPT="%F{red}$0%f"
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -23,4 +22,4 @@ syntax_highligting=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-hig
 autosuggestions=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f $syntax_highligting ] && source $syntax_highligting
 [ -f $autosuggestions ] && source $autosuggestions
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=2'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'

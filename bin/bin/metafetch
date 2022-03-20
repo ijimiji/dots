@@ -1,0 +1,48 @@
+#!/bin/sh
+
+black_bg=`tput setab 0`
+grey_bg=`tput setab 8`
+red_bg=`tput setab 1`
+pink_bg=`tput setab 9`
+green_bg=`tput setab 2`
+light_green_bg=`tput setab 10`
+yellow_bg=`tput setab 3`
+light_yellow_bg=`tput setab 11`
+blue_bg=`tput setab 4`
+light_blue_bg=`tput setab 12`
+magenta_bg=`tput setab 5`
+light_magenta_bg=`tput setab 13`
+cyan_bg=`tput setab 6`
+light_cyan_bg=`tput setab 14`
+white_bg=`tput setab 7`
+light_white_bg=`tput setab 15`
+
+black=`tput setaf 0`
+grey=`tput setaf 8`
+red=`tput setaf 1`
+pink=`tput setaf 9`
+green=`tput setaf 2`
+light_green=`tput setaf 10`
+yellow=`tput setaf 3`
+light_yellow=`tput setaf 11`
+blue=`tput setaf 4`
+light_blue=`tput setaf 12`
+magenta=`tput setaf 5`
+light_magenta=`tput setaf 13`
+cyan=`tput setaf 6`
+light_cyan=`tput setaf 14`
+white=`tput setaf 7`
+light_white=`tput setaf 15`
+reset=`tput sgr0`
+
+os=`uname --operating-system`
+
+echo "${red}${os}${reset}" | cowsay -f ~/dots/assets/cow/fox.cow
+
+echo ""
+
+echo -e "${black_bg}   ${red_bg}   ${green_bg}   ${yellow_bg}   ${blue_bg}\
+   ${magenta_bg}   ${cyan_bg}   ${white_bg}   ${reset}"
+echo -e "${grey_bg}   ${pink_bg}   ${light_green_bg}   ${light_yellow_bg}   ${light_blue_bg}\
+   ${light_magenta_bg}   ${light_cyan_bg}   ${light_white_bg}   ${reset}"
+
