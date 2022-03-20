@@ -10,7 +10,7 @@ alias x="startx"
 alias please="sudo"
 
 cd() {
-    [[ -o interactive ]] && (builtin cd "$@" && ls) || cd "$@"
+    [[ -o interactive ]] && builtin cd "$@" && ls || builtin cd "$@"
 }
 
 [ ! -s ~/.config/mpd/mpd.pid ] && mpd 2> /dev/null
