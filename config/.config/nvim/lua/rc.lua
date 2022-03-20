@@ -59,6 +59,7 @@ require("plugins.editor.pairs")()
 ---------------------------------------------------------------------------------
 require("plugins.mapx")()
 ---------------------------------------------------------------------------------
+require("plugins.ui.kind")()
 require("plugins.ui.reach")()
 require("plugins.ui.which-key")()
 require("plugins.ui.lualine")(false)
@@ -72,6 +73,7 @@ require("plugins.lsp.installer")(
         "vsnip", 
         "buffer"
     }, 
-    require("plugins.snippets")()),
+    require("plugins.snippets")()
+    ),
     require("plugins.lsp.ui")())
 ---------------------------------------------------------------------------------

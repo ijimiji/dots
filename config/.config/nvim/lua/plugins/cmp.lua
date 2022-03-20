@@ -1,5 +1,6 @@
 return function(backends, snippet)
     sources = {}
+
     for _, source in ipairs(backends) do
         table.insert(sources, { name = source })
     end
@@ -12,7 +13,7 @@ return function(backends, snippet)
         mapping = { 
             ['<CR>'] = cmp.mapping.confirm({ select = false }) 
         } 
-}
+    }
 
     cmp.setup.cmdline('/', {
         sources = {

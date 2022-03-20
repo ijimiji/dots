@@ -1,0 +1,5 @@
+#!/bin/sh
+
+output=$(echo $1 | sed 's/\.[^.]*$//')
+
+ffmpeg -i $1 $output.mp4
