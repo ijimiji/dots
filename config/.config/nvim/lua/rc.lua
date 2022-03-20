@@ -16,6 +16,7 @@ plugins = {
     "lervag/vimtex",
     "tpope/vim-fugitive",
 ---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
     "neovim/nvim-lspconfig",
     "RishabhRD/nvim-lsputils",
     "RishabhRD/popfix",

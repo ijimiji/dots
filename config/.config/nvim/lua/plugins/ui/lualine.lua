@@ -13,13 +13,28 @@ return function(icons)
             lualine_a = {'mode'},
             lualine_b = {{'branch', 'diff', 'diagnostics', color = {fg = vim.g.terminal_color_0, bg = vim.g.terminal_color_3}}},
             lualine_c = {{'filename', color = {fg = vim.g.terminal_color_0, bg = vim.g.terminal_color_1}}},
-            lualine_x = {
-                {"location", padding = 0, color = {bg = vim.g.terminal_color_4, fg = vim.g.terminal_color_0}}
+            lualine_y = {
+                {
+                    "encoding", 
+                    padding = 0,
+                    color = {bg = vim.g.terminal_color_4, fg = vim.g.terminal_color_0},
+                    fmt = function (str)
+                        return "[" .. str .. "]"
+                    end
+
+                }
             },
             lualine_z = {
-                {"filesize", color = {bg = vim.g.terminal_color_3, fg = vim.g.terminal_color_0}}
+                {
+                    "filesize", 
+                    padding = 0,
+                    color = {bg = vim.g.terminal_color_3, fg = vim.g.terminal_color_0},
+                    fmt = function (str)
+                        return "[" .. str .. "]"
+                    end
+            }
             },
-            lualine_y = {
+            lualine_x = {
                 {
                     function()
                         local current_line = vim.fn.line "."
