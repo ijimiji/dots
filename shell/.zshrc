@@ -18,8 +18,16 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
-syntax_highligting=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-autosuggestions=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-[ -f $syntax_highligting ] && source $syntax_highligting
-[ -f $autosuggestions ] && source $autosuggestions
+
+if [[ $(uname) == Darwin ]] then
+    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+    syntax_highligting=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    autosuggestions=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+    [ -f $syntax_highligting ] && source $syntax_highligting
+    [ -f $autosuggestions ] && source $autosuggestions
+fi
+
+
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
