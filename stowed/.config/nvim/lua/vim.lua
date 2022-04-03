@@ -23,13 +23,9 @@ set textwidth=80
 set updatetime=300
 set wildmode=full
 set guifont=FantasqueSansMono\ Nerd\ Font,Apple\ Color\ Emoji:b:h24
+set laststatus=2
 let maplocalleader=","
 let mapleader=" "
-
-" augroup highlight_yank
-"     autocmd!
-"     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
-" augroup END
 
 nnoremap n nzzzv
 nnoremap N Nzzzv
