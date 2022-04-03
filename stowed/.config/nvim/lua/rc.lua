@@ -13,9 +13,9 @@ plugins = {
     "folke/which-key.nvim",
 ---------------------------------------------------------------------------------
     "RRethy/nvim-base16",
+    "ijimiji/shoji",
     "lervag/vimtex",
     "tpope/vim-fugitive",
----------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
     "neovim/nvim-lspconfig",
     "RishabhRD/nvim-lsputils",
@@ -33,8 +33,9 @@ plugins = {
     "ijimiji/cmp-cmdline",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
     "hrsh7th/cmp-vsnip",
+    "lukas-reineke/cmp-rg",
+    "hrsh7th/cmp-path",
 ---------------------------------------------------------------------------------
     "hrsh7th/vim-vsnip",
     "rafamadriz/friendly-snippets",
@@ -45,7 +46,9 @@ plugins = {
     "windwp/nvim-autopairs",
 ---------------------------------------------------------------------------------
     "chemzqm/vim-jsx-improve",
-    "nvim-treesitter/nvim-treesitter"
+    "nvim-treesitter/nvim-treesitter",
+---------------------------------------------------------------------------------
+    "nvim-telescope/telescope.nvim"
 ---------------------------------------------------------------------------------
 } require("plugins.packer")(plugins)
 ---------------------------------------------------------------------------------
@@ -71,9 +74,36 @@ require("plugins.lsp.installer")(
     require("plugins.cmp")({
         "nvim_lsp", 
         "vsnip", 
-        "buffer"
+        "buffer",
+        "rg",
+        "path"
     }, 
     require("plugins.snippets")()
     ),
     require("plugins.lsp.ui")())
 ---------------------------------------------------------------------------------
+vim.cmd [[
+augroup zk
+    autocmd!
+    autocmd FileType markdown nnoremap <buffer> gf vi[gf
+augroup END
+]]
+
+auto = vim.api.nvim_create_autocmd 
+
+auto("TextYankPost", {
+    pattern = "*", 
+    callback = function() 
+    require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
+end})
+
+local actions = require "telescope.actions"
+require('telescope').setup{}
+
+vim.cmd [[
+nnoremap <C-x><C-f> :lua require'telescope.builtin'.find_files(require('telescope.themes').get_ivy())<cr>
+nnoremap <M-x> :lua require'telescope.builtin'.commands(require('telescope.themes').get_ivy())<cr>
+]]
+
+
+

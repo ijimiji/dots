@@ -26,10 +26,10 @@ set guifont=FantasqueSansMono\ Nerd\ Font,Apple\ Color\ Emoji:b:h24
 let maplocalleader=","
 let mapleader=" "
 
-augroup highlight_yank
-    autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
-augroup END
+" augroup highlight_yank
+"     autocmd!
+"     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
+" augroup END
 
 nnoremap n nzzzv
 nnoremap N Nzzzv
