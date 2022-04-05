@@ -14,8 +14,8 @@ Feauturing several useful [scripts][4] and old configurations.
 ## Demo
 ![Screenshot](assets/1647757430.png)
 
-[1]: config/.config/nvim
-[2]: config/.config/awesome
-[3]: shell/.zshrc
-[4]: bin/bin
-[5]: config/.config/alacritty
+[1]: stowed/.config/nvim
+[2]: stowed/.config/awesome
+[3]: stowed/.zshrc
+[4]: stowed/bin
+[5]: stowed/.config/alacritty
