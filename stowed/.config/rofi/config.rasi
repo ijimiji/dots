@@ -10,6 +10,4 @@ configuration {
         sorting-method:    "name";
     }
 }
-//@theme "/usr/share/rofi/themes/gruvbox-light.rasi"
-//@theme "/usr/share/rofi/themes/solarized_alternate.rasi"
-@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
+@theme "~/.config/rofi/Nord.rasi"

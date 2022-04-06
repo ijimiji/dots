@@ -1,4 +1,4 @@
-return function(backends, snippet)
+return function(backends, icons, snippet)
     sources = {}
 
     for _, source in ipairs(backends) do
@@ -6,33 +6,7 @@ return function(backends, snippet)
     end
 
     local cmp = require("cmp")
-    local kind_icons = {
-        Text = "",
-        Method = "",
-        Function = "",
-        Constructor = "",
-        Field = "",
-        Variable = "",
-        Class = "ﴯ",
-        Interface = "",
-        Module = "",
-        Property = "ﰠ",
-        Unit = "",
-        Value = "",
-        Enum = "",
-        Keyword = "",
-        Snippet = "",
-        Color = "",
-        File = "",
-        Reference = "",
-        Folder = "",
-        EnumMember = "",
-        Constant = "",
-        Struct = "",
-        Event = "",
-        Operator = "",
-        TypeParameter = ""
-    }
+    local kind_icons = icons 
 
     cmp.setup {
         snippet = { expand = snippet },

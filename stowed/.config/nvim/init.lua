@@ -63,13 +63,11 @@ plugins = {
     "nvim-telescope/telescope.nvim"
 } require("plugins.packer")(plugins)
 servers = {"clangd", "texlab", "pyright"}
-
 ---------------------------------------------------------------------------------
 require("util")
 colorscheme("base16-nord", "base16")
 ---------------------------------------------------------------------------------
 vim.notify = require("notify")
-
 ---------------------------------------------------------------------------------
 require("plugins.mapx")()
 require("plugins.telescope")()
@@ -82,18 +80,22 @@ require("plugins.ui.reach")()
 require("plugins.ui.which-key")()
 require("plugins.ui.lualine")(false)
 ---------------------------------------------------------------------------------
-require("plugins.lsp.signs")(require("misc.icons.unicode"))
+local icons = require("misc.icons.ascii")
+require("plugins.lsp.signs")(icons)
 require("plugins.lsp.installer")(
     servers, 
-    require("plugins.cmp")({
-        "nvim_lsp", 
-        "vsnip", 
-        "buffer",
-        "path"
-    }, 
-    require("plugins.snippets")()
+    require("plugins.cmp")(
+	    {
+		"nvim_lsp", 
+		"vsnip", 
+		"buffer",
+		"path"
+	    }, 
+	    icons,
+	    require("plugins.snippets")()
     ),
-    require("plugins.lsp.ui")())
+    require("plugins.lsp.ui")()
+)
 ---------------------------------------------------------------------------------
 auto("FileType", {
     pattern = "markdown",
@@ -148,18 +150,18 @@ tnoremap("<esc>", [[<C-\><C-n>]])
 highlight({name = "NotifyERRORBorder", foreground = red})
 highlight({name = "NotifyERRORIcon",   foreground = red})
 highlight({name = "NotifyERRORTitle",  foreground = red})
-highlight({name = "NotifyWARNBorder",  foreground = red})
-highlight({name = "NotifyWARNIcon",    foreground = red})
-highlight({name = "NotifyWARNTitle",   foreground = red})
-highlight({name = "NotifyINFOBorder",  foreground = red})
-highlight({name = "NotifyINFOTitle",   foreground = red})
-highlight({name = "NotifyINFOIcon",    foreground = red})
-highlight({name = "NotifyTRACEBorder", foreground = red})
-highlight({name = "NotifyTRACEIcon",   foreground = red})
-highlight({name = "NotifyTRACETitle",  foreground = red})
-highlight({name = "NotifyDEBUGIcon",   foreground = red})
-highlight({name = "NotifyDEBUGBorder", foreground = red})
-highlight({name = "NotifyDEBUGTitle",  foreground = red})
+highlight({name = "NotifyWARNBorder",  foreground = yellow})
+highlight({name = "NotifyWARNIcon",    foreground = yellow})
+highlight({name = "NotifyWARNTitle",   foreground = yellow})
+highlight({name = "NotifyINFOBorder",  foreground = blue})
+highlight({name = "NotifyINFOTitle",   foreground = blue})
+highlight({name = "NotifyINFOIcon",    foreground = blue})
+highlight({name = "NotifyTRACEBorder", foreground = yellow})
+highlight({name = "NotifyTRACEIcon",   foreground = yellow})
+highlight({name = "NotifyTRACETitle",  foreground = yellow})
+highlight({name = "NotifyDEBUGIcon",   foreground = yellow})
+highlight({name = "NotifyDEBUGBorder", foreground = yellow})
+highlight({name = "NotifyDEBUGTitle",  foreground = yellow})
 ---------------------------------------------------------------------------------
 highlight({name = "NormalFloat", background = grey})
 ---------------------------------------------------------------------------------
