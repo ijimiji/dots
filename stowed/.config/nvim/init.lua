@@ -30,6 +30,10 @@ plugins = {
 ---------------------------------------------------------------------------------
     "lervag/vimtex",
 ---------------------------------------------------------------------------------
+    "Olical/conjure",
+    "Olical/aniseed",
+    "PaterJason/cmp-conjure",
+---------------------------------------------------------------------------------
     "tpope/vim-fugitive",
 ---------------------------------------------------------------------------------
     "neovim/nvim-lspconfig",
@@ -54,6 +58,7 @@ plugins = {
     "hrsh7th/vim-vsnip",
     "rafamadriz/friendly-snippets",
 ---------------------------------------------------------------------------------
+    "ijimiji/tabout.nvim",
     "junegunn/vim-easy-align",
     "tpope/vim-surround",
     "numToStr/Comment.nvim",
@@ -89,7 +94,8 @@ require("plugins.lsp.installer")(
 		"nvim_lsp", 
 		"vsnip", 
 		"buffer",
-		"path"
+		"path",
+                "conjure"
 	    }, 
 	    icons,
 	    require("plugins.snippets")()
@@ -163,7 +169,7 @@ highlight({name = "NotifyDEBUGIcon",   foreground = yellow})
 highlight({name = "NotifyDEBUGBorder", foreground = yellow})
 highlight({name = "NotifyDEBUGTitle",  foreground = yellow})
 ---------------------------------------------------------------------------------
-highlight({name = "NormalFloat", background = grey})
+--highlight({name = "NormalFloat", background = grey})
 ---------------------------------------------------------------------------------
 highlight({name = "DiagnosticWarn", foreground = yellow})
 ---------------------------------------------------------------------------------
