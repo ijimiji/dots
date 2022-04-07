@@ -129,7 +129,6 @@ o.shiftwidth     = 4
 o.softtabstop    = 4
 o.textwidth      = 80
 o.updatetime     = 300
-o.laststatus     = 2
 o.signcolumn     = "number"
 o.background     = "dark"
 o.mouse          = "a"
@@ -201,3 +200,4 @@ highlight({name = "CmpItemKindEvent",         foreground = red})
 highlight({name = "CmpItemKindOperator",      foreground = red})
 highlight({name = "CmpItemKindTypeParameter", foreground = red})
 ---------------------------------------------------------------------------------
+o.laststatus     = 2
