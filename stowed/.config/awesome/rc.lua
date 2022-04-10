@@ -497,6 +497,8 @@ awful.rules.rules = {
            "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
    }, properties = { floating = true }},
+   { rule = { class = "TelegramDesktop" },
+   properties = { maximized_vertical = true, maximized_horizontal = true } },
 
    -- Add titlebars to normal clients and dialogs
    { rule_any = {type = { "normal", "dialog" }
