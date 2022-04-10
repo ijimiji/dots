@@ -89,3 +89,11 @@ config/.config/mpd/mpd.db
 config/.config/mpd/mpd.log
 config/.config/mpd/mpd.pid
 config/.config/mpd/mpdstate
+stowed/.config/nvim/plugin/packer_compiled.lua
+stowed/.config/Code - OSS/logs/20220410T205147/exthost1/output_logging_20220410T205149/2-JSON Language Server.log
+stowed/.config/Code - OSS/User/History/-28c74176/pyvz
+stowed/.config/mpd/mpd.db
+stowed/.config/mpd/mpd.log
+stowed/.config/mpd/mpd.pid
+stowed/.config/mpd/mpdstate
+stowed/.config/Code - OSS/logs/20220410T205147/exthost1/output_logging_20220410T205149/2-JSON Language Server.log
