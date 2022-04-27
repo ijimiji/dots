@@ -31,7 +31,6 @@ plugins = {
     "lervag/vimtex",
 ---------------------------------------------------------------------------------
     "Olical/conjure",
-    "Olical/aniseed",
     "PaterJason/cmp-conjure",
 ---------------------------------------------------------------------------------
     "tpope/vim-fugitive",
@@ -65,7 +64,6 @@ plugins = {
     "windwp/nvim-autopairs",
     "chemzqm/vim-jsx-improve",
     "nvim-treesitter/nvim-treesitter",
-    "nvim-telescope/telescope.nvim"
 } require("plugins.packer")(plugins)
 servers = {"clangd", "texlab", "pyright"}
 ---------------------------------------------------------------------------------
@@ -75,7 +73,6 @@ colorscheme("base16-nord", "base16")
 vim.notify = require("notify")
 ---------------------------------------------------------------------------------
 require("plugins.mapx")()
-require("plugins.telescope")()
 ---------------------------------------------------------------------------------
 require("plugins.editor.comment")()
 require("plugins.editor.align")()
@@ -150,6 +147,7 @@ nnoremap("H",     [[^]])
 nnoremap("Y",     [[y$]])
 vnoremap(">",     [[>gv]])
 vnoremap("<",     [[<gv]])
+vnoremap("s",     [[:s/]])
 tnoremap("<esc>", [[<C-\><C-n>]])
 ---------------------------------------------------------------------------------
 highlight({name = "NotifyERRORBorder", foreground = red})
@@ -168,9 +166,11 @@ highlight({name = "NotifyDEBUGIcon",   foreground = yellow})
 highlight({name = "NotifyDEBUGBorder", foreground = yellow})
 highlight({name = "NotifyDEBUGTitle",  foreground = yellow})
 ---------------------------------------------------------------------------------
---highlight({name = "NormalFloat", background = grey})
+highlight({name = "NormalFloat", background = "#343945"})
 ---------------------------------------------------------------------------------
 highlight({name = "DiagnosticWarn", foreground = yellow})
+---------------------------------------------------------------------------------
+highlight({name = "CursorLineNR", foreground = yellow})
 ---------------------------------------------------------------------------------
 highlight({name = "CmpItemKindMatch",         foreground = yellow})
 highlight({name = "CmpItemKindMatchFuzzy",    foreground = yellow})

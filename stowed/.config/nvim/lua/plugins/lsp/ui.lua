@@ -9,6 +9,8 @@ return function()
     vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
     vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
     vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
+    -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
+    -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
 
     return function()
         nnoremap("gD",        [[<cmd>lua vim.lsp.buf.declaration()<CR>]])
@@ -23,7 +25,9 @@ return function()
         nnoremap("<space>ca", [[<cmd>lua vim.lsp.buf.code_action()<CR>]])
         nnoremap("gr",        [[<cmd>lua vim.lsp.buf.references()<CR>]])
         nnoremap("<space>f",  [[<cmd>lua vim.lsp.buf.formatting()<CR>]])
-        nnoremap("<C-j>",     [[<cmd>lua vim.diagnostic.goto_next()<CR>]])
-        nnoremap("<C-k>",     [[<cmd>lua vim.diagnostic.goto_prev()<CR>]])
+        -- nnoremap("gj",        [[<cmd>lua vim.diagnostic.goto_next({ float = { border = "single" }})<CR>]])
+        -- nnoremap("gk",        [[<cmd>lua vim.diagnostic.goto_prev({ float = { border = "single" }})<CR>]])
+        nnoremap("gj",        [[<cmd>lua vim.diagnostic.goto_next()<CR>]])
+        nnoremap("gk",        [[<cmd>lua vim.diagnostic.goto_prev()<CR>]])
     end
 end

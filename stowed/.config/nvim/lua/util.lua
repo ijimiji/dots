@@ -5,10 +5,19 @@ g = vim.g
 t = true
 
 function _G.highlight(face)
-    foreground = face.foreground and face.foreground or "default" 
-    background = face.background and face.background or "default" 
-    style = face.style and face.style or "None" 
-    vim.cmd(fmt("highlight! %s guifg=%s guibg=%s gui=%s", face.name, foreground, background, style))
+    cmd = fmt("highlight! %s", face.name)
+
+    if face.foreground then
+        cmd = fmt("%s guifg=%s", cmd, face.foreground)
+    end
+    if face.background then
+        cmd = fmt("%s guibg=%s", cmd, face.background)
+    end
+    if face.style then
+        cmd = fmt("%s gui=%s", cmd, face.style)
+    end
+
+    vim.cmd(cmd)
 end
 
 function _G.colorscheme(theme, bat)

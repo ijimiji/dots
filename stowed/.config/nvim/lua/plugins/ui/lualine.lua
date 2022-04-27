@@ -10,7 +10,6 @@ return function(icons)
         ["c"]     = white
     }
     require('lualine').setup {
-
         options = {
             icons_enabled = icons,
             theme = 'auto',
