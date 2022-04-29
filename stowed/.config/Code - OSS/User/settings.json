@@ -5,18 +5,15 @@
   "editor.fontSize": 20,
   "editor.cursorSmoothCaretAnimation": true,
   "editor.smoothScrolling": true,
-  "editor.renderWhitespace": "none",
   "editor.mouseWheelZoom": true,
   "editor.fontLigatures": true,
   "editor.cursorBlinking": "phase",
   "editor.scrollbar.verticalScrollbarSize": 5,
   "editor.hideCursorInOverviewRuler": true,
   "editor.overviewRulerBorder": false,
-  "window.zoomLevel": 2,
-  // "editor.glyphMargin": false,
-  "workbench.iconTheme": "material-icon-theme",
+  "window.zoomLevel": 1,
   "workbench.list.smoothScrolling": true,
-  "workbench.activityBar.visible": false,
+  // "workbench.activityBar.visible": false,
   "workbench.sideBar.location": "right",
   "workbench.tips.enabled": false,
   "workbench.colorTheme": "Nord",
@@ -26,8 +23,21 @@
   "extensions.ignoreRecommendations": true,
   "git.autofetch": true,
   "cmake.configureOnOpen": true,
-  "redhat.telemetry.enabled": false,
-  // "C_Cpp.intelliSenseEngine": "Disabled",
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "clangd.path": "/home/jahor/.config/Code - OSS/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/14.0.0/clangd_14.0.0/bin/clangd",
+  "window.dialogStyle": "custom",
+  "window.titleBarStyle": "custom",
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "dance.modes": {
+    "insert": {
+    },
+    "normal": {
+      "cursorStyle": "block",
+      "selectionBehavior": "character",
+    }
+  },
   "vim.easymotion": true,
   "vim.incsearch": true,
   "vim.useSystemClipboard": true,
@@ -202,18 +212,4 @@
       ]
     }
   ],
-  "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "files.exclude": {
-    "**/.classpath": true,
-    "**/.project": true,
-    "**/.settings": true,
-    "**/.factorypath": true
-  },
-  "clangd.path": "/home/jahor/.config/Code - OSS/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/14.0.0/clangd_14.0.0/bin/clangd",
-  "C_Cpp.intelliSenseEngine": "Disabled",
-"vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
-"window.dialogStyle": "custom",
-"window.titleBarStyle": "custom",
 }
