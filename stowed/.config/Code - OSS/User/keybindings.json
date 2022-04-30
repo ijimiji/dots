@@ -1,0 +1,7 @@
+[
+    {
+        "key": "enter",
+        "command": "renameFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+    },
+]
