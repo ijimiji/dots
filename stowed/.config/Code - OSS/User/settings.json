@@ -11,12 +11,10 @@
   "editor.scrollbar.verticalScrollbarSize": 5,
   "editor.hideCursorInOverviewRuler": true,
   "editor.overviewRulerBorder": false,
-  "window.zoomLevel": 1,
   "workbench.list.smoothScrolling": true,
   // "workbench.activityBar.visible": false,
   "workbench.sideBar.location": "right",
   "workbench.tips.enabled": false,
-  "workbench.colorTheme": "Nord",
   "workbench.editor.highlightModifiedTabs": true,
   "breadcrumbs.enabled": false,
   "latex-workshop.view.pdf.viewer": "tab",
@@ -212,4 +210,23 @@
       ]
     }
   ],
+  "workbench.tree.renderIndentGuides": "always",
+  "editor.guides.bracketPairs": true,
+  "window.zoomLevel": 2,
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-lualatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    },
+  ],
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "workbench.colorTheme": "Nord",
+  "Lua.telemetry.enable": false
 }

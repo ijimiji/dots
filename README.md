@@ -13,6 +13,7 @@ Feauturing several useful [scripts][4] and old configurations.
 
 ## Demo
 ![Screenshot](assets/1647757430.png)
+![Screenshot](assets/1653323421.png)
 
 [1]: stowed/.config/nvim
 [2]: stowed/.config/awesome

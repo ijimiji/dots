@@ -1,0 +1,7 @@
+#!/bin/sh
+
+for book in "$@"
+do
+    name=$(echo $book | sed -r 's/(.*)\.[^\.]+$/\1.mobi/')
+    ebook-convert "$book" "$name"
+done

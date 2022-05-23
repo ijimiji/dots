@@ -9,7 +9,7 @@ scrolling:
 font:
   normal:
     # family: Iosevka Nerd Font Mono
-    #family: Apple Color Emoji
+    # family: Apple Color Emoji
     family: FantasqueSansMono Nerd Font
     style: Bold
   size: 20.0
