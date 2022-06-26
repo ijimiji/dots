@@ -18,16 +18,21 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
-if [[ $(uname) == Darwin ]] then
-    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ $(uname -a | grep Ubuntu) ]] then
+    syntax_highligting=/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    autosuggestions=/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 else
     syntax_highligting=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     autosuggestions=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-    [ -f $syntax_highligting ] && source $syntax_highligting
-    [ -f $autosuggestions ] && source $autosuggestions
 fi
 
+[ -f $syntax_highligting ] && source $syntax_highligting
+[ -f $autosuggestions ] && source $autosuggestions
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

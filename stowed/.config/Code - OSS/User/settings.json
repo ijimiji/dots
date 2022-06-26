@@ -12,7 +12,6 @@
   "editor.hideCursorInOverviewRuler": true,
   "editor.overviewRulerBorder": false,
   "workbench.list.smoothScrolling": true,
-  // "workbench.activityBar.visible": false,
   "workbench.sideBar.location": "right",
   "workbench.tips.enabled": false,
   "workbench.editor.highlightModifiedTabs": true,
@@ -28,14 +27,6 @@
   "window.dialogStyle": "custom",
   "window.titleBarStyle": "custom",
   "editor.suggest.snippetsPreventQuickSuggestions": false,
-  "dance.modes": {
-    "insert": {
-    },
-    "normal": {
-      "cursorStyle": "block",
-      "selectionBehavior": "character",
-    }
-  },
   "vim.easymotion": true,
   "vim.incsearch": true,
   "vim.useSystemClipboard": true,
@@ -213,20 +204,18 @@
   "workbench.tree.renderIndentGuides": "always",
   "editor.guides.bracketPairs": true,
   "window.zoomLevel": 2,
-  "latex-workshop.latex.tools": [
-    {
-      "name": "latexmk",
-      "command": "latexmk",
-      "args": [
-        "-lualatex",
-        "-synctex=1",
-        "-interaction=nonstopmode",
-        "-file-line-error",
-        "%DOC%"
-      ]
-    },
-  ],
   "editor.unicodeHighlight.ambiguousCharacters": false,
-  "workbench.colorTheme": "Nord",
-  "Lua.telemetry.enable": false
+  "workbench.colorTheme": "Nord Aurora",
+  "Lua.telemetry.enable": false,
+  "workbench.colorCustomizations": {
+      "editorBracketMatch.background": "#2e344000",
+      "editorBracketMatch.border": "#88c0d0",
+      "editorBracketHighlight.foreground1": "#8fbcbb",
+      "editorBracketHighlight.foreground2": "#88c0d0",
+      "editorBracketHighlight.foreground3": "#81a1c1",
+      "editorBracketHighlight.foreground4": "#5e81ac",
+      "editorBracketHighlight.foreground5": "#8fbcbb",
+      "editorBracketHighlight.foreground6": "#88c0d0",
+      "editorBracketHighlight.unexpectedBracket.foreground": "#bf616a",
+  },
 }
