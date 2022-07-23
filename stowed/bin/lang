@@ -1,16 +1,17 @@
 #!/bin/sh
 
 has_rus=$(setxkbmap -print | grep ru)
-
-echo "'$hasrus'"
+rofi_style="window { height: 15%; }  listview { scrollbar: false; }"
+russian="РУС/rus"
+belarusian="БЕЛ/by"
 
 if [ -z "$has_rus" ]; then
-    choice=$(echo -e "RU\nBY" | rofi -dmenu)
+    choice=$(echo -e "$russian\n$belarusian" | rofi -dmenu -theme-str "$rofi_style")
 else
-    choice=$(echo -e "BY\nRU" | rofi -dmenu)
+    choice=$(echo -e "$belarusian\n$russian" | rofi -dmenu -theme-str "$rofi_style")
 fi
 
-if [[ "$choice" == "RU" ]]
+if [[ "$choice" == "$russian" ]]
 then
     setxkbmap -option grp:caps_toggle -layout "by(latin),ru"
 else
