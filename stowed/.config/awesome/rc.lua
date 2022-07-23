@@ -55,6 +55,8 @@ terminal = "alacritty"
 editor = os.getenv("EDITOR") or "nvim"
 -- editor_cmd = terminal .. " -e " .. editor
 editor_cmd = "neovide "
+lang_cmd = "~/bin/lang"
+screenshot_cmd =  "~/bin/screenshot"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -227,7 +229,7 @@ globalkeys = gears.table.join(
       {description="Restart awesome", group="awesome"}),
    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
       {description="show help", group="awesome"}),
-   awful.key({ modkey,           }, "Print",    function () awful.spawn.with_shell("~/bin/screenshot") end,
+   awful.key({ modkey,           }, "Print",    function () awful.spawn.with_shell(screenshot_cmd) end,
       {description="Screenshot", group="personal"}),
    awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
       {description = "view previous", group = "tag"}),
@@ -291,10 +293,10 @@ globalkeys = gears.table.join(
       {description = "increase the number of columns", group = "layout"}),
    awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
       {description = "decrease the number of columns", group = "layout"}),
-   awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
+   awful.key({ modkey,           }, "space", function () awful.spawn.with_shell(lang_cmd) end,
       {description = "select next", group = "layout"}),
-   awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
-      {description = "select previous", group = "layout"}),
+   -- awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
+   --    {description = "select previous", group = "layout"}),
 
    awful.key({ modkey, "Control" }, "n",
       function ()

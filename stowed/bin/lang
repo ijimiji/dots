@@ -1,0 +1,18 @@
+#!/bin/sh
+
+has_rus=$(setxkbmap -print | grep ru)
+
+echo "'$hasrus'"
+
+if [ -z "$has_rus" ]; then
+    choice=$(echo -e "RU\nBY" | rofi -dmenu)
+else
+    choice=$(echo -e "BY\nRU" | rofi -dmenu)
+fi
+
+if [[ "$choice" == "RU" ]]
+then
+    setxkbmap -option grp:caps_toggle -layout "by(latin),ru"
+else
+    setxkbmap -option grp:caps_toggle -layout "by(latin),by"
+fi
