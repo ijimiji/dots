@@ -13,5 +13,15 @@
         "key": "ctrl+shift+w",
         "command": "undo_expand_region",
         "when": "editorTextFocus && editorHasSelection"
-    }
+    },
+    {
+        "key": "ctrl+n",
+        "command": "workbench.action.quickOpenSelectNext",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "workbench.action.quickOpenSelectPrevious",
+        "when": "inQuickOpen"
+    },
 ]

@@ -1,32 +1,44 @@
 {
+  // Builtin settings
   "terminal.integrated.fontSize": 20,
+  "editor.fontSize": 20,
   "editor.fontFamily": "'FantasqueSansMono Nerd Font', 'Apple Color Emoji'",
   "editor.minimap.enabled": false,
-  "editor.fontSize": 20,
   "editor.cursorSmoothCaretAnimation": true,
   "editor.smoothScrolling": true,
   "editor.mouseWheelZoom": true,
   "editor.fontLigatures": true,
   "editor.cursorBlinking": "phase",
-  "editor.scrollbar.verticalScrollbarSize": 5,
+  "editor.scrollbar.verticalScrollbarSize": 15,
   "editor.hideCursorInOverviewRuler": true,
-  "editor.overviewRulerBorder": false,
+  "editor.overviewRulerBorder": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.guides.bracketPairs": true,
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "workbench.tree.renderIndentGuides": "always",
   "workbench.list.smoothScrolling": true,
   "workbench.sideBar.location": "right",
   "workbench.tips.enabled": false,
   "workbench.editor.highlightModifiedTabs": true,
-  "breadcrumbs.enabled": false,
-  "latex-workshop.view.pdf.viewer": "tab",
-  "extensions.ignoreRecommendations": true,
-  "git.autofetch": true,
-  "cmake.configureOnOpen": true,
-  "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "clangd.path": "/home/jahor/.config/Code - OSS/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/14.0.0/clangd_14.0.0/bin/clangd",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.activityBar.iconClickBehavior": "focus",
+  "workbench.activityBar.visible": false,
   "window.dialogStyle": "custom",
-  "window.titleBarStyle": "custom",
-  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "window.menuBarVisibility": "hidden",
+  "extensions.ignoreRecommendations": true,
+  "breadcrumbs.enabled": false,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "files.associations": {
+    "*.txt": "markdown"
+  },
+  // Extension settings
+  // Latex
+  "latex-workshop.view.pdf.viewer": "tab",
+  // C++
+  "clangd.path": "/home/jahor/.config/Code - OSS/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/14.0.0/clangd_14.0.0/bin/clangd",
+  "cmake.configureOnOpen": true,
+  // Vim settings
   "vim.easymotion": true,
   "vim.incsearch": true,
   "vim.useSystemClipboard": true,
@@ -201,21 +213,8 @@
       ]
     }
   ],
-  "workbench.tree.renderIndentGuides": "always",
-  "editor.guides.bracketPairs": true,
-  "window.zoomLevel": 2,
-  "editor.unicodeHighlight.ambiguousCharacters": false,
-  "workbench.colorTheme": "Nord Aurora",
+  // Telemetry
+  "telemetry.telemetryLevel": "off",
+  "redhat.telemetry.enabled": false,
   "Lua.telemetry.enable": false,
-  "workbench.colorCustomizations": {
-      "editorBracketMatch.background": "#2e344000",
-      "editorBracketMatch.border": "#88c0d0",
-      "editorBracketHighlight.foreground1": "#8fbcbb",
-      "editorBracketHighlight.foreground2": "#88c0d0",
-      "editorBracketHighlight.foreground3": "#81a1c1",
-      "editorBracketHighlight.foreground4": "#5e81ac",
-      "editorBracketHighlight.foreground5": "#8fbcbb",
-      "editorBracketHighlight.foreground6": "#88c0d0",
-      "editorBracketHighlight.unexpectedBracket.foreground": "#bf616a",
-  },
 }
