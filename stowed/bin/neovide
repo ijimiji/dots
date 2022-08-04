@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/bin/neovide --multigrid > /dev/null 2> /dev/null

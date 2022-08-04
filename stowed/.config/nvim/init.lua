@@ -42,6 +42,32 @@ local packages = {
     "rafamadriz/friendly-snippets"
 }
 
+vim.g.maplocalleader = ","
+vim.g.mapleader      = " "
+vim.o.autochdir      = true
+vim.o.cursorline     = true
+vim.o.number         = true
+vim.o.relativenumber = true
+vim.o.termguicolors  = true
+vim.o.expandtab      = true
+vim.o.undofile       = true
+vim.o.hidden         = true
+vim.o.splitbelow     = true
+vim.o.splitright     = true
+vim.o.ignorecase     = true
+vim.o.smartcase      = true
+vim.o.shiftwidth     = 4
+vim.o.softtabstop    = 4
+vim.o.textwidth      = 80
+vim.o.updatetime     = 300
+vim.o.signcolumn     = "number"
+vim.o.background     = "dark"
+vim.o.mouse          = "a"
+vim.o.inccommand     = "nosplit"
+vim.o.clipboard      = "unnamedplus,unnamed"
+vim.o.colorcolumn    = "+1"
+vim.o.wildmode       = "full"
+
 do 
     local fn = vim.fn
     local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -109,32 +135,6 @@ end
 
 colorscheme("base16-nord")
 
-vim.g.maplocalleader = ","
-vim.g.mapleader      = " "
-vim.o.autochdir      = true
-vim.o.cursorline     = true
-vim.o.number         = true
-vim.o.relativenumber = true
-vim.o.termguicolors  = true
-vim.o.expandtab      = true
-vim.o.undofile       = true
-vim.o.hidden         = true
-vim.o.splitbelow     = true
-vim.o.splitright     = true
-vim.o.ignorecase     = true
-vim.o.smartcase      = true
-vim.o.shiftwidth     = 4
-vim.o.softtabstop    = 4
-vim.o.textwidth      = 80
-vim.o.updatetime     = 300
-vim.o.signcolumn     = "number"
-vim.o.background     = "dark"
-vim.o.mouse          = "a"
-vim.o.inccommand     = "nosplit"
-vim.o.clipboard      = "unnamedplus,unnamed"
-vim.o.colorcolumn    = "+1"
-vim.o.wildmode       = "full"
-
 require("luasnip.loaders.from_vscode").lazy_load()
 require("nvim-autopairs").setup{}
 require("nvim_comment").setup{}
@@ -177,102 +177,110 @@ for _,server in ipairs(lsp_servers) do
     }
 end
 
+do
+    local luasnip = require("luasnip")
+    local cmp = require'cmp'
 
-local cmp = require'cmp'
+    map("c", "<C-n>", cmp.select_next_item, noremap)
+    map("c", "<C-p>", cmp.select_prev_item, noremap)
 
-local luasnip = require("luasnip")
 
-local icons = {
-    warning       = "◍",
-    problem       = "◍",
-    info          = "◍",
-    hint          = "◍",
-    bulb          = "◍",
-    Text          = "",
-    Method        = "",
-    Function      = "",
-    Constructor   = "",
-    Field         = "",
-    Variable      = "",
-    Class         = "ﴯ",
-    Interface     = "",
-    Module        = "",
-    Property      = "ﰠ",
-    Unit          = "",
-    Value         = "",
-    Enum          = "",
-    Keyword       = "",
-    Snippet       = "",
-    Color         = "",
-    File          = "",
-    Reference     = "",
-    Folder        = "",
-    EnumMember    = "",
-    Constant      = "",
-    Struct        = "",
-    Event         = "",
-    Operator      = "",
-    TypeParameter = ""
-}
-
-local sources = {}
-
-for _, source in ipairs(cmp_backends) do
-    table.insert(sources, { name = source })
-end
-
-cmp.setup({
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
-    },
-    window = {
-        -- completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered({
-            border = "single"
-        }),
-    },
-    formatting = {
-        format = function(entry, vim_item)
-            vim_item.kind = string.format('%s %s', icons[vim_item.kind], vim_item.kind)
-            return vim_item
-        end
-    },
-    mapping = cmp.mapping.preset.insert({
-        ["<CR>"] = cmp.mapping.confirm({ select = false }),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-
-    }),
-    sources = cmp.config.sources(sources)
-})
-
-cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-        { name = 'path' },
-        { name = 'cmdline' }
-    })
-}) 
-cmp.setup.cmdline('/', {
-    sources = {
-        { name = 'buffer' }
+    local icons = {
+        warning       = "◍",
+        problem       = "◍",
+        info          = "◍",
+        hint          = "◍",
+        bulb          = "◍",
+        Text          = "",
+        Method        = "",
+        Function      = "",
+        Constructor   = "",
+        Field         = "",
+        Variable      = "",
+        Class         = "ﴯ",
+        Interface     = "",
+        Module        = "",
+        Property      = "ﰠ",
+        Unit          = "",
+        Value         = "",
+        Enum          = "",
+        Keyword       = "",
+        Snippet       = "",
+        Color         = "",
+        File          = "",
+        Reference     = "",
+        Folder        = "",
+        EnumMember    = "",
+        Constant      = "",
+        Struct        = "",
+        Event         = "",
+        Operator      = "",
+        TypeParameter = ""
     }
-})
+    local sources = {}
+
+    for _, source in ipairs(cmp_backends) do
+        table.insert(sources, { name = source })
+    end
+
+    local has_words_before = function()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+    end
+
+    cmp.setup({
+        snippet = {
+            expand = function(args)
+                luasnip.lsp_expand(args.body)
+            end,
+        },
+        window = {
+            -- completion = cmp.config.window.bordered(),
+            documentation = cmp.config.window.bordered({
+                border = "single"
+            }),
+        },
+        formatting = {
+            format = function(entry, vim_item)
+                vim_item.kind = string.format('%s %s', icons[vim_item.kind], vim_item.kind)
+                return vim_item
+            end
+        },
+        mapping = cmp.mapping.preset.insert({
+            ["<CR>"] = cmp.mapping.confirm({ select = false }),
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ["<Tab>"] = cmp.mapping(function(fallback)
+                if luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
+                else
+                    fallback()
+                end
+            end, { "i", "s" }),
+
+            ["<S-Tab>"] = cmp.mapping(function(fallback)
+                if luasnip.jumpable(-1) then
+                    luasnip.jump(-1)
+                else
+                    fallback()
+                end
+            end, { "i", "s" }),
+
+        }),
+        sources = cmp.config.sources(sources)
+    })
+
+    cmp.setup.cmdline(':', {
+        sources = cmp.config.sources({
+            { name = 'path' },
+            { name = 'cmdline' }
+        })
+    }) 
+    cmp.setup.cmdline('/', {
+        sources = {
+            { name = 'buffer' }
+        }
+    })
+end
 
 
 local nord_theme = {
@@ -361,8 +369,6 @@ require('lualine').setup {
 }
 
 -- mappings
-map("n", "<C-ESC>", "<CMD>ToggleTerm<CR>", nnoremap)
-map("t", "<C-ESC>", "<CMD>ToggleTerm<CR>", nnoremap)
 map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {})
 map("v", ">", ">gv", noremap)
 map("v", "<", "<gv", noremap)
@@ -375,8 +381,6 @@ map("n", "H", "^]", noremap)
 map("n", "Y", "y$", noremap)
 map("t", "<esc>", "<C-\\><C-n>", noremap)
 map("n", "<esc>", "<cmd>noh<cr>", {})
-map("c", "<C-n>", cmp.select_next_item, noremap)
-map("c", "<C-p>", cmp.select_prev_item, noremap)
 
 -- autocmds
 auto("TextYankPost", {
@@ -387,59 +391,141 @@ auto("TextYankPost", {
 })
 
 
-local attach_to_buffer = function(output_bufnr, pattern, command)
-    vim.api.nvim_create_autocmd("BufWritePost", {
-        group = vim.api.nvim_create_augroup("jahor-autorun", {clear = true}),
-        pattern = pattern,
-        callback = function()
-            local append_data = function(_, data)
-                if data then
-                    vim.api.nvim_buf_set_lines(output_bufnr, -1, -1, false, data)
+do
+    local attach_to_buffer = function(output_bufnr, pattern, command)
+        vim.api.nvim_create_autocmd("BufWritePost", {
+            group = vim.api.nvim_create_augroup("jahor-autorun", {clear = true}),
+            pattern = pattern,
+            callback = function()
+                local append_data = function(_, data)
+                    if data then
+                        vim.api.nvim_buf_set_lines(output_bufnr, -1, -1, false, data)
+                    end
                 end
-            end
 
-            vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, {"output: "})
-            vim.fn.jobstart(command, {
-                stdout_buffered = true,
-                on_stdout = append_data,
-                on_stderr = append_data,
-            })
-        end,
-    })
+                vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, {"output: "})
+                vim.fn.jobstart(command, {
+                    stdout_buffered = true,
+                    on_stdout = append_data,
+                    on_stderr = append_data,
+                })
+            end,
+        })
+    end
+
+    vim.api.nvim_create_user_command("AutoRun", function()
+        vim.cmd("vsplit")
+        local prev_win = vim.fn.win_findbuf(vim.fn.bufnr("%"))[1]
+        local bufnr = vim.api.nvim_create_buf(true, true)
+        local win = vim.api.nvim_get_current_win()
+        vim.api.nvim_win_set_buf(win, bufnr)
+
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
+
+        vim.api.nvim_set_current_win(prev_win)
+
+        local pattern = vim.fn.input("Pattern: ")
+        local command = vim.split(vim.fn.input("Command: "), " ")
+        attach_to_buffer(tonumber(bufnr), pattern, command)
+    end, {})
 end
 
-vim.api.nvim_create_user_command("AutoRun", function()
-    vim.cmd("vsplit")
-    local prev_win = vim.fn.win_findbuf(vim.fn.bufnr("%"))[1]
-    local bufnr = vim.api.nvim_create_buf(true, true)
-    local win = vim.api.nvim_get_current_win()
-    vim.api.nvim_win_set_buf(win, bufnr)
-    vim.cmd "set nonumber norelativenumber"
-    vim.api.nvim_set_current_win(prev_win)
 
-    local pattern = vim.fn.input("Pattern: ")
-    local command = vim.split(vim.fn.input("Command: "), " ")
-    attach_to_buffer(tonumber(bufnr), pattern, command)
+do
+    map("n", "<C-`>", "<CMD>ToggleTerm<CR>", nnoremap)
+    map("t", "<C-`>", "<CMD>ToggleTerm<CR>", nnoremap)
+    vim.api.nvim_create_user_command("ToggleTerm", function()
+        local height = 15
+        local buffer_id = vim.fn.bufnr("term")
+        local window_id = vim.fn.win_findbuf(buffer_id)[1]
 
-end, {})
-
-
-vim.api.nvim_create_user_command("ToggleTerm", function()
-    local height = 15
-    local buffer_id = vim.fn.bufnr("term")
-    local window_id = vim.fn.win_findbuf(buffer_id)[1]
-    if window_id then
-        return vim.cmd("hide")
-    else
-        vim.cmd("split")
-        if (buffer_id == -1) then
-            vim.cmd("terminal")
+        if window_id then
+            return vim.api.nvim_win_hide(0)
         else
-            vim.cmd(("buffer " .. buffer_id))
+            vim.cmd("split")
+            if (buffer_id == -1) then
+                vim.cmd("terminal")
+            else
+                vim.cmd(("buffer " .. buffer_id))
+            end
+
+            vim.cmd(("resize " .. height))
+
+            vim.opt_local.number = false
+            vim.opt_local.relativenumber = false
+
+            vim.cmd("startinsert!")
         end
-        vim.cmd(("resize " .. height))
-        return vim.cmd("startinsert!\n          set noshowmode\n          set nonumber\n          set norelativenumber")
+    end, {})
+end
+
+do
+    local function min(a, b)
+        if a > b then
+            return b
+        end
+        return a
     end
-end, {})
 
+    local function max(a, b)
+        if a > b then
+            return a
+        end
+        return b
+    end
 
+    local function split (inputstr, sep)
+        if sep == nil then
+            sep = "%s"
+        end
+        local t={}
+        for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+            table.insert(t, str)
+        end
+        return t
+    end
+
+    local function strjoin(delimiter, list)
+        local len = #list
+        if len == 0 then
+            return "" 
+        end
+        local string = list[1]
+        for i = 2, len do 
+            string = string .. delimiter .. list[i] 
+        end
+        return string
+    end
+
+    local function get_font_table()
+        local font = split(vim.o.guifont, ":")
+        font[2] = tonumber(string.sub(font[2], 2, 3))
+
+        return font
+    end
+
+    local function font_tbl_to_string(tbl)
+        return strjoin(":", tbl)
+    end
+
+    local function change_font_size(delta)
+        local font = get_font_table() 
+        font[2] = "h" .. min(max(font[2] + delta, 5), 60)
+        vim.o.guifont = font_tbl_to_string(font)
+    end
+
+    local delta = 1
+
+    map("n", "<C-MouseDown>", function()
+        change_font_size(delta)
+    end, noremap)
+
+    map("n", "<C-MouseUp>", function()
+        change_font_size(-delta)
+    end, noremap)
+end
+
+if vim.fn.exists("g:neovide") ~= 0 then
+    vim.o.guifont = "Iosevka Term:h18"
+end
