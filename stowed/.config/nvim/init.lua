@@ -176,6 +176,7 @@ require("nvim-autopairs").setup{}
 require("nvim_comment").setup{}
 require("nvim-surround").setup{}
 require("mason").setup{}
+
 require("mason-lspconfig").setup{
     ensure_installed = lsp_servers
 }
@@ -188,6 +189,16 @@ vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typ
 vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
 vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
 vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
+
+do 
+    highlight({name = "DiagnosticWarn", foreground = colors.yellow})
+    signs = {Error = icons["problem"], Warn = icons["warning"], Hint = icons["hint"], Info = icons["hint"], Bulb = icons["bulb"]}
+    for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    end
+    vim.fn.sign_define("LightBulbSign", {text = signs["Bulb"], texthl = "LspDiagnosticsDefaultWarning", linehl = "", numhl = ""})
+end
 
 local on_attach = function()
     map("n", "gD",        "<cmd>lua vim.lsp.buf.declaration()<CR>", noremap)
@@ -389,6 +400,7 @@ map("n", "<esc>", "<cmd>noh<cr>", {})
 -- autocmds
 auto("TextYankPost", {
     pattern = "*", 
+    group = vim.api.nvim_create_augroup("highlight-on-yank", {clear = true}),
     callback = function() 
         require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
     end
@@ -534,12 +546,14 @@ if vim.fn.exists("g:neovide") ~= 0 then
     vim.o.guifont = "Iosevka Term:h18"
 end
 
-do 
-    highlight({name = "DiagnosticWarn", foreground = colors.yellow})
-    signs = {Error = icons["problem"], Warn = icons["warning"], Hint = icons["hint"], Info = icons["hint"], Bulb = icons["bulb"]}
-    for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+
+auto("BufReadPost", {
+    pattern = "*", 
+    group = vim.api.nvim_create_augroup("highlight-on-yank", {clear = true}),
+    callback = function() 
+        if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
+            vim.cmd("normal! g`\"")
+        end
     end
-    vim.fn.sign_define("LightBulbSign", {text = signs["Bulb"], texthl = "LspDiagnosticsDefaultWarning", linehl = "", numhl = ""})
-end
+})
+
