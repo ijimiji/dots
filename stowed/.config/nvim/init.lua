@@ -19,6 +19,7 @@ local packages = {
     "lewis6991/impatient.nvim",
     "nvim-lua/plenary.nvim",
     "TimUntersberger/neogit",
+    "kosayoda/nvim-lightbulb",
     "L3MON4D3/LuaSnip",
     "nvim-lualine/lualine.nvim",
     "ryvnf/readline.vim",
@@ -67,6 +68,39 @@ vim.o.inccommand     = "nosplit"
 vim.o.clipboard      = "unnamedplus,unnamed"
 vim.o.colorcolumn    = "+1"
 vim.o.wildmode       = "full"
+
+local icons = {
+    warning       = "◍",
+    problem       = "◍",
+    info          = "◍",
+    hint          = "◍",
+    bulb          = "◍",
+    Text          = "",
+    Method        = "",
+    Function      = "",
+    Constructor   = "",
+    Field         = "",
+    Variable      = "",
+    Class         = "ﴯ",
+    Interface     = "",
+    Module        = "",
+    Property      = "ﰠ",
+    Unit          = "",
+    Value         = "",
+    Enum          = "",
+    Keyword       = "",
+    Snippet       = "",
+    Color         = "",
+    File          = "",
+    Reference     = "",
+    Folder        = "",
+    EnumMember    = "",
+    Constant      = "",
+    Struct        = "",
+    Event         = "",
+    Operator      = "",
+    TypeParameter = ""
+}
 
 do 
     local fn = vim.fn
@@ -135,7 +169,9 @@ end
 
 colorscheme("base16-nord")
 
+
 require("luasnip.loaders.from_vscode").lazy_load()
+require('nvim-lightbulb').setup({autocmd = {enabled = true}})
 require("nvim-autopairs").setup{}
 require("nvim_comment").setup{}
 require("nvim-surround").setup{}
@@ -185,38 +221,6 @@ do
     map("c", "<C-p>", cmp.select_prev_item, noremap)
 
 
-    local icons = {
-        warning       = "◍",
-        problem       = "◍",
-        info          = "◍",
-        hint          = "◍",
-        bulb          = "◍",
-        Text          = "",
-        Method        = "",
-        Function      = "",
-        Constructor   = "",
-        Field         = "",
-        Variable      = "",
-        Class         = "ﴯ",
-        Interface     = "",
-        Module        = "",
-        Property      = "ﰠ",
-        Unit          = "",
-        Value         = "",
-        Enum          = "",
-        Keyword       = "",
-        Snippet       = "",
-        Color         = "",
-        File          = "",
-        Reference     = "",
-        Folder        = "",
-        EnumMember    = "",
-        Constant      = "",
-        Struct        = "",
-        Event         = "",
-        Operator      = "",
-        TypeParameter = ""
-    }
     local sources = {}
 
     for _, source in ipairs(cmp_backends) do
@@ -286,11 +290,11 @@ end
 local nord_theme = {
     inactive = {
         a = { bg = colors.grey, fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
+        b = { bg = colors.grey, fg = colors.black },
         c = { bg = colors.grey, fg = colors.black },
         x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
+        y = { bg = colors.grey, fg = colors.black },
+        z = { bg = colors.grey, fg = colors.black },
     },
     visual = {
         a = { bg = colors.blue, fg = colors.black, gui = "bold" },
@@ -350,7 +354,7 @@ require('lualine').setup {
     sections = {
         lualine_a = {'mode'},
         lualine_b = {'filename'},
-        lualine_c = {{"branch", "diff", "diagnostics"}},
+        lualine_c = {{"branch", "diff", "diagnostics", color = {fg = colors.black, bg = colors.red}}},
         lualine_y = {{"encoding", padding = 1}},
         lualine_z = {{"filesize", padding = 1}},
         lualine_x = {{
@@ -517,15 +521,25 @@ do
 
     local delta = 1
 
-    map("n", "<C-MouseDown>", function()
+    map({"n", "i", "c", "v", "s"}, "<C-MouseDown>", function()
         change_font_size(delta)
     end, noremap)
 
-    map("n", "<C-MouseUp>", function()
+    map({"n", "i", "c", "v", "s"}, "<C-MouseUp>", function()
         change_font_size(-delta)
     end, noremap)
 end
 
 if vim.fn.exists("g:neovide") ~= 0 then
     vim.o.guifont = "Iosevka Term:h18"
+end
+
+do 
+    highlight({name = "DiagnosticWarn", foreground = colors.yellow})
+    signs = {Error = icons["problem"], Warn = icons["warning"], Hint = icons["hint"], Info = icons["hint"], Bulb = icons["bulb"]}
+    for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    end
+    vim.fn.sign_define("LightBulbSign", {text = signs["Bulb"], texthl = "LspDiagnosticsDefaultWarning", linehl = "", numhl = ""})
 end

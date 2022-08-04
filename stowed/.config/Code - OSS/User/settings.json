@@ -2,7 +2,7 @@
   // Builtin settings
   "terminal.integrated.fontSize": 20,
   "editor.fontSize": 20,
-  "editor.fontFamily": "'FantasqueSansMono Nerd Font', 'Apple Color Emoji'",
+  "editor.fontFamily": "'Iosevka', 'Apple Color Emoji'",
   "editor.minimap.enabled": false,
   "editor.cursorSmoothCaretAnimation": true,
   "editor.smoothScrolling": true,
@@ -22,16 +22,13 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.iconTheme": "material-icon-theme",
   "workbench.activityBar.iconClickBehavior": "focus",
-  "workbench.activityBar.visible": false,
+  "workbench.activityBar.visible": true,
   "window.dialogStyle": "custom",
   "window.menuBarVisibility": "hidden",
   "extensions.ignoreRecommendations": true,
   "breadcrumbs.enabled": false,
   "git.autofetch": true,
   "git.confirmSync": false,
-  "files.associations": {
-    "*.txt": "markdown"
-  },
   // Extension settings
   // Latex
   "latex-workshop.view.pdf.viewer": "tab",
@@ -217,4 +214,6 @@
   "telemetry.telemetryLevel": "off",
   "redhat.telemetry.enabled": false,
   "Lua.telemetry.enable": false,
+  "rust-analyzer.inlayHints.typeHints.enable": false,
+  "window.zoomLevel": 2,
 }
