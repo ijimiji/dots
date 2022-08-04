@@ -67,7 +67,8 @@ vim.o.mouse          = "a"
 vim.o.inccommand     = "nosplit"
 vim.o.clipboard      = "unnamedplus,unnamed"
 vim.o.colorcolumn    = "+1"
-vim.o.wildmode       = "full"
+vim.o.wildmode       = "lastused:longest"
+vim.o.wildignorecase = true
 
 local icons = {
     warning       = "◍",
@@ -230,6 +231,9 @@ do
 
     map("c", "<C-n>", cmp.select_next_item, noremap)
     map("c", "<C-p>", cmp.select_prev_item, noremap)
+
+    map("c", "<Tab>", cmp.select_next_item, {})
+    map("c", "<S-Tab>", cmp.select_prev_item, {})
 
 
     local sources = {}
@@ -470,6 +474,7 @@ do
 
             vim.opt_local.number = false
             vim.opt_local.relativenumber = false
+            vim.opt_local.cursorline = false
 
             vim.cmd("startinsert!")
         end
