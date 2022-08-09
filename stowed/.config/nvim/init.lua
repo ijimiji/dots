@@ -40,7 +40,8 @@ local packages = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    "rafamadriz/friendly-snippets"
+    "rafamadriz/friendly-snippets",
+    "nvim-telescope/telescope.nvim",
 }
 
 vim.g.maplocalleader = ","
@@ -128,21 +129,23 @@ local noremap = {noremap = true}
 local fmt = string.format
 local colors = {}
 
-
-function highlight(face)
-    local cmd = fmt("highlight! %s", face.name)
-
-    if face.foreground then
-        cmd = fmt("%s guifg=%s", cmd, face.foreground)
+local function min(a, b)
+    if a > b then
+        return b
     end
-    if face.background then
-        cmd = fmt("%s guibg=%s", cmd, face.background)
-    end
-    if face.style then
-        cmd = fmt("%s gui=%s", cmd, face.style)
-    end
+    return a
+end
 
-    vim.cmd(cmd)
+local function max(a, b)
+    if a > b then
+        return a
+    end
+    return b
+end
+
+function shade_color(color, delta)
+    local hex = string.sub(color, 2, 7)
+    return fmt("#%06x", max(min(tonumber("0x" .. hex) + delta, 0xffffff), 0x000000))
 end
 
 function colorscheme(theme, bat)
@@ -182,17 +185,8 @@ require("mason-lspconfig").setup{
     ensure_installed = lsp_servers
 }
 
-vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
-vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
-vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
-vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
-vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
-vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
-vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
-vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-
 do 
-    highlight({name = "DiagnosticWarn", foreground = colors.yellow})
+    vim.api.nvim_set_hl(0, "DiagnosticWarn", {fg = colors.yellow})
     signs = {Error = icons["problem"], Warn = icons["warning"], Hint = icons["hint"], Info = icons["hint"], Bulb = icons["bulb"]}
     for type, icon in pairs(signs) do
         local hl = "DiagnosticSign" .. type
@@ -201,28 +195,38 @@ do
     vim.fn.sign_define("LightBulbSign", {text = signs["Bulb"], texthl = "LspDiagnosticsDefaultWarning", linehl = "", numhl = ""})
 end
 
-local on_attach = function()
-    map("n", "gD",        "<cmd>lua vim.lsp.buf.declaration()<CR>", noremap)
-    map("n", "gd",        "<cmd>lua vim.lsp.buf.definition()<CR>", noremap)
-    map("n", "K",         "<cmd>lua vim.lsp.buf.hover()<CR>", noremap)
-    map("n", "gi",        "<cmd>lua vim.lsp.buf.implementation()<CR>", noremap)
-    map("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", noremap)
-    map("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", noremap)
-    map("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", noremap)
-    map("n", "<space>D",  "<cmd>lua vim.lsp.buf.type_definition()<CR>", noremap)
-    map("n", "<space>r",  "<cmd>lua vim.lsp.buf.rename()<CR>", noremap)
-    map("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", noremap)
-    map("n", "gr",        "<cmd>lua vim.lsp.buf.references()<CR>", noremap)
-    map("n", "<space>f",  "<cmd>lua vim.lsp.buf.formatting()<CR>", noremap)
-    map("n", "<c-j>", "<CMD>lua vim.diagnostic.goto_next({ float = { border = 'single' }})<CR>", noremap)
-    map("n", "<c-k>", "<CMD>lua vim.diagnostic.goto_prev({ float = { border = 'single' }})<CR>", noremap)
-end
-
-local lspconfig = require('lspconfig')
-for _,server in ipairs(lsp_servers) do
-    lspconfig[server].setup{
-        on_attach = on_attach,
-    }
+do 
+    vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
+    vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
+    vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
+    vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
+    vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
+    vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
+    vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
+    vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
+    local on_attach = function()
+        map("n", "gD",        vim.lsp.buf.declaration, noremap)
+        map("n", "gd",        vim.lsp.buf.definition, noremap)
+        map("n", "<C-LeftMouse>",        vim.lsp.buf.definition, noremap)
+        map("n", "K",         vim.lsp.buf.hover, noremap)
+        map("n", "gi",        vim.lsp.buf.implementation, noremap)
+        map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, noremap)
+        map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, noremap)
+        map("n", "<space>wl", "lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", noremap)
+        map("n", "<space>D",  vim.lsp.buf.type_definition, noremap)
+        map("n", "<space>r",  vim.lsp.buf.rename, noremap)
+        map("n", "<space>ca", vim.lsp.buf.code_action, noremap)
+        map("n", "gr",        vim.lsp.buf.references, noremap)
+        map("n", "<space>f",  vim.lsp.buf.formatting, noremap)
+        map("n", "<c-j>", "<CMD>lua vim.diagnostic.goto_next({ float = { border = 'single' }})<CR>", noremap)
+        map("n", "<c-k>", "<CMD>lua vim.diagnostic.goto_prev({ float = { border = 'single' }})<CR>", noremap)
+    end
+    local lspconfig = require('lspconfig')
+    for _,server in ipairs(lsp_servers) do
+        lspconfig[server].setup{
+            on_attach = on_attach,
+        }
+    end
 end
 
 do
@@ -302,114 +306,128 @@ do
 end
 
 
-local nord_theme = {
-    inactive = {
-        a = { bg = colors.grey, fg = colors.black, gui = "bold" },
-        b = { bg = colors.grey, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.grey, fg = colors.black },
-        z = { bg = colors.grey, fg = colors.black },
-    },
-    visual = {
-        a = { bg = colors.blue, fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
-    },
-    replace = {
-        a = { bg = colors.magenta, fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
-    },
-    normal = {
-        a = { bg = colors.red,  fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
+do
+    local nord_theme = {
+        inactive = {
+            a = { bg = colors.grey, fg = colors.black, gui = "bold" },
+            b = { bg = colors.grey, fg = colors.black },
+            c = { bg = colors.grey, fg = colors.black },
+            x = { bg = colors.grey, fg = colors.red },
+            y = { bg = colors.grey, fg = colors.black },
+            z = { bg = colors.grey, fg = colors.black },
+        },
+        visual = {
+            a = { bg = colors.blue, fg = colors.black, gui = "bold" },
+            b = { bg = colors.yellow, fg = colors.black },
+            c = { bg = colors.grey, fg = colors.black },
+            x = { bg = colors.grey, fg = colors.red },
+            y = { bg = colors.blue, fg = colors.black },
+            z = { bg = colors.yellow, fg = colors.black },
+        },
+        replace = {
+            a = { bg = colors.magenta, fg = colors.black, gui = "bold" },
+            b = { bg = colors.yellow, fg = colors.black },
+            c = { bg = colors.grey, fg = colors.black },
+            x = { bg = colors.grey, fg = colors.red },
+            y = { bg = colors.blue, fg = colors.black },
+            z = { bg = colors.yellow, fg = colors.black },
+        },
+        normal = {
+            a = { bg = colors.red,  fg = colors.black, gui = "bold" },
+            b = { bg = colors.yellow, fg = colors.black },
+            c = { bg = colors.grey, fg = colors.black },
+            x = { bg = colors.grey, fg = colors.red },
+            y = { bg = colors.blue, fg = colors.black },
+            z = { bg = colors.yellow, fg = colors.black },
 
-    },
-    insert = {
-        a = { bg = colors.green, fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
-    },
-    command = {
-        a = { bg = colors.white,fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
-    },
-}
+        },
+        insert = {
+            a = { bg = colors.green, fg = colors.black, gui = "bold" },
+            b = { bg = colors.yellow, fg = colors.black },
+            c = { bg = colors.grey, fg = colors.black },
+            x = { bg = colors.grey, fg = colors.red },
+            y = { bg = colors.blue, fg = colors.black },
+            z = { bg = colors.yellow, fg = colors.black },
+        },
+        command = {
+            a = { bg = colors.white,fg = colors.black, gui = "bold" },
+            b = { bg = colors.yellow, fg = colors.black },
+            c = { bg = colors.grey, fg = colors.black },
+            x = { bg = colors.grey, fg = colors.red },
+            y = { bg = colors.blue, fg = colors.black },
+            z = { bg = colors.yellow, fg = colors.black },
+        },
+    }
+    require('lualine').setup {
+        options = {
+            icons_enabled = icons,
+            theme = nord_theme,
+            component_separators = { left = '', right = ''},
+            section_separators = { left = '', right = ''},
+            disabled_filetypes = {},
+            always_divide_middle = true,
+            globalstatus = true,
+            bg = colors.grey
+        },
+        sections = {
+            lualine_a = {'mode'},
+            lualine_b = {'filename'},
+            lualine_c = {{"branch", "diff", "diagnostics", color = {fg = colors.black, bg = colors.red}}},
+            lualine_y = {{"encoding", padding = 1}},
+            lualine_z = {{"filesize", padding = 1}},
+            lualine_x = {
+                {
+                    function()
+                        local current_line = vim.fn.line "."
+                        local total_lines = vim.fn.line "$"
+                        local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
+                        local line_ratio = current_line / total_lines
+                        local index = math.ceil(line_ratio * #chars)
+                        return chars[index]
+                    end,
+                    padding = { left = 0, right = 0 },
+                }
+            },
+        },
+    }
+
+end
 
 
-require('lualine').setup {
-    options = {
-        icons_enabled = icons,
-        theme = nord_theme,
-        component_separators = { left = '', right = ''},
-        section_separators = { left = '', right = ''},
-        disabled_filetypes = {},
-        always_divide_middle = true,
-        globalstatus = true,
-        bg = colors.grey
-    },
-    sections = {
-        lualine_a = {'mode'},
-        lualine_b = {'filename'},
-        lualine_c = {{"branch", "diff", "diagnostics", color = {fg = colors.black, bg = colors.red}}},
-        lualine_y = {{"encoding", padding = 1}},
-        lualine_z = {{"filesize", padding = 1}},
-        lualine_x = {{
-            function()
-                local current_line = vim.fn.line "."
-                local total_lines = vim.fn.line "$"
-                local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-                local line_ratio = current_line / total_lines
-                local index = math.ceil(line_ratio * #chars)
-                return chars[index]
-            end,
-            padding = { left = 0, right = 0 },
-        }
-    },
-},
-}
+do 
+    map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {})
+    map("v", ">", ">gv", noremap)
+    map("v", "<", "<gv", noremap)
+    map("n", "n", "nzzzv", noremap)
+    map("n", "N", "Nzzzv", nnoremap)
+    map("i", ",", ",<C-g>u", noremap)
+    map("i", ".", ".<C-g>u", noremap)
+    map("n", "L", "g$", noremap)
+    map("n", "H", "^]", noremap)
+    map("n", "Y", "y$", noremap)
+    map("t", "<esc>", "<C-\\><C-n>", noremap)
+    map("n", "<esc>", "<cmd>noh<cr>", {})
+end
 
--- mappings
-map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {})
-map("v", ">", ">gv", noremap)
-map("v", "<", "<gv", noremap)
-map("n", "n", "nzzzv", noremap)
-map("n", "N", "Nzzzv", nnoremap)
-map("i", ",", ",<C-g>u", noremap)
-map("i", ".", ".<C-g>u", noremap)
-map("n", "L", "g$", noremap)
-map("n", "H", "^]", noremap)
-map("n", "Y", "y$", noremap)
-map("t", "<esc>", "<C-\\><C-n>", noremap)
-map("n", "<esc>", "<cmd>noh<cr>", {})
+do
+    auto("BufReadPost", {
+        pattern = "*", 
+        group = vim.api.nvim_create_augroup("highlight-on-yank", {clear = true}),
+        callback = function() 
+            if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
+                vim.cmd("normal! g`\"")
+            end
+        end
+    })
 
--- autocmds
-auto("TextYankPost", {
-    pattern = "*", 
-    group = vim.api.nvim_create_augroup("highlight-on-yank", {clear = true}),
-    callback = function() 
-        require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
-    end
-})
-
+    auto("TextYankPost", {
+        pattern = "*", 
+        group = vim.api.nvim_create_augroup("highlight-on-yank", {clear = true}),
+        callback = function() 
+            require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
+        end
+    })
+end
 
 do
     local attach_to_buffer = function(output_bufnr, pattern, command)
@@ -481,21 +499,8 @@ do
     end, {})
 end
 
+
 do
-    local function min(a, b)
-        if a > b then
-            return b
-        end
-        return a
-    end
-
-    local function max(a, b)
-        if a > b then
-            return a
-        end
-        return b
-    end
-
     local function split (inputstr, sep)
         if sep == nil then
             sep = "%s"
@@ -547,18 +552,71 @@ do
     end, noremap)
 end
 
+do
+    require('telescope').setup{
+        defaults = {
+            border = false,
+        },
+        pickers = {
+            find_files = {
+                theme = "dropdown",
+            },
+            commands = {
+                theme = "dropdown",
+            },
+            buffers = {
+                theme = "dropdown",
+            },
+            help_tags = {
+                theme = "dropdown",
+            },
+        }
+    }
+
+    local delta = 0x050505
+
+    vim.api.nvim_set_hl(0, "TelescopeNormal", {
+        bg = shade_color(colors.black, delta),
+        fg = colors.white
+    })
+
+    vim.api.nvim_set_hl(0, "TelescopeBorder", {
+        bg = shade_color(colors.black, delta),
+        fg = shade_color(colors.black, delta),
+    })
+
+    vim.api.nvim_set_hl(0, "TelescopePromptNormal", {
+        bg = shade_color(colors.black, delta),
+        fg = colors.blue
+    })
+
+    vim.api.nvim_set_hl(0, "TelescopeMatching", {
+        fg = colors.yellow
+    })
+
+    vim.api.nvim_set_hl(0, "TelescopePromptBorder", {
+        bg = shade_color(colors.black, delta),
+        fg = shade_color(colors.black, delta),
+    })
+
+    vim.api.nvim_set_hl(0, "TelescopePromptPrefix", {
+        bg = shade_color(colors.black, delta),
+        fg = colors.red
+    })
+
+    map("n", "<C-x><C-f>", require'telescope.builtin'.find_files, noremap)
+    map("n", "<C-x><C-b>", require'telescope.builtin'.buffers,    noremap)
+    map("n", "<C-x><C-h>", require'telescope.builtin'.help_tags,  noremap)
+    map("n", "<M-x>",      require'telescope.builtin'.commands,   noremap)
+end
+
+do
+    vim.api.nvim_create_user_command("Update", function()
+        vim.cmd [[source %]]
+        require('packer').sync()
+    end, {})
+end
+
 if vim.fn.exists("g:neovide") ~= 0 then
     vim.o.guifont = "Iosevka Term:h18"
 end
-
-
-auto("BufReadPost", {
-    pattern = "*", 
-    group = vim.api.nvim_create_augroup("highlight-on-yank", {clear = true}),
-    callback = function() 
-        if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
-            vim.cmd("normal! g`\"")
-        end
-    end
-})
-
