@@ -15,6 +15,7 @@ local cmp_backends = {
 
 local packages = {
     "RRethy/nvim-base16",
+    "lervag/vimtex",
     "wbthomason/packer.nvim",
     "lewis6991/impatient.nvim",
     "nvim-lua/plenary.nvim",
@@ -174,7 +175,14 @@ end
 colorscheme("base16-nord")
 
 
+
+
+require("luasnip").config.setup {
+    enable_autosnippets = true,
+}
+require("luasnip.loaders.from_vscode").lazy_load({paths = "./snippets"})
 require("luasnip.loaders.from_vscode").lazy_load()
+
 require('nvim-lightbulb').setup({autocmd = {enabled = true}})
 require("nvim-autopairs").setup{}
 require("nvim_comment").setup{}

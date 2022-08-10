@@ -1,0 +1,12 @@
+{
+    "example1": {
+        "prefix": "sign",
+        "body": [
+            "Jahor Laryn"
+        ],
+        "luasnip": {
+            "priority": 2000,
+            "autotrigger": true
+        }
+    }
+}
