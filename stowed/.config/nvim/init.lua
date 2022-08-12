@@ -2,7 +2,8 @@ local lsp_servers = {
     "clangd", 
     "rust_analyzer", 
     "pyright",
-    "gopls"
+    "gopls",
+    "texlab"
 }
 
 local cmp_backends = {
@@ -43,6 +44,7 @@ local packages = {
     "neovim/nvim-lspconfig",
     "rafamadriz/friendly-snippets",
     "nvim-telescope/telescope.nvim",
+    "ijimiji/std.lua"
 }
 
 vim.g.maplocalleader = ","
@@ -124,29 +126,16 @@ end
 
 require("impatient")
 
+local std = require("std")
 local auto = vim.api.nvim_create_autocmd 
 local map = vim.keymap.set
 local noremap = {noremap = true}
 local fmt = string.format
 local colors = {}
 
-local function min(a, b)
-    if a > b then
-        return b
-    end
-    return a
-end
-
-local function max(a, b)
-    if a > b then
-        return a
-    end
-    return b
-end
-
 function shade_color(color, delta)
     local hex = string.sub(color, 2, 7)
-    return fmt("#%06x", max(min(tonumber("0x" .. hex) + delta, 0xffffff), 0x000000))
+    return fmt("#%06x", std.max(std.min(tonumber("0x" .. hex) + delta, 0xffffff), 0x000000))
 end
 
 function colorscheme(theme, bat)
@@ -177,11 +166,31 @@ colorscheme("base16-nord")
 
 
 
-require("luasnip").config.setup {
-    enable_autosnippets = true,
-}
-require("luasnip.loaders.from_vscode").lazy_load({paths = "./snippets"})
-require("luasnip.loaders.from_vscode").lazy_load()
+do 
+    local ls = require("luasnip")
+    function load_snippets(filetype) 
+        local snippets = require("snippets."..filetype)
+
+        if snippets.auto ~= nil then
+            ls.add_snippets(filetype, snippets["auto"], { 
+                type = "autosnippets", 
+                key = "all_auto", 
+            })
+            ls.add_snippets(filetype, snippets["normal"])
+        else 
+            ls.add_snippets(filetype, snippets)
+        end
+    end
+
+    ls.config.setup {
+        history = true,
+        enable_autosnippets = true,
+    }
+    load_snippets("tex")
+
+end
+
+require("luasnip.loaders.from_vscode").lazy_load({exclude = {"tex"}})
 
 require('nvim-lightbulb').setup({autocmd = {enabled = true}})
 require("nvim-autopairs").setup{}
@@ -509,43 +518,21 @@ end
 
 
 do
-    local function split (inputstr, sep)
-        if sep == nil then
-            sep = "%s"
-        end
-        local t={}
-        for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-            table.insert(t, str)
-        end
-        return t
-    end
-
-    local function strjoin(delimiter, list)
-        local len = #list
-        if len == 0 then
-            return "" 
-        end
-        local string = list[1]
-        for i = 2, len do 
-            string = string .. delimiter .. list[i] 
-        end
-        return string
-    end
 
     local function get_font_table()
-        local font = split(vim.o.guifont, ":")
+        local font = std.strsplit(vim.o.guifont, ":")
         font[2] = tonumber(string.sub(font[2], 2, 3))
 
         return font
     end
 
     local function font_tbl_to_string(tbl)
-        return strjoin(":", tbl)
+        return std.strjoin(tbl, ":")
     end
 
     local function change_font_size(delta)
         local font = get_font_table() 
-        font[2] = "h" .. min(max(font[2] + delta, 5), 60)
+        font[2] = "h" .. std.min(std.max(font[2] + delta, 5), 60)
         vim.o.guifont = font_tbl_to_string(font)
     end
 
