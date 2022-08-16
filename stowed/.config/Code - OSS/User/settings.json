@@ -17,7 +17,6 @@
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.smoothScrolling": true,
-  "workbench.sideBar.location": "right",
   "workbench.tips.enabled": false,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.iconTheme": "material-icon-theme",
@@ -215,5 +214,6 @@
   "redhat.telemetry.enabled": false,
   "Lua.telemetry.enable": false,
   "rust-analyzer.inlayHints.typeHints.enable": false,
-  "window.zoomLevel": 2,
+  "editor.experimental.stickyScroll.enabled": true,
+  "latex-workshop.latex.build.forceRecipeUsage": false,
 }
