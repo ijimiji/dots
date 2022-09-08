@@ -50,6 +50,7 @@ require("packer").startup(function()
     use "rafamadriz/friendly-snippets"
     use "nvim-telescope/telescope.nvim"
     use "ijimiji/std.lua"
+    use "lewis6991/gitsigns.nvim"
 end)
 
 vim.g.maplocalleader = ","
@@ -72,7 +73,7 @@ vim.o.tabstop        = 4
 vim.o.smartindent    = true
 vim.o.textwidth      = 80
 vim.o.updatetime     = 300
-vim.o.signcolumn     = "number"
+vim.o.signcolumn     = "auto"
 vim.o.background     = "dark"
 vim.o.mouse          = "a"
 vim.o.inccommand     = "nosplit"
@@ -155,6 +156,7 @@ ls.config.setup {
 require('go').setup()
 require("luasnip.loaders.from_vscode").lazy_load({exclude = {"tex"}})
 require('nvim-lightbulb').setup({autocmd = {enabled = true}})
+require('gitsigns').setup()
 require("nvim-autopairs").setup{}
 require("nvim_comment").setup{}
 require("nvim-surround").setup{}
@@ -214,8 +216,8 @@ local on_attach = function()
     map("n", "<space>r",      vim.lsp.buf.rename,                  noremap)
     map("n", "<space>ca",     vim.lsp.buf.code_action,             noremap)
     map("n", "<space>wl", "lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", noremap)
-    map("n", "<c-j>", "<CMD>lua vim.diagnostic.goto_next({ float = { border = 'single' }})<CR>", noremap)
-    map("n", "<c-k>", "<CMD>lua vim.diagnostic.goto_prev({ float = { border = 'single' }})<CR>", noremap)
+    -- map("n", "<c-j>", "<CMD>lua vim.diagnostic.goto_next({ float = { border = 'single' }})<CR>", noremap)
+    -- map("n", "<c-k>", "<CMD>lua vim.diagnostic.goto_prev({ float = { border = 'single' }})<CR>", noremap)
 end
 local lspconfig = require('lspconfig')
 for _,server in ipairs(lsp_servers) do
