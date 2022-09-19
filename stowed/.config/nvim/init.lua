@@ -17,6 +17,8 @@ require("packer").startup(function()
     use "nvim-treesitter/nvim-treesitter"
     use "lukas-reineke/indent-blankline.nvim"
     use "ray-x/go.nvim"
+    use "lambdalisue/suda.vim"
+    use "LnL7/vim-nix"
     use "RRethy/nvim-base16"
     use "lervag/vimtex"
     use "farmergreg/vim-lastplace"

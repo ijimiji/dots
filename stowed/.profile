@@ -25,4 +25,4 @@ cd() {
 }
 
 [ ! -s ~/.config/mpd/mpd.pid ] && mpd 2> /dev/null
-. "$HOME/.cargo/env"
+[ -f ~/.cargo/env ] && . "$HOME/.cargo/env"
