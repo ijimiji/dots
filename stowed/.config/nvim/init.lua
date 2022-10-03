@@ -3,11 +3,11 @@ local fn = vim.fn
 local pack_path = fn.stdpath("data") .. "/site/pack"
 local fmt = string.format
 function ensure (user, repo)
-  local install_path = fmt("%s/packer/start/%s", pack_path, repo)
-  if fn.empty(fn.glob(install_path)) > 0 then
-    execute(fmt("!git clone https://github.com/%s/%s %s", user, repo, install_path))
-    execute(fmt("packadd %s", repo))
-  end
+    local install_path = fmt("%s/packer/start/%s", pack_path, repo)
+    if fn.empty(fn.glob(install_path)) > 0 then
+        execute(fmt("!git clone https://github.com/%s/%s %s", user, repo, install_path))
+        execute(fmt("packadd %s", repo))
+    end
 end
 ensure("wbthomason", "packer.nvim")
 ensure("lewis6991", "impatient.nvim")
@@ -99,6 +99,13 @@ local lsp_servers = {
     "texlab",
     "gopls",
 }
+local mason_servers = { 
+    "clangd", 
+    "rust_analyzer", 
+    "pyright",
+    "texlab",
+    "gopls",
+}
 
 function shade_color(color, delta)
     local hex = string.sub(color, 2, 7)
@@ -164,7 +171,7 @@ require("nvim_comment").setup{}
 require("nvim-surround").setup{}
 require("mason").setup{}
 require("mason-lspconfig").setup{
-    ensure_installed = lsp_servers
+    ensure_installed = mason_servers
 }
 require("null-ls").setup({
     sources = {},
@@ -381,6 +388,7 @@ local nord_theme = {
         z = { bg = colors.yellow, fg = colors.black },
     },
 }
+
 require('lualine').setup {
     options = {
         icons_enabled = icons,
@@ -414,40 +422,42 @@ require('lualine').setup {
     },
 }
 
-require("telescope").load_extension("ui-select")
 
-local no_preview = function()
-    return require('telescope.themes').get_dropdown({
-        borderchars = {
-            { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-            prompt = {"─", "│", " ", "│", '┌', '┐', "│", "│"},
-            results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
-            preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-        },
-        width = 0.8,
-        previewer = false,
-        prompt_title = false
-    })
-end
-local preview = function()
-    return require('telescope.themes').get_dropdown({
-        borderchars = {
-            { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-            prompt = {"─", "│", " ", "│", '┌', '┐', "│", "│"},
-            results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
-            preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-        },
-        prompt_title = false
-    })
-end
 
 require('telescope').setup{
     extensions = {
         ["ui-select"] = {
-            no_preview()
+            require('telescope.themes').get_dropdown({
+                borderchars = {
+                    { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+                    prompt = {"─", "│", " ", "│", '┌', '┐', "│", "│"},
+                    results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
+                    preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+                },
+                width = 0.8,
+                previewer = false,
+                prompt_title = false
+            })
         }
-    }
+    },
+    defaults = {
+        layout_strategy = "vertical",
+        sorting_strategy = "ascending",
+        results_title = false,
+        prompt_title = false,
+        prompt_prefix = " ",
+        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+        layout_config = {
+            vertical = {
+                height = 0.8,
+                preview_height = 0.5, 
+                width = 0.8,
+            }
+        },
+    },
 }
+
+require("telescope").load_extension("ui-select")
 
 local delta = 0x050505
 
@@ -472,7 +482,7 @@ hl(0, "TelescopeMatching", {
 
 hl(0, "TelescopePromptBorder", {
     bg = shade_color(colors.black, -delta),
-    fg = colors.white -- shade_color(colors.black, -delta),
+    fg = colors.white
 })
 
 hl(0, "TelescopePromptPrefix", {
@@ -480,14 +490,25 @@ hl(0, "TelescopePromptPrefix", {
     fg = colors.red
 })
 
-map("n", "gr",               function () require'telescope.builtin'.lsp_references(no_preview()) end, noremap)
-map("n", "<leader>f",        function () require'telescope.builtin'.find_files(no_preview()) end, noremap)
-map("n", "<leader>s",        function () require'telescope.builtin'.live_grep(preview())   end, noremap)
-map("n", "<leader>b",        function () require'telescope.builtin'.buffers(no_preview())    end, noremap)
-map("n", "<leader>ha",       function () require'telescope.builtin'.help_tags(no_preview())  end, noremap)
-map("n", "<leader>hh",       function () require'telescope.builtin'.highlights(no_preview()) end, noremap)
-map("n", "<leader>Q",        function () require'telescope.builtin'.diagnostics(preview())   end, noremap)
-map("n", "<leader><leader>", function () require'telescope.builtin'.commands(no_preview())   end, noremap)
+-- map("n", "gr",               function () require'telescope.builtin'.lsp_references(default_theme()) end, noremap)
+-- map("n", "<leader>f",        function () require'telescope.builtin'.find_files(default_theme()) end, noremap)
+-- map("n", "<leader>s",        function () require'telescope.builtin'.live_grep(default_theme({previewer = true})) end, noremap)
+-- map("n", "<leader>b",        function () require'telescope.builtin'.buffers(default_theme()) end, noremap)
+-- map("n", "<leader>ha",       function () require'telescope.builtin'.help_tags(default_theme()) end, noremap)
+-- map("n", "<leader>hh",       function () require'telescope.builtin'.highlights(default_theme()) end, noremap)
+-- map("n", "<leader>Q",        function () require'telescope.builtin'.diagnostics(default_theme({previewer = true})) end, noremap)
+-- map("n", "<leader><leader>", function () require'telescope.builtin'.commands(default_theme())   end, noremap)
+
+map("n", "gr",               function () require'telescope.builtin'.lsp_references({previewer = false}) end, noremap)
+map("n", "<leader>f",        function () require'telescope.builtin'.find_files({previewer = false}) end, noremap)
+map("n", "<leader>b",        function () require'telescope.builtin'.buffers({previewer = false}) end, noremap)
+map("n", "<leader>ha",       function () require'telescope.builtin'.help_tags({previewer = false}) end, noremap)
+map("n", "<leader>hh",       function () require'telescope.builtin'.highlights({previewer = false}) end, noremap)
+map("n", "<leader><leader>", function () require'telescope.builtin'.commands({previewer = false})   end, noremap)
+
+map("n", "<leader>Q",        function () require'telescope.builtin'.diagnostics() end, noremap)
+map("n", "<leader>s",        function () require'telescope.builtin'.live_grep() end, noremap)
+
 
 map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {})
 map("v", ">", ">gv", noremap)
