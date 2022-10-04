@@ -225,14 +225,30 @@ local on_attach = function()
     map("n", "<space>r",      vim.lsp.buf.rename,                  noremap)
     map("n", "<space>ca",     vim.lsp.buf.code_action,             noremap)
     map("n", "<space>wl", "lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", noremap)
-    -- map("n", "<c-j>", "<CMD>lua vim.diagnostic.goto_next({ float = { border = 'single' }})<CR>", noremap)
-    -- map("n", "<c-k>", "<CMD>lua vim.diagnostic.goto_prev({ float = { border = 'single' }})<CR>", noremap)
+    map("n", "<c-j>", goto_next_error, noremap)
+    map("n", "<c-k>", goto_prev_error, noremap)
 end
 local lspconfig = require('lspconfig')
 for _,server in ipairs(lsp_servers) do
     lspconfig[server].setup{
         on_attach = on_attach,
     }
+end
+
+function goto_next_error() 
+    if #vim.fn.getqflist() == 0 then
+        vim.diagnostic.goto_next({ float = { border = 'single' }})
+    else 
+        vim.cmd "try | cnext | catch | cfirst | catch | endtry"
+    end
+end
+
+function goto_prev_error() 
+    if #vim.fn.getqflist() == 0 then
+        vim.diagnostic.goto_prev({ float = { border = 'single' }})
+    else 
+        vim.cmd "try | cprev | catch | clast | catch | endtry"
+    end
 end
 
 local icons = {
@@ -445,12 +461,14 @@ require('telescope').setup{
         sorting_strategy = "ascending",
         results_title = false,
         prompt_title = false,
+        dynamic_preview_title = false,
         prompt_prefix = " ",
         borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
         layout_config = {
             vertical = {
                 height = 0.8,
                 preview_height = 0.5, 
+                prompt_title = false,
                 width = 0.8,
             }
         },
@@ -458,7 +476,7 @@ require('telescope').setup{
 }
 
 require("telescope").load_extension("ui-select")
-
+ 
 local delta = 0x050505
 
 hl(0, "TelescopeNormal", {
@@ -520,8 +538,6 @@ map("i", ".", ".<C-g>u", noremap)
 map("n", "L", "g$", noremap)
 map("n", "H", "^]", noremap)
 map("n", "Y", "y$", noremap)
-map("n", "<C-j>", "<cmd>cnext<cr>", noremap)
-map("n", "<C-k>", "<cmd>cprev<cr>", noremap)
 map("n", "<leader>q", "<cmd>copen<cr>", noremap)
 map("t", "<esc>", "<C-\\><C-n>", noremap)
 map("n", "<esc>", "<cmd>noh<cr>", {})
