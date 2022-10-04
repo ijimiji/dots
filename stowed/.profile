@@ -6,6 +6,8 @@ export LS_COLORS="di=01;34:ln=01;93:ex=01;31:or=01;90:cd=01;35:fi=01;32"
 export NNN_FCOLORS="010104010203030808050505"
 
 [ $(uname) = Linux ] && alias ls="ls --color=auto" || alias ls="ls -G"
+[ $(uname) = Darwin ] && export LANG=ru_RU.UTF-8
+
 
 alias dcd="docker compose down"
 alias dcu="docker compose up -d"
