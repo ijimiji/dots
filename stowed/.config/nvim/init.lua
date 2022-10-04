@@ -657,17 +657,6 @@ hl(0, "Blue", { bg = colors.blue, fg = colors.black, bold = true})
 hl(0, "Magenta", { bg = colors.magenta, fg = colors.black, bold = true})
 hl(0, "Grey", { bg = colors.grey, fg = colors.grey, bold = true})
 
-function SpellToggle()
-    if vim.opt.spell:get() then
-        vim.opt_local.spell = false
-        vim.opt_local.spelllang = "en"
-    else
-        vim.opt_local.spell = true
-        vim.opt_local.spelllang = {"en_us", "de"}
-    end
-end
-
--- statusline
 local git_branch = function()
     if vim.g.loaded_fugitive then
         local branch = vim.fn.FugitiveHead()
@@ -702,14 +691,6 @@ local file_path = function()
         return file_dir
     else
         return string.format("%s/%s", file_dir, vim.fn.expand("%:t"))
-    end
-end
-
-local word_count = function()
-    if vim.fn.wordcount().visual_words ~= nil then
-        return vim.fn.wordcount().visual_words
-    else
-        return vim.fn.wordcount().words
     end
 end
 
@@ -759,44 +740,36 @@ local get_current_mode = function()
     end
 end
 
-function red(s)
-    return fmt("%%#Red#%s%%*", s)
+function pad(str)
+    str = string.gsub(str, '^%s*(.-)%s*$', '%1')
+
+    if #str == 0 then
+        return ""
+    end
+
+    return fmt(" %s ", str)
 end
 
-function yellow(s)
-    return fmt("%%#Yellow#%s%%*", s)
+function diagnostics()
+    local count = #vim.diagnostic.get()
+    if count == 0 then
+        return ""
+    end
+
+    return fmt("%d errors", count)
 end
 
-function blue(s)
-    return fmt("%%#Blue#%s%%*", s)
-end
-
-function green(s)
-    return fmt("%%#Green#%s%%*", s)
-end
-
-function magenta(s)
-    return fmt("%%#Magenta#%s%%*", s)
-end
-
-function grey(s)
-    return fmt("%%#Grey#%s%%*", s)
-end
-
-function pad(s)
-    return fmt(" %s ", s)
-end
-
----@diagnostic disable-next-line: lowercase-global
 function status_line()
     return table.concat {
-        red(pad(get_current_mode())),
-        yellow(pad(git_branch())), -- branch name
-        red(pad(file_path())), -- smart full path filename
-        "%h%m%r%w", -- help flag, modified, readonly, and preview
-        grey("%="), -- right align
+        fmt("%%#Red#%s%%*", pad(get_current_mode())),
+        fmt("%%#Yellow# %s %%*", "%f"),
+        fmt("%%#Red#%s%%*", pad(git_branch())),
+        fmt("%%#Blue#%s%%*", pad(diagnostics())),
+        "%#Grey#%=%*", -- right align
         fmt("%%#Position#%s%%*", get_cursor_pos()),
-        yellow("[%{strlen(&ft)?&ft[0].&ft[1:]:'None'}]")
+        fmt("%%#Blue#[%s]%%*", "%l|%c"),
+        fmt("%%#Green#%s%%*", "%m"),
+        "%#Yellow#[%{strlen(&ft)?&ft[0].&ft[1:]:'None'}]%*"
     }
 end
 
