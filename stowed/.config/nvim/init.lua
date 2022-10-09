@@ -351,302 +351,224 @@ cmp.setup.cmdline('/', {
     }
 })
 
-local nord_theme = {
-    inactive = {
-        a = { bg = colors.grey, fg = colors.black, gui = "bold" },
-        b = { bg = colors.grey, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.grey, fg = colors.black },
-        z = { bg = colors.grey, fg = colors.black },
+require('telescope').setup{
+    extensions = {
+        ["ui-select"] = {
+            require('telescope.themes').get_dropdown({
+                borderchars = {
+                    { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+                    prompt = {"─", "│", " ", "│", '┌', '┐', "│", "│"},
+                    results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
+                    preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+                },
+                width = 0.8,
+                previewer = false,
+                prompt_title = false
+            })
+        }
     },
-    visual = {
-        a = { bg = colors.blue, fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
-    },
-    replace = {
-        a = { bg = colors.magenta, fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
-    },
-    normal = {
-        a = { bg = colors.red,  fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
-
-    },
-    insert = {
-        a = { bg = colors.green, fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
-    },
-    command = {
-        a = { bg = colors.white,fg = colors.black, gui = "bold" },
-        b = { bg = colors.yellow, fg = colors.black },
-        c = { bg = colors.grey, fg = colors.black },
-        x = { bg = colors.grey, fg = colors.red },
-        y = { bg = colors.blue, fg = colors.black },
-        z = { bg = colors.yellow, fg = colors.black },
+    defaults = {
+        layout_strategy = "vertical",
+        sorting_strategy = "ascending",
+        results_title = false,
+        prompt_title = false,
+        dynamic_preview_title = false,
+        prompt_prefix = "> ",
+        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+        layout_config = {
+            vertical = {
+                height = 0.8,
+                preview_height = 0.5, 
+                prompt_title = false,
+                width = 0.8,
+            }
+        },
     },
 }
 
--- require('lualine').setup {
-    --     options = {
-        --         icons_enabled = icons,
-        --         theme = nord_theme,
-        --         component_separators = { left = '', right = ''},
-        --         section_separators = { left = '', right = ''},
-        --         disabled_filetypes = {},
-        --         always_divide_middle = true,
-        --         globalstatus = true,
-        --         bg = colors.grey
-        --     },
-        --     sections = {
-            --         lualine_a = {'mode'},
-            --         lualine_b = {'filename'},
-            --                     local line_ratio = current_line / total_lines
-            --                     local index = math.ceil(line_ratio * #chars)
-            --                     return chars[index]
-            --                 end,
-            --                 padding = { left = 0, right = 0 },
-            --             }
-            --         },
-            --     },
-            -- }
-            --
+require("telescope").load_extension("ui-select")
 
 
-            require('telescope').setup{
-                extensions = {
-                    ["ui-select"] = {
-                        require('telescope.themes').get_dropdown({
-                            borderchars = {
-                                { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-                                prompt = {"─", "│", " ", "│", '┌', '┐', "│", "│"},
-                                results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
-                                preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-                            },
-                            width = 0.8,
-                            previewer = false,
-                            prompt_title = false
-                        })
-                    }
-                },
-                defaults = {
-                    layout_strategy = "vertical",
-                    sorting_strategy = "ascending",
-                    results_title = false,
-                    prompt_title = false,
-                    dynamic_preview_title = false,
-                    prompt_prefix = " ",
-                    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-                    layout_config = {
-                        vertical = {
-                            height = 0.8,
-                            preview_height = 0.5, 
-                            prompt_title = false,
-                            width = 0.8,
-                        }
-                    },
-                },
-            }
+hl(0, "TelescopeNormal", {
+    bg = colors.shade(colors.black, -colors.delta),
+    fg = colors.white
+})
 
-            require("telescope").load_extension("ui-select")
+hl(0, "TelescopeBorder", {
+    bg = colors.shade(colors.black, -colors.delta),
+    fg = colors.white
+})
 
+hl(0, "TelescopePromptNormal", {
+    bg = colors.shade(colors.black, -colors.delta),
+    fg = colors.blue
+})
 
-            hl(0, "TelescopeNormal", {
-                bg = colors.shade(colors.black, -colors.delta),
-                fg = colors.white
-            })
+hl(0, "TelescopeMatching", {
+    fg = colors.yellow
+})
 
-            hl(0, "TelescopeBorder", {
-                bg = colors.shade(colors.black, -colors.delta),
-                fg = colors.white
-            })
+hl(0, "TelescopePromptBorder", {
+    bg = colors.shade(colors.black, -colors.delta),
+    fg = colors.white
+})
 
-            hl(0, "TelescopePromptNormal", {
-                bg = colors.shade(colors.black, -colors.delta),
-                fg = colors.blue
-            })
+hl(0, "TelescopePromptPrefix", {
+    bg = nil,
+    fg = colors.red
+})
 
-            hl(0, "TelescopeMatching", {
-                fg = colors.yellow
-            })
+map("n", "gr",               function () require'telescope.builtin'.lsp_references({previewer = false}) end, noremap)
+map("n", "<leader>f",        function () require'telescope.builtin'.find_files({previewer = false}) end, noremap)
+map("n", "<leader>b",        function () require'telescope.builtin'.buffers({previewer = false}) end, noremap)
+map("n", "<leader>ha",       function () require'telescope.builtin'.help_tags({previewer = false}) end, noremap)
+map("n", "<leader>hh",       function () require'telescope.builtin'.highlights({previewer = false}) end, noremap)
+map("n", "<leader><leader>", function () require'telescope.builtin'.commands({previewer = false})   end, noremap)
 
-            hl(0, "TelescopePromptBorder", {
-                bg = colors.shade(colors.black, -colors.delta),
-                fg = colors.white
-            })
-
-            hl(0, "TelescopePromptPrefix", {
-                bg = nil,
-                fg = colors.red
-            })
-
-            map("n", "gr",               function () require'telescope.builtin'.lsp_references({previewer = false}) end, noremap)
-            map("n", "<leader>f",        function () require'telescope.builtin'.find_files({previewer = false}) end, noremap)
-            map("n", "<leader>b",        function () require'telescope.builtin'.buffers({previewer = false}) end, noremap)
-            map("n", "<leader>ha",       function () require'telescope.builtin'.help_tags({previewer = false}) end, noremap)
-            map("n", "<leader>hh",       function () require'telescope.builtin'.highlights({previewer = false}) end, noremap)
-            map("n", "<leader><leader>", function () require'telescope.builtin'.commands({previewer = false})   end, noremap)
-
-            map("n", "<leader>Q",        function () require'telescope.builtin'.diagnostics() end, noremap)
-            map("n", "<leader>s",        function () require'telescope.builtin'.live_grep() end, noremap)
+map("n", "<leader>Q",        function () require'telescope.builtin'.diagnostics() end, noremap)
+map("n", "<leader>s",        function () require'telescope.builtin'.live_grep() end, noremap)
 
 
-            map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {})
-            map("v", ">", ">gv", noremap)
-            map("v", "<", "<gv", noremap)
-            map("n", "n", "nzzzv", noremap)
-            map("n", "N", "Nzzzv", noremap)
-            map("i", ",", ",<C-g>u", noremap)
-            map("i", ".", ".<C-g>u", noremap)
-            map("n", "L", "g$", noremap)
-            map("n", "H", "^]", noremap)
-            map("n", "Y", "y$", noremap)
-            map("n", "<leader>q", "<cmd>copen<cr>", noremap)
-            map("t", "<esc>", "<C-\\><C-n>", noremap)
-            map("n", "<esc>", "<cmd>noh<cr>", {})
-            map("n", "<leader>g", "<cmd>Git<cr>", noremap)
+map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {})
+map("v", ">", ">gv", noremap)
+map("v", "<", "<gv", noremap)
+map("n", "n", "nzzzv", noremap)
+map("n", "N", "Nzzzv", noremap)
+map("i", ",", ",<C-g>u", noremap)
+map("i", ".", ".<C-g>u", noremap)
+map("n", "L", "g$", noremap)
+map("n", "H", "^]", noremap)
+map("n", "Y", "y$", noremap)
+map("n", "<leader>q", "<cmd>copen<cr>", noremap)
+map("t", "<esc>", "<C-\\><C-n>", noremap)
+map("n", "<esc>", "<cmd>noh<cr>", {})
+map("n", "<leader>g", "<cmd>Git<cr>", noremap)
 
-            autocmd("BufWritePre", {
-                pattern = "*.go", 
-                group = augroup("go", {clear = true}),
-                callback = function() 
-                    require("go.format").goimport()  -- goimport + gofmt
+autocmd("BufWritePre", {
+    pattern = "*.go", 
+    group = augroup("go", {clear = true}),
+    callback = function() 
+        require("go.format").goimport()  -- goimport + gofmt
+    end
+})
+
+autocmd("TextYankPost", {
+    pattern = "*", 
+    group = augroup("highlight-on-yank", {clear = true}),
+    callback = function() 
+        require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
+    end
+})
+
+local attach_to_buffer = function(output_bufnr, pattern, command)
+    autocmd("BufWritePost", {
+        group = augroup("jahor-autorun", {clear = true}),
+        pattern = pattern,
+        callback = function()
+            local append_data = function(_, data)
+                if data then
+                    vim.api.nvim_buf_set_lines(output_bufnr, -1, -1, false, data)
                 end
-            })
-
-            autocmd("TextYankPost", {
-                pattern = "*", 
-                group = augroup("highlight-on-yank", {clear = true}),
-                callback = function() 
-                    require'vim.highlight'.on_yank{higroup="Substitute", timeout=250}
-                end
-            })
-
-            local attach_to_buffer = function(output_bufnr, pattern, command)
-                autocmd("BufWritePost", {
-                    group = augroup("jahor-autorun", {clear = true}),
-                    pattern = pattern,
-                    callback = function()
-                        local append_data = function(_, data)
-                            if data then
-                                vim.api.nvim_buf_set_lines(output_bufnr, -1, -1, false, data)
-                            end
-                        end
-
-                        vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, {"output: "})
-                        vim.fn.jobstart(command, {
-                            stdout_buffered = true,
-                            on_stdout = append_data,
-                            on_stderr = append_data,
-                        })
-                    end,
-                })
             end
 
-            cmd("AutoRun", function()
-                vim.cmd("vsplit")
-                local prev_win = vim.fn.win_findbuf(vim.fn.bufnr("%"))[1]
-                local bufnr = vim.api.nvim_create_buf(true, true)
-                local win = vim.api.nvim_get_current_win()
-                vim.api.nvim_win_set_buf(win, bufnr)
-
-                vim.opt_local.number = false
-                vim.opt_local.relativenumber = false
-
-                vim.api.nvim_set_current_win(prev_win)
-
-                local pattern = vim.fn.input("Pattern: ")
-                local command = vim.split(vim.fn.input("Command: "), " ")
-                attach_to_buffer(tonumber(bufnr), pattern, command)
-            end, {})
-
-            map("n", "<C-`>", "<CMD>ToggleTerm<CR>", nnoremap)
-            map("t", "<C-`>", "<CMD>ToggleTerm<CR>", nnoremap)
-            cmd("ToggleTerm", function()
-                local height = 15
-                local buffer_id = vim.fn.bufnr("term")
-                local window_id = vim.fn.win_findbuf(buffer_id)[1]
-
-                if window_id then
-                    return vim.api.nvim_win_hide(0)
-                else
-                    vim.cmd("split")
-                    if (buffer_id == -1) then
-                        vim.cmd("terminal")
-                    else
-                        vim.cmd(("buffer " .. buffer_id))
-                    end
-
-                    vim.cmd(("resize " .. height))
-
-                    vim.opt_local.number = false
-                    vim.opt_local.relativenumber = false
-                    vim.opt_local.cursorline = false
-
-                    vim.cmd("startinsert!")
-                end
-            end, {})
-
-            cmd("Update", function()
-                vim.cmd [[source %]]
-                require('packer').sync()
-            end, {})
-
-            if vim.fn.exists("g:neovide") ~= 0 then
-                vim.o.guifont = "Iosevka Term:h18"
-                local function get_font_table()
-                    local font = std.strsplit(vim.o.guifont, ":")
-                    font[2] = tonumber(string.sub(font[2], 2, 3))
-
-                    return font
-                end
-
-                local function font_tbl_to_string(tbl)
-                    return std.strjoin(tbl, ":")
-                end
-                local function change_font_size(delta)
-                    local font = get_font_table() 
-                    font[2] = "h" .. std.min(std.max(font[2] + delta, 5), 60)
-                    vim.o.guifont = font_tbl_to_string(font)
-                end
-
-                map({"n", "i", "c", "v", "s"}, "<C-MouseDown>", function()
-                    change_font_size(1)
-                end, noremap)
-
-                map({"n", "i", "c", "v", "s"}, "<C-MouseUp>", function()
-                    change_font_size(-1)
-                end, noremap)
-            end
-
-            require("snippets")
-
-            autocmd("BufWinEnter", {
-                pattern = "*.tex", 
-                group = augroup("tex-local-settings", {clear = true}),
-                callback = function() 
-                    vim.opt_local.spell = true
-                    vim.opt_local.spelllang = "ru"
-                    map({"i"}, "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", noremap)
-                    hl(0, "SpellBad", {fg = colors.red, underline = true})
-                end
+            vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, {"output: "})
+            vim.fn.jobstart(command, {
+                stdout_buffered = true,
+                on_stdout = append_data,
+                on_stderr = append_data,
             })
+        end,
+    })
+end
+
+cmd("AutoRun", function()
+    vim.cmd("vsplit")
+    local prev_win = vim.fn.win_findbuf(vim.fn.bufnr("%"))[1]
+    local bufnr = vim.api.nvim_create_buf(true, true)
+    local win = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(win, bufnr)
+
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+
+    vim.api.nvim_set_current_win(prev_win)
+
+    local pattern = vim.fn.input("Pattern: ")
+    local command = vim.split(vim.fn.input("Command: "), " ")
+    attach_to_buffer(tonumber(bufnr), pattern, command)
+end, {})
+
+map("n", "<C-`>", "<CMD>ToggleTerm<CR>", nnoremap)
+map("t", "<C-`>", "<CMD>ToggleTerm<CR>", nnoremap)
+cmd("ToggleTerm", function()
+    local height = 15
+    local buffer_id = vim.fn.bufnr("term")
+    local window_id = vim.fn.win_findbuf(buffer_id)[1]
+
+    if window_id then
+        return vim.api.nvim_win_hide(0)
+    else
+        vim.cmd("split")
+        if (buffer_id == -1) then
+            vim.cmd("terminal")
+        else
+            vim.cmd(("buffer " .. buffer_id))
+        end
+
+        vim.cmd(("resize " .. height))
+
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
+        vim.opt_local.cursorline = false
+
+        vim.cmd("startinsert!")
+    end
+end, {})
+
+cmd("Update", function()
+    vim.cmd [[source %]]
+    require('packer').sync()
+end, {})
+
+if vim.fn.exists("g:neovide") ~= 0 then
+    vim.o.guifont = "Iosevka Term:h18"
+    local function get_font_table()
+        local font = std.strsplit(vim.o.guifont, ":")
+        font[2] = tonumber(string.sub(font[2], 2, 3))
+
+        return font
+    end
+
+    local function font_tbl_to_string(tbl)
+        return std.strjoin(tbl, ":")
+    end
+    local function change_font_size(delta)
+        local font = get_font_table() 
+        font[2] = "h" .. std.min(std.max(font[2] + delta, 5), 60)
+        vim.o.guifont = font_tbl_to_string(font)
+    end
+
+    map({"n", "i", "c", "v", "s"}, "<C-MouseDown>", function()
+        change_font_size(1)
+    end, noremap)
+
+    map({"n", "i", "c", "v", "s"}, "<C-MouseUp>", function()
+        change_font_size(-1)
+    end, noremap)
+end
+
+require("snippets")
+
+autocmd("BufWinEnter", {
+    pattern = "*.tex", 
+    group = augroup("tex-local-settings", {clear = true}),
+    callback = function() 
+        vim.opt_local.spell = true
+        vim.opt_local.spelllang = "ru"
+        map({"i"}, "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", noremap)
+        hl(0, "SpellBad", {fg = colors.red, underline = true})
+    end
+})
 
 
 hl(0, "Position", { bg = colors.grey, fg = colors.red, bold = true })

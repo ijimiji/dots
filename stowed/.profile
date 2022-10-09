@@ -1,3 +1,7 @@
+export RED='\033[0;31m'
+export YELLOW='\033[0;33m'
+export NC='\033[0m'
+
 export PATH=~/.cargo/bin:~/bin:~/.local/bin:$PATH
 export NAME=jahor
 export EDITOR=nvim
@@ -20,7 +24,7 @@ alias vim="nvim"
 
 cd() {
     if [[ -o interactive ]]; then 
-        builtin cd "$@" && ls 
+        builtin cd "$@" 2>/dev/null && ls || printf "${RED}No such directory${NC}: ${YELLOW}${@}${NC}\n"
     else
         builtin cd "$@"
     fi
