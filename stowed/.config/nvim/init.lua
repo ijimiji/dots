@@ -15,8 +15,9 @@ require("impatient")
 
 require("packer").startup(function()
     use "Olical/conjure"
-    use 'mfussenegger/nvim-dap'
-    use 'sindrets/diffview.nvim'
+    use "mfussenegger/nvim-dap"
+    use "sindrets/diffview.nvim"
+    use "ggandor/leap.nvim"
     use "jbyuki/one-small-step-for-vimkind"
     use "nvim-treesitter/nvim-treesitter"
     use "nvim-treesitter/nvim-treesitter-context"
@@ -61,7 +62,7 @@ require("packer").startup(function()
     use "lewis6991/gitsigns.nvim"
 end)
 
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = ";"
 vim.g.mapleader      = " "
 vim.o.autochdir      = false
 vim.o.cmdheight      = 1
@@ -168,6 +169,7 @@ require("nvim-autopairs").setup{}
 require("nvim_comment").setup{}
 require("nvim-surround").setup{}
 require("mason").setup{}
+require'treesitter-context'.setup{}
 require("mason-lspconfig").setup{
     ensure_installed = mason_servers,
     automatic_installation = true,
@@ -177,10 +179,6 @@ require("mason-lspconfig").setup_handlers{
         require("lspconfig")[server].setup({})
     end
 }
-
--- require("null-ls").setup({
---     sources = {},
--- })
 require'nvim-treesitter.configs'.setup {
     ensure_installed = { "c", "lua", "python", "go", "fennel" },
     auto_install = true,
@@ -188,6 +186,10 @@ require'nvim-treesitter.configs'.setup {
         enable = true,
     },
 }
+
+-- require("null-ls").setup({
+--     sources = {},
+-- })
 
 hl(0, "DiagnosticUnderlineError", {underline = false, undercurl = true})
 hl(0, "DiagnosticUnderlineWarn", {underline = true, undercurl = false})
@@ -204,11 +206,11 @@ local lsp_icons = {
     bulb          = "◍"
 }
 local signs = {
-    Error = lsp_icons["problem"], 
-    Warn = lsp_icons["warning"], 
-    Hint = lsp_icons["hint"], 
-    Info = lsp_icons["hint"], 
-    Bulb = lsp_icons["bulb"]
+    Error = lsp_icons["problem"],
+    Warn  = lsp_icons["warning"],
+    Hint  = lsp_icons["hint"],
+    Info  = lsp_icons["hint"],
+    Bulb  = lsp_icons["bulb"]
 }
 for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
@@ -239,8 +241,6 @@ autocmd("LspAttach", {
         map("n", "<space>r",      vim.lsp.buf.rename,                  noremap)
         map("n", "<space>ca",     vim.lsp.buf.code_action,             noremap)
         map("n", "<space>wl", "lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", noremap)
-        map("n", "<c-j>", goto_next_error, noremap)
-        map("n", "<c-k>", goto_prev_error, noremap)
     end,
 })
 
@@ -259,6 +259,9 @@ function goto_prev_error()
         vim.cmd "try | cprev | catch | clast | catch | endtry"
     end
 end
+
+map("n", "<C-j>", goto_next_error, noremap)
+map("n", "<C-k>", goto_prev_error, noremap)
 
 local icons = {
     Text          = "",
@@ -293,7 +296,6 @@ local cmp = require'cmp'
 
 map("c", "<C-n>", cmp.select_next_item, noremap)
 map("c", "<C-p>", cmp.select_prev_item, noremap)
-
 map("c", "<Tab>", cmp.select_next_item, {})
 map("c", "<S-Tab>", cmp.select_prev_item, {})
 
@@ -369,7 +371,10 @@ local default_theme = require('telescope.themes').get_dropdown({
         results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
         preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
     },
-    width = 0.8,
+    width = 0.5,
+    layout_config = {
+        height = {0.8, max = 30}
+    },
     previewer = false,
     prompt_title = false
 })
@@ -386,49 +391,18 @@ require('telescope').setup{
         prompt_title = false,
         dynamic_preview_title = false,
         prompt_prefix = "> ",
-        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-        layout_config = {
-            vertical = {
-                height = 0.8,
-                preview_height = 0.5, 
-                prompt_title = false,
-                width = 0.8,
-            }
-        },
+        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└'}
     },
 }
 
 require("telescope").load_extension("ui-select")
 
-
-hl(0, "TelescopeNormal", {
-    bg = colors.shade(colors.black, -colors.delta),
-    fg = colors.white
-})
-
-hl(0, "TelescopeBorder", {
-    bg = colors.shade(colors.black, -colors.delta),
-    fg = colors.white
-})
-
-hl(0, "TelescopePromptNormal", {
-    bg = colors.shade(colors.black, -colors.delta),
-    fg = colors.blue
-})
-
-hl(0, "TelescopeMatching", {
-    fg = colors.yellow
-})
-
-hl(0, "TelescopePromptBorder", {
-    bg = colors.shade(colors.black, -colors.delta),
-    fg = colors.white
-})
-
-hl(0, "TelescopePromptPrefix", {
-    bg = nil,
-    fg = colors.red
-})
+hl(0, "TelescopeNormal",       { bg = colors.shade(colors.black, -colors.delta), fg = colors.white })
+hl(0, "TelescopeBorder",       { bg = colors.shade(colors.black, -colors.delta), fg = colors.white })
+hl(0, "TelescopePromptNormal", { bg = colors.shade(colors.black, -colors.delta), fg = colors.blue })
+hl(0, "TelescopePromptBorder", { bg = colors.shade(colors.black, -colors.delta), fg = colors.white })
+hl(0, "TelescopePromptPrefix", { bg = nil, fg = colors.red })
+hl(0, "TelescopeMatching",     { fg = colors.yellow })
 
 map("n", "gr",               function () require'telescope.builtin'.lsp_references(default_theme) end, noremap)
 map("n", "<leader>f",        function () require'telescope.builtin'.find_files(default_theme) end, noremap)
@@ -438,8 +412,6 @@ map("n", "<leader>hh",       function () require'telescope.builtin'.highlights(d
 map("n", "<leader><leader>", function () require'telescope.builtin'.commands(default_theme)   end, noremap)
 map("n", "<leader>Q",        function () require'telescope.builtin'.diagnostics(default_theme) end, noremap)
 map("n", "<leader>s",        function () require'telescope.builtin'.live_grep(default_theme) end, noremap)
-
-
 map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {})
 map("v", ">", ">gv", noremap)
 map("v", "<", "<gv", noremap)
@@ -537,7 +509,7 @@ cmd("ToggleTerm", function()
 end, {})
 
 cmd("Update", function()
-    vim.cmd [[source %]]
+    vim.cmd "source %"
     require('packer').sync()
 end, {})
 
@@ -581,14 +553,13 @@ autocmd("BufWinEnter", {
     end
 })
 
-
-hl(0, "Position", { bg = colors.grey, fg = colors.red, bold = true })
-hl(0, "Red", { bg = colors.red, fg = colors.black, bold = true })
-hl(0, "Yellow", { bg = colors.yellow, fg = colors.black, bold = true })
-hl(0, "Green", { bg = colors.green, fg = colors.black, bold = true })
-hl(0, "Blue", { bg = colors.blue, fg = colors.black, bold = true})
-hl(0, "Magenta", { bg = colors.magenta, fg = colors.black, bold = true})
-hl(0, "Grey", { bg = colors.grey, fg = colors.grey, bold = true})
+hl(0, "Position", { bg = colors.grey,    fg = colors.red,   bold = true })
+hl(0, "Red",      { bg = colors.red,     fg = colors.black, bold = true })
+hl(0, "Yellow",   { bg = colors.yellow,  fg = colors.black, bold = true })
+hl(0, "Green",    { bg = colors.green,   fg = colors.black, bold = true })
+hl(0, "Blue",     { bg = colors.blue,    fg = colors.black, bold = true})
+hl(0, "Magenta",  { bg = colors.magenta, fg = colors.black, bold = true})
+hl(0, "Grey",     { bg = colors.grey,    fg = colors.grey,  bold = true})
 
 local git_branch = function()
     if vim.g.loaded_fugitive then
@@ -698,7 +669,7 @@ function status_line()
         fmt("%%#Yellow# %s %%*", "%f"),
         fmt("%%#Red#%s%%*", pad(git_branch())),
         fmt("%%#Blue#%s%%*", pad(diagnostics())),
-        "%#Grey#%=%*", -- right align
+        "%#Grey#%=%*",
         fmt("%%#Position#%s%%*", get_cursor_pos()),
         fmt("%%#Blue#[%s]%%*", "%l|%c"),
         fmt("%%#Green#%s%%*", "%m"),
@@ -721,11 +692,12 @@ dap.configurations.lua = {
 dap.adapters.nlua = function(callback, config)
     callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
 end
-vim.api.nvim_set_keymap('n', '<F8>', [[:lua require"dap".toggle_breakpoint()<CR>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<F9>', [[:lua require"dap".continue()<CR>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<F10>', [[:lua require"dap".step_over()<CR>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<S-F10>', [[:lua require"dap".step_into()<CR>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<F12>', [[:lua require"dap.ui.widgets".hover()<CR>]], { noremap = true })
+
+vim.api.nvim_set_keymap('n', '<F8>',    ":lua require'dap'.toggle_breakpoint()<CR>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<F9>',    ":lua require'dap'.continue()<CR>",          { noremap = true })
+vim.api.nvim_set_keymap('n', '<F10>',   ":lua require'dap'.step_over()<CR>",         { noremap = true })
+vim.api.nvim_set_keymap('n', '<S-F10>', ":lua require'dap'.step_into()<CR>",         { noremap = true })
+vim.api.nvim_set_keymap('n', '<F12>',   ":lua require'dap.ui.widgets'.hover()<CR>",  { noremap = true })
 
 autocmd("BufEnter", {
     pattern = "*.lua", 
@@ -734,5 +706,3 @@ autocmd("BufEnter", {
         map('n', '<F5>', require"osv".run_this, noremap)
     end
 })
-
-require'treesitter-context'.setup{}
