@@ -1,3 +1,5 @@
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 export RED='\033[0;31m'
 export YELLOW='\033[0;33m'
 export NC='\033[0m'

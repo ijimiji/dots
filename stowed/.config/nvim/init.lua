@@ -14,7 +14,12 @@ ensure("lewis6991", "impatient.nvim")
 require("impatient")
 
 require("packer").startup(function()
+    use "Olical/conjure"
+    use 'mfussenegger/nvim-dap'
+    use 'sindrets/diffview.nvim'
+    use "jbyuki/one-small-step-for-vimkind"
     use "nvim-treesitter/nvim-treesitter"
+    use "nvim-treesitter/nvim-treesitter-context"
     use "lukas-reineke/indent-blankline.nvim"
     use "ray-x/go.nvim"
     use "lambdalisue/suda.vim"
@@ -44,6 +49,7 @@ require("packer").startup(function()
     use "hrsh7th/cmp-buffer"
     use "hrsh7th/cmp-path"
     use "ijimiji/cmp-cmdline"
+    use "ijimiji/shoji"
     use "hrsh7th/cmp-nvim-lsp"
     use "saadparwaiz1/cmp_luasnip"
     use "williamboman/mason.nvim"
@@ -58,6 +64,7 @@ end)
 vim.g.maplocalleader = ","
 vim.g.mapleader      = " "
 vim.o.autochdir      = false
+vim.o.cmdheight      = 1
 vim.o.cursorline     = true
 vim.o.number         = true
 vim.o.relativenumber = true
@@ -92,13 +99,6 @@ local hl      = vim.api.nvim_set_hl
 local map     = vim.keymap.set
 local noremap = { noremap = true }
 local fmt     = string.format
-local lsp_servers = { 
-    "clangd", 
-    "rust_analyzer", 
-    "pyright",
-    "texlab",
-    "gopls",
-}
 local mason_servers = { 
     "clangd", 
     "rust_analyzer", 
@@ -169,25 +169,38 @@ require("nvim_comment").setup{}
 require("nvim-surround").setup{}
 require("mason").setup{}
 require("mason-lspconfig").setup{
-    ensure_installed = mason_servers
+    ensure_installed = mason_servers,
+    automatic_installation = true,
 }
-require("null-ls").setup({
-    sources = {},
-})
+require("mason-lspconfig").setup_handlers{
+    function(server)
+        require("lspconfig")[server].setup({})
+    end
+}
+
+-- require("null-ls").setup({
+--     sources = {},
+-- })
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = { "c", "lua", "rust", "go" },
+    ensure_installed = { "c", "lua", "python", "go", "fennel" },
     auto_install = true,
     highlight = {
         enable = true,
     },
 }
 
+hl(0, "DiagnosticUnderlineError", {underline = false, undercurl = true})
+hl(0, "DiagnosticUnderlineWarn", {underline = true, undercurl = false})
+hl(0, "DiagnosticUnderlineInfo", {underline = true, undercurl = false})
+hl(0, "DiagnosticUnderlineHint", {underline = true, undercurl = false})
 hl(0, "DiagnosticWarn", {fg = colors.yellow})
+hl(0, "DiagnosticInfo", {fg = colors.yellow})
+hl(0, "DiagnosticHint", {fg = colors.yellow})
 local lsp_icons = {
-    warning       = "◍",
-    problem       = "◍",
-    info          = "◍",
-    hint          = "◍",
+    warning       = "", --"◍",
+    problem       = "⊚",
+    info          = "", --"◍",
+    hint          = "", --"◍",
     bulb          = "◍"
 }
 local signs = {
@@ -211,27 +224,25 @@ vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typ
 vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
 vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
 vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-local on_attach = function()
-    map("n", "gD",            vim.lsp.buf.declaration,             noremap)
-    map("n", "gd",            vim.lsp.buf.definition,              noremap)
-    map("n", "<C-LeftMouse>", vim.lsp.buf.definition,              noremap)
-    map("n", "K",             vim.lsp.buf.hover,                   noremap)
-    map("n", "gi",            vim.lsp.buf.implementation,          noremap)
-    map("n", "<space>wa",     vim.lsp.buf.add_workspace_folder,    noremap)
-    map("n", "<space>wr",     vim.lsp.buf.remove_workspace_folder, noremap)
-    map("n", "<space>D",      vim.lsp.buf.type_definition,         noremap)
-    map("n", "<space>r",      vim.lsp.buf.rename,                  noremap)
-    map("n", "<space>ca",     vim.lsp.buf.code_action,             noremap)
-    map("n", "<space>wl", "lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", noremap)
-    map("n", "<c-j>", goto_next_error, noremap)
-    map("n", "<c-k>", goto_prev_error, noremap)
-end
-local lspconfig = require('lspconfig')
-for _,server in ipairs(lsp_servers) do
-    lspconfig[server].setup{
-        on_attach = on_attach,
-    }
-end
+
+autocmd("LspAttach", {
+    group = augroup("lspmaps", {clear = true}),
+    callback = function(args)
+        map("n", "gD",            vim.lsp.buf.declaration,             noremap)
+        map("n", "gd",            vim.lsp.buf.definition,              noremap)
+        map("n", "<C-LeftMouse>", vim.lsp.buf.definition,              noremap)
+        map("n", "K",             vim.lsp.buf.hover,                   noremap)
+        map("n", "gi",            vim.lsp.buf.implementation,          noremap)
+        map("n", "<space>wa",     vim.lsp.buf.add_workspace_folder,    noremap)
+        map("n", "<space>wr",     vim.lsp.buf.remove_workspace_folder, noremap)
+        map("n", "<space>D",      vim.lsp.buf.type_definition,         noremap)
+        map("n", "<space>r",      vim.lsp.buf.rename,                  noremap)
+        map("n", "<space>ca",     vim.lsp.buf.code_action,             noremap)
+        map("n", "<space>wl", "lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", noremap)
+        map("n", "<c-j>", goto_next_error, noremap)
+        map("n", "<c-k>", goto_prev_error, noremap)
+    end,
+})
 
 function goto_next_error() 
     if #vim.fn.getqflist() == 0 then
@@ -351,20 +362,21 @@ cmp.setup.cmdline('/', {
     }
 })
 
+local default_theme = require('telescope.themes').get_dropdown({
+    borderchars = {
+        { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+        prompt = {"─", "│", " ", "│", '┌', '┐', "│", "│"},
+        results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
+        preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
+    },
+    width = 0.8,
+    previewer = false,
+    prompt_title = false
+})
 require('telescope').setup{
     extensions = {
         ["ui-select"] = {
-            require('telescope.themes').get_dropdown({
-                borderchars = {
-                    { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-                    prompt = {"─", "│", " ", "│", '┌', '┐', "│", "│"},
-                    results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
-                    preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└'},
-                },
-                width = 0.8,
-                previewer = false,
-                prompt_title = false
-            })
+            default_theme
         }
     },
     defaults = {
@@ -418,15 +430,14 @@ hl(0, "TelescopePromptPrefix", {
     fg = colors.red
 })
 
-map("n", "gr",               function () require'telescope.builtin'.lsp_references({previewer = false}) end, noremap)
-map("n", "<leader>f",        function () require'telescope.builtin'.find_files({previewer = false}) end, noremap)
-map("n", "<leader>b",        function () require'telescope.builtin'.buffers({previewer = false}) end, noremap)
-map("n", "<leader>ha",       function () require'telescope.builtin'.help_tags({previewer = false}) end, noremap)
-map("n", "<leader>hh",       function () require'telescope.builtin'.highlights({previewer = false}) end, noremap)
-map("n", "<leader><leader>", function () require'telescope.builtin'.commands({previewer = false})   end, noremap)
-
-map("n", "<leader>Q",        function () require'telescope.builtin'.diagnostics() end, noremap)
-map("n", "<leader>s",        function () require'telescope.builtin'.live_grep() end, noremap)
+map("n", "gr",               function () require'telescope.builtin'.lsp_references(default_theme) end, noremap)
+map("n", "<leader>f",        function () require'telescope.builtin'.find_files(default_theme) end, noremap)
+map("n", "<leader>b",        function () require'telescope.builtin'.buffers(default_theme) end, noremap)
+map("n", "<leader>ha",       function () require'telescope.builtin'.help_tags(default_theme) end, noremap)
+map("n", "<leader>hh",       function () require'telescope.builtin'.highlights(default_theme) end, noremap)
+map("n", "<leader><leader>", function () require'telescope.builtin'.commands(default_theme)   end, noremap)
+map("n", "<leader>Q",        function () require'telescope.builtin'.diagnostics(default_theme) end, noremap)
+map("n", "<leader>s",        function () require'telescope.builtin'.live_grep(default_theme) end, noremap)
 
 
 map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {})
@@ -696,4 +707,32 @@ function status_line()
 end
 
 vim.opt.statusline = "%!v:lua.status_line()"
+vim.g['conjure#extract#tree_sitter#enabled'] = true
 
+local dap = require"dap"
+dap.configurations.lua = { 
+    { 
+        type = 'nlua', 
+        request = 'attach',
+        name = "Attach to running Neovim instance",
+    }
+}
+
+dap.adapters.nlua = function(callback, config)
+    callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+end
+vim.api.nvim_set_keymap('n', '<F8>', [[:lua require"dap".toggle_breakpoint()<CR>]], { noremap = true })
+vim.api.nvim_set_keymap('n', '<F9>', [[:lua require"dap".continue()<CR>]], { noremap = true })
+vim.api.nvim_set_keymap('n', '<F10>', [[:lua require"dap".step_over()<CR>]], { noremap = true })
+vim.api.nvim_set_keymap('n', '<S-F10>', [[:lua require"dap".step_into()<CR>]], { noremap = true })
+vim.api.nvim_set_keymap('n', '<F12>', [[:lua require"dap.ui.widgets".hover()<CR>]], { noremap = true })
+
+autocmd("BufEnter", {
+    pattern = "*.lua", 
+    group = augroup("lua", {clear = true}),
+    callback = function() 
+        map('n', '<F5>', require"osv".run_this, noremap)
+    end
+})
+
+require'treesitter-context'.setup{}

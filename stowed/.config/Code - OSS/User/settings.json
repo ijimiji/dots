@@ -1,8 +1,8 @@
 {
   // Builtin settings
   "terminal.integrated.fontSize": 20,
-  "editor.fontSize": 20,
-  "editor.fontFamily": "'Iosevka', 'Apple Color Emoji'",
+  "editor.fontSize": 25,
+  "editor.fontFamily": "'FantasqueSansMono Nerd Font', 'Apple Color Emoji'",
   "editor.minimap.enabled": false,
   "editor.cursorSmoothCaretAnimation": true,
   "editor.smoothScrolling": true,
@@ -213,16 +213,24 @@
   "redhat.telemetry.enabled": false,
   "Lua.telemetry.enable": false,
   "rust-analyzer.inlayHints.typeHints.enable": false,
-  "editor.experimental.stickyScroll.enabled": true,
   "latex-workshop.latex.build.forceRecipeUsage": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "go.toolsManagement.autoUpdate": true,
   "window.titleBarStyle": "custom",
   "editor.semanticHighlighting.enabled": true,
+  "editor.stickyScroll.enabled": true,
   // "go.inlayHints.constantValues": true,
   // "go.inlayHints.parameterNames": true,
   // "go.inlayHints.rangeVariableTypes": true,
   // "go.inlayHints.compositeLiteralTypes": true,
   // "go.inlayHints.compositeLiteralFields": true,
   // "go.inlayHints.assignVariableTypes": true,
+  "dance.modes": {
+    "insert": {
+    },
+    "normal": {
+      "cursorStyle": "block",
+      "selectionBehavior": "character",
+    }
+  },
 }
