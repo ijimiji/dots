@@ -32,18 +32,18 @@ require("packer").startup(function()
     use "wbthomason/packer.nvim"
     use "lewis6991/impatient.nvim"
     use "nvim-lua/plenary.nvim"
-    use "tpope/vim-fugitive"
     use "kosayoda/nvim-lightbulb"
     use "L3MON4D3/LuaSnip"
     use "jose-elias-alvarez/null-ls.nvim"
     use "nvim-lualine/lualine.nvim"
+    use "tpope/vim-fugitive"
+    use "tpope/vim-sleuth"
     use "ryvnf/readline.vim"
     use "junegunn/vim-easy-align"
     use "rcarriga/nvim-notify"
     use "windwp/nvim-autopairs"
     use "terrortylor/nvim-comment"
     use "kylechui/nvim-surround"
-    use "ijimiji/tabout.nvim"
     use "RishabhRD/nvim-lsputils"
     use "RishabhRD/popfix"
     use "hrsh7th/nvim-cmp"
@@ -51,6 +51,8 @@ require("packer").startup(function()
     use "hrsh7th/cmp-path"
     use "ijimiji/cmp-cmdline"
     use "ijimiji/shoji"
+    use "ijimiji/std.lua"
+    use "ijimiji/tabout.nvim"
     use "hrsh7th/cmp-nvim-lsp"
     use "saadparwaiz1/cmp_luasnip"
     use "williamboman/mason.nvim"
@@ -58,9 +60,17 @@ require("packer").startup(function()
     use "neovim/nvim-lspconfig"
     use "rafamadriz/friendly-snippets"
     use "nvim-telescope/telescope.nvim"
-    use "ijimiji/std.lua"
     use "lewis6991/gitsigns.nvim"
 end)
+
+local std     = require("std")
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+local cmd     = vim.api.nvim_create_user_command
+local hl      = vim.api.nvim_set_hl
+local map     = vim.keymap.set
+local noremap = { noremap = true }
+local fmt     = string.format
 
 vim.g.maplocalleader = ";"
 vim.g.mapleader      = " "
@@ -92,14 +102,19 @@ vim.o.colorcolumn    = "+1"
 vim.o.wildmode       = "lastused:longest"
 vim.o.wildignorecase = true
 
-local std     = require("std")
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
-local cmd     = vim.api.nvim_create_user_command
-local hl      = vim.api.nvim_set_hl
-local map     = vim.keymap.set
-local noremap = { noremap = true }
-local fmt     = string.format
+map("v", ">", ">gv", noremap)
+map("v", "<", "<gv", noremap)
+map("n", "n", "nzzzv", noremap)
+map("n", "N", "Nzzzv", noremap)
+map("i", ",", ",<C-g>u", noremap)
+map("i", ".", ".<C-g>u", noremap)
+map("n", "L", "g$", noremap)
+map("n", "H", "^]", noremap)
+map("n", "Y", "y$", noremap)
+map("n", "<leader>q", "<cmd>copen<cr>", noremap)
+map("t", "<esc>", "<C-\\><C-n>", noremap)
+map("n", "<esc>", "<cmd>noh<cr>", {})
+
 local mason_servers = { 
     "clangd", 
     "rust_analyzer", 
@@ -161,6 +176,13 @@ ls.config.setup {
     enable_autosnippets = true,
 }
 
+require('leap').add_default_mappings()
+vim.keymap.del({'x', 'o'}, 'x')
+vim.keymap.del({'x', 'o'}, 'X')
+hl(0, "LeapMatch", {fg = colors.green})
+hl(0, "LeapLabelPrimary", {bg = colors.yellow, fg = colors.black})
+hl(0, "LeapLabelSecondary", {bg = colors.green, fg = colors.black})
+
 require('go').setup()
 require("luasnip.loaders.from_vscode").lazy_load({exclude = {"tex"}})
 require('nvim-lightbulb').setup({autocmd = {enabled = true}})
@@ -187,6 +209,8 @@ require'nvim-treesitter.configs'.setup {
     },
 }
 
+vim.g['conjure#extract#tree_sitter#enabled'] = true
+
 -- require("null-ls").setup({
 --     sources = {},
 -- })
@@ -199,11 +223,11 @@ hl(0, "DiagnosticWarn", {fg = colors.yellow})
 hl(0, "DiagnosticInfo", {fg = colors.yellow})
 hl(0, "DiagnosticHint", {fg = colors.yellow})
 local lsp_icons = {
-    warning       = "", --"◍",
-    problem       = "⊚",
-    info          = "", --"◍",
-    hint          = "", --"◍",
-    bulb          = "◍"
+    warning       = "",
+    problem       = "",
+    info          = "",
+    hint          = "",
+    bulb          = "⊚"
 }
 local signs = {
     Error = lsp_icons["problem"],
@@ -217,7 +241,6 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 vim.fn.sign_define("LightBulbSign", {text = signs["Bulb"], texthl = "LspDiagnosticsDefaultWarning", linehl = "", numhl = ""})
-
 vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
 vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
 vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
@@ -412,19 +435,8 @@ map("n", "<leader>hh",       function () require'telescope.builtin'.highlights(d
 map("n", "<leader><leader>", function () require'telescope.builtin'.commands(default_theme)   end, noremap)
 map("n", "<leader>Q",        function () require'telescope.builtin'.diagnostics(default_theme) end, noremap)
 map("n", "<leader>s",        function () require'telescope.builtin'.live_grep(default_theme) end, noremap)
+
 map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {})
-map("v", ">", ">gv", noremap)
-map("v", "<", "<gv", noremap)
-map("n", "n", "nzzzv", noremap)
-map("n", "N", "Nzzzv", noremap)
-map("i", ",", ",<C-g>u", noremap)
-map("i", ".", ".<C-g>u", noremap)
-map("n", "L", "g$", noremap)
-map("n", "H", "^]", noremap)
-map("n", "Y", "y$", noremap)
-map("n", "<leader>q", "<cmd>copen<cr>", noremap)
-map("t", "<esc>", "<C-\\><C-n>", noremap)
-map("n", "<esc>", "<cmd>noh<cr>", {})
 map("n", "<leader>g", "<cmd>Git<cr>", noremap)
 
 autocmd("BufWritePre", {
@@ -678,31 +690,4 @@ function status_line()
 end
 
 vim.opt.statusline = "%!v:lua.status_line()"
-vim.g['conjure#extract#tree_sitter#enabled'] = true
 
-local dap = require"dap"
-dap.configurations.lua = { 
-    { 
-        type = 'nlua', 
-        request = 'attach',
-        name = "Attach to running Neovim instance",
-    }
-}
-
-dap.adapters.nlua = function(callback, config)
-    callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
-end
-
-vim.api.nvim_set_keymap('n', '<F8>',    ":lua require'dap'.toggle_breakpoint()<CR>", { noremap = true })
-vim.api.nvim_set_keymap('n', '<F9>',    ":lua require'dap'.continue()<CR>",          { noremap = true })
-vim.api.nvim_set_keymap('n', '<F10>',   ":lua require'dap'.step_over()<CR>",         { noremap = true })
-vim.api.nvim_set_keymap('n', '<S-F10>', ":lua require'dap'.step_into()<CR>",         { noremap = true })
-vim.api.nvim_set_keymap('n', '<F12>',   ":lua require'dap.ui.widgets'.hover()<CR>",  { noremap = true })
-
-autocmd("BufEnter", {
-    pattern = "*.lua", 
-    group = augroup("lua", {clear = true}),
-    callback = function() 
-        map('n', '<F5>', require"osv".run_this, noremap)
-    end
-})
