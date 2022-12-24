@@ -1,4 +1,5 @@
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export PATH="$PATH:$(go env GOPATH)/bin"
 
 export RED='\033[0;31m'
 export YELLOW='\033[0;33m'
@@ -22,7 +23,6 @@ alias dcr="docker compose restart"
 alias dc="docker compose"
 alias x="startx"
 alias please="sudo"
-alias vim="nvim"
 
 cd() {
     if [[ -o interactive ]]; then 
@@ -32,5 +32,16 @@ cd() {
     fi
 }
 
+vim () {
+    if [[ -z "$@" ]]; then
+        nvim .
+    else
+        nvim "$@"
+    fi
+}
+
 [ ! -s ~/.config/mpd/mpd.pid ] && mpd 2> /dev/null
 [ -f ~/.cargo/env ] && . "$HOME/.cargo/env"
+
+pidof picom >/dev/null || picom -b 2>/dev/null >/dev/null
+
