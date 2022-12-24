@@ -1,0 +1,3 @@
+#!/bin/sh
+
+xdotool type $(cat ~/.bookmarks|dmenu -l 10)
