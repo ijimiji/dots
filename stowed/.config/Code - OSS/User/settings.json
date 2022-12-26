@@ -2,7 +2,7 @@
   // Builtin settings
   "terminal.integrated.fontSize": 20,
   "editor.fontSize": 25,
-  "editor.fontFamily": "'FantasqueSansMono Nerd Font', 'Apple Color Emoji'",
+  "editor.fontFamily": "FiraCode Nerd Font Mono",
   "editor.minimap.enabled": false,
   "editor.cursorSmoothCaretAnimation": true,
   "editor.smoothScrolling": true,
@@ -19,9 +19,7 @@
   "workbench.list.smoothScrolling": true,
   "workbench.tips.enabled": false,
   "workbench.editor.highlightModifiedTabs": true,
-  "workbench.iconTheme": "material-icon-theme",
   "workbench.activityBar.iconClickBehavior": "focus",
-  "workbench.activityBar.visible": true,
   "window.dialogStyle": "custom",
   "extensions.ignoreRecommendations": true,
   // "breadcrumbs.enabled": false,
@@ -31,7 +29,7 @@
   // Latex
   "latex-workshop.view.pdf.viewer": "tab",
   // C++
-  "clangd.path": "/home/jahor/.config/Code - OSS/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/14.0.0/clangd_14.0.0/bin/clangd",
+  "clangd.path": "/home/jahor/.config/Code - OSS/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/15.0.3/clangd_15.0.3/bin/clangd",
   "cmake.configureOnOpen": true,
   // Vim settings
   "vim.easymotion": true,
@@ -225,12 +223,9 @@
   // "go.inlayHints.compositeLiteralTypes": true,
   // "go.inlayHints.compositeLiteralFields": true,
   // "go.inlayHints.assignVariableTypes": true,
-  "dance.modes": {
-    "insert": {
-    },
-    "normal": {
-      "cursorStyle": "block",
-      "selectionBehavior": "character",
-    }
-  },
+
+  "workbench.sideBar.location": "right",
+  "window.menuBarVisibility": "hidden",
+  "window.zoomLevel": -2,
+  "editor.renderWhitespace": "none",
 }

@@ -67,10 +67,8 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-   awful.layout.suit.tile,
+   awful.layout.suit.tile.right,
    awful.layout.suit.floating,
-   awful.layout.suit.max,
-   awful.layout.suit.max.fullscreen,
 }
 -- }}}
 
@@ -460,20 +458,20 @@ awful.rules.rules = {
    -- Floating clients.
    { rule_any = {
         instance = {
-           "DTA",  -- Firefox addon DownThemAll.
-           "copyq",  -- Includes session name in class.
-           "pinentry",
+           -- "DTA",  -- Firefox addon DownThemAll.
+           -- "copyq",  -- Includes session name in class.
+           -- "pinentry",
         },
         class = {
-           "Arandr",
-           "Blueman-manager",
-           "Gpick",
-           "Kruler",
-           "MessageWin",  -- kalarm.
-           "Sxiv",
-           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-           "Wpa_gui",
-           "veromix",
+           -- "Arandr",
+           -- "Blueman-manager",
+           -- "Gpick",
+           -- "Kruler",
+           -- "MessageWin",  -- kalarm.
+           -- "Sxiv",
+           -- "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
+           -- "Wpa_gui",
+           -- "veromix",
            "xtightvncviewer"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -564,8 +562,5 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-awful.spawn.with_shell("~/.screenlayout/displays.sh")
 
-
-
-
+-- awful.spawn.with_shell("~/.screenlayout/displays.sh")
