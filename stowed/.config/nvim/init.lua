@@ -43,6 +43,7 @@ require("packer").startup(function(use)
 	use("ray-x/go.nvim")
 	use("WhoIsSethDaniel/mason-tool-installer.nvim")
 	use("jose-elias-alvarez/null-ls.nvim")
+	use("mfussenegger/nvim-dap")
 end)
 
 vim.g.maplocalleader = ";"
