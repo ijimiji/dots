@@ -2,20 +2,41 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 local map = vim.keymap.set
 
-require("mason").setup({})
+local ok, null_ls = pcall(require, "null-ls")
+if not ok then
+	return
+end
 
-require("mason-tool-installer").setup({
+local ok, mason = pcall(require, "mason")
+if not ok then
+	return
+end
+
+local ok, mason_tools = pcall(require, "mason-tool-installer")
+if not ok then
+	return
+end
+
+local ok, mason_lspconfig = pcall(require, "mason-lspconfig")
+if not ok then
+	return
+end
+
+mason.setup({})
+
+mason_tools.setup({
 	ensure_installed = {
 		"staticcheck",
 		"golangci-lint",
 		"goimports",
 		"golines",
+		"delve",
 	},
 	run_on_start = true,
 	start_delay = 0,
 })
 
-require("mason-lspconfig").setup({
+mason_lspconfig.setup({
 	ensure_installed = {
 		"clangd",
 		"rust_analyzer",
@@ -67,8 +88,6 @@ autocmd("LspAttach", {
 })
 
 vim.fn.sign_define("LightBulbSign", { text = "蛍", texthl = "Todo" })
-
-local null_ls = require("null-ls")
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
