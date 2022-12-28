@@ -44,17 +44,16 @@ dap_go.setup({
 	},
 })
 
-vim.fn.sign_define("DapBreakpoint", { text = "⏺" })
+vim.fn.sign_define("DapBreakpoint", { text = "⏺", texthl = "ErrorMsg" })
 
 vim.keymap.set({ "n", "i" }, "<F9>", dap.toggle_breakpoint)
 vim.keymap.set({ "n", "i" }, "<F5>", dap.continue)
 vim.keymap.set({ "n", "i" }, "<F17>", function()
 	dap.continue()
 	ui.toggle({})
-	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false)
 end)
 
-vim.keymap.set("n", "<leader>du", ui.toggle)
+vim.keymap.set("n", "<Space>du", ui.toggle)
 local hl = vim.api.nvim_set_hl
 
 hl(0, "DapUIVariable", { link = "Normal" })
