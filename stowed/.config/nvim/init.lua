@@ -47,12 +47,11 @@ require("packer").startup(function(use)
 	use("leoluz/nvim-dap-go")
 	use("rcarriga/nvim-dap-ui")
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+	use("nvim-treesitter/nvim-treesitter-textobjects")
 end)
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
-
-vim.cmd("color base16-nord")
 
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "<", "<gv")
@@ -67,11 +66,37 @@ vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<leader>q", vim.cmd.copen)
 vim.keymap.set("t", "<esc>", "<C-\\><C-n>")
 vim.keymap.set("n", "<esc>", vim.cmd.noh)
-
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
-
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+
+vim.o.autochdir = false
+vim.o.cmdheight = 1
+vim.o.cursorline = true
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.termguicolors = true
+vim.o.expandtab = true
+vim.o.undofile = true
+vim.o.hidden = true
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.tabstop = 4
+vim.o.smartindent = true
+vim.o.textwidth = 80
+vim.o.updatetime = 300
+vim.o.signcolumn = "auto"
+vim.o.background = "dark"
+vim.o.mouse = "a"
+vim.o.inccommand = "nosplit"
+vim.o.clipboard = "unnamedplus,unnamed"
+vim.o.colorcolumn = "80"
+vim.o.wildignorecase = true
+
+pcall(vim.cmd, "color base16-nord")

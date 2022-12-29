@@ -47,13 +47,16 @@ mason_lspconfig.setup({
 	automatic_installation = true,
 })
 
-require("mason-lspconfig").setup_handlers({
+mason_lspconfig.setup_handlers({
 	function(server)
 		require("lspconfig")[server].setup({})
 	end,
 })
 
-require("nvim-lightbulb").setup({ autocmd = { enabled = true } })
+local ok, bulb = pcall(require, "nvim-lightbulb")
+if ok then
+	bulb.setup({ autocmd = { enabled = true } })
+end
 
 function goto_next_error()
 	if #vim.fn.getqflist() == 0 then
@@ -101,10 +104,6 @@ null_ls.setup({
 			end,
 			method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
 		}),
-
-		-- null_ls.builtins.diagnostics.golangci_lint.with({
-		-- 	method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-		-- }),
 
 		null_ls.builtins.formatting.stylua,
 	},
