@@ -6,49 +6,52 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 require("packer").startup(function(use)
-	use("wbthomason/packer.nvim")
-	use("RRethy/nvim-base16")
-	use("nvim-lua/plenary.nvim")
-	use("shaunsingh/nord.nvim")
-	use("ibhagwan/fzf-lua")
+	use "wbthomason/packer.nvim"
+	use "RRethy/nvim-base16"
+	use "nvim-lua/plenary.nvim"
+	use "ibhagwan/fzf-lua"
 
-	use("tpope/vim-fugitive")
-	use("lewis6991/gitsigns.nvim")
+	use "tpope/vim-fugitive"
+	use "lewis6991/gitsigns.nvim"
 
-	use("farmergreg/vim-lastplace")
-	use("lewis6991/impatient.nvim")
-	use("tpope/vim-sleuth")
-	use("ryvnf/readline.vim")
-	use("junegunn/vim-easy-align")
-	use("windwp/nvim-autopairs")
-	use("terrortylor/nvim-comment")
-	use("kylechui/nvim-surround")
-	use("ijimiji/tabout.nvim")
+	use "farmergreg/vim-lastplace"
+	use "lewis6991/impatient.nvim"
+	use "tpope/vim-sleuth"
+	use "ryvnf/readline.vim"
+	use "junegunn/vim-easy-align"
+	use "windwp/nvim-autopairs"
+	use "terrortylor/nvim-comment"
+	use "kylechui/nvim-surround"
+	use "ijimiji/tabout.nvim"
 
-	use("nvim-lualine/lualine.nvim")
+	use "nvim-lualine/lualine.nvim"
 
-	use("saadparwaiz1/cmp_luasnip")
-	use("L3MON4D3/LuaSnip")
-	use("rafamadriz/friendly-snippets")
+	use "saadparwaiz1/cmp_luasnip"
+	use "L3MON4D3/LuaSnip"
+	use "rafamadriz/friendly-snippets"
 
-	use("hrsh7th/nvim-cmp")
-	use("hrsh7th/cmp-nvim-lsp")
-	use("hrsh7th/cmp-buffer")
-	use("hrsh7th/cmp-path")
+	use "hrsh7th/nvim-cmp"
+	use "hrsh7th/cmp-nvim-lsp"
+	use "hrsh7th/cmp-buffer"
+	use "hrsh7th/cmp-path"
 
-	use("neovim/nvim-lspconfig")
-	use("kosayoda/nvim-lightbulb")
-	use("williamboman/mason.nvim")
-	use("williamboman/mason-lspconfig.nvim")
-	use("ray-x/go.nvim")
-	use("WhoIsSethDaniel/mason-tool-installer.nvim")
-	use("jose-elias-alvarez/null-ls.nvim")
-	use("mfussenegger/nvim-dap")
-	use("leoluz/nvim-dap-go")
-	use("rcarriga/nvim-dap-ui")
-	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-	use("nvim-treesitter/nvim-treesitter-textobjects")
+	use "shaunsingh/nord.nvim"
+
+	use "neovim/nvim-lspconfig"
+	use "kosayoda/nvim-lightbulb"
+	use "williamboman/mason.nvim"
+	use "williamboman/mason-lspconfig.nvim"
+	use "ray-x/go.nvim"
+	use "WhoIsSethDaniel/mason-tool-installer.nvim"
+	use "jose-elias-alvarez/null-ls.nvim"
+	use "mfussenegger/nvim-dap"
+	use "leoluz/nvim-dap-go"
+	use "rcarriga/nvim-dap-ui"
+	use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+	use "nvim-treesitter/nvim-treesitter-textobjects"
 end)
+
+pcall(require, "impatient")
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
@@ -99,4 +102,6 @@ vim.o.clipboard = "unnamedplus,unnamed"
 vim.o.colorcolumn = "80"
 vim.o.wildignorecase = true
 
-pcall(vim.cmd, "color base16-nord")
+pcall(vim.cmd, "color nord")
+
+vim.api.nvim_set_hl(0, "IncSearch", {bg = vim.g.terminal_color_3, fg = vim.g.terminal_color_0, bold =true})

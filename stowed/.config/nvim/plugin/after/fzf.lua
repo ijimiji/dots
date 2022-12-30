@@ -8,10 +8,10 @@ fzf.setup({
 	fzf_colors = {
 		fg = { "fg", "CursorLine" },
 		bg = { "bg", "Normal" },
-		hl = { "bg", "Search" },
+		hl = { "bg", "IncSearch" },
 		["fg+"] = { "fg", "Normal" },
 		["bg+"] = { "bg", "CursorLine" },
-		["hl+"] = { "bg", "Search" },
+		["hl+"] = { "bg", "IncSearch" },
 		info = { "fg", "PreProc" },
 		prompt = { "fg", "Conditional" },
 		pointer = { "fg", "Exception" },

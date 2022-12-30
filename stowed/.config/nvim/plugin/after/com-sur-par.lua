@@ -5,7 +5,7 @@ end
 
 local ok, pairs = pcall(require, "nvim-autopairs")
 if ok then
-	pairs.setup({})
+	pairs.setup()
 end
 
 local ok, surround = pcall(require, "nvim-surround")

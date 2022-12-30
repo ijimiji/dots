@@ -104,8 +104,6 @@ null_ls.setup({
 			end,
 			method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
 		}),
-
-		null_ls.builtins.formatting.stylua,
 	},
 	on_attach = function(client, bufnr)
 		vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = false, undercurl = true })
