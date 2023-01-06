@@ -35,3 +35,5 @@ vim.keymap.set("n", "<leader>fh", require("fzf-lua").help_tags)
 vim.keymap.set("n", "<leader>fH", require("fzf-lua").highlights)
 vim.keymap.set("n", "<M-s>", require("fzf-lua").live_grep)
 vim.keymap.set("n", "<leader>b", require("fzf-lua").buffers)
+
+fzf.register_ui_select()

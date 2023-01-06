@@ -84,13 +84,14 @@ autocmd("LspAttach", {
 		map("n", "gd", vim.lsp.buf.definition)
 		map("n", "K", vim.lsp.buf.hover)
 		map("n", "gi", vim.lsp.buf.implementation)
-		map("n", "<space>r", vim.lsp.buf.rename)
-		map("n", "<space>ca", vim.lsp.buf.code_action)
+		map("n", "<leader>r", vim.lsp.buf.rename)
+		map("n", "<leader>lr", vim.cmd.LspRestart)
+		map("n", "<leader>ca", vim.lsp.buf.code_action)
 		map("n", "gr", require("fzf-lua").lsp_references)
 	end,
 })
 
-vim.fn.sign_define("LightBulbSign", { text = "蛍", texthl = "Todo" })
+vim.fn.sign_define("LightBulbSign", { text = "■", texthl = "WarningMsg" })
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
@@ -98,12 +99,12 @@ null_ls.setup({
 		null_ls.builtins.formatting.gofmt,
 		null_ls.builtins.formatting.goimports,
 		null_ls.builtins.formatting.golines,
-		null_ls.builtins.diagnostics.staticcheck.with({
-			diagnostics_postprocess = function(diagnostic)
-				diagnostic.severity = vim.diagnostic.severity["WARN"]
-			end,
-			method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-		}),
+		-- null_ls.builtins.diagnostics.staticcheck.with({
+		-- 	diagnostics_postprocess = function(diagnostic)
+		-- 		diagnostic.severity = vim.diagnostic.severity["WARN"]
+		-- 	end,
+		-- 	method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+		-- }),
 	},
 	on_attach = function(client, bufnr)
 		vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = false, undercurl = true })

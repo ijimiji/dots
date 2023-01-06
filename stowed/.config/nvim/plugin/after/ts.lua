@@ -32,9 +32,6 @@ ts.setup({
 	},
 })
 
-vim.api.nvim_set_hl(0, "@method", {fg = vim.g.terminal_color_1})
-vim.api.nvim_set_hl(0, "@variable", {fg = vim.g.terminal_color_3})
-
 vim.keymap.set("n", "<leader>hd",
     function()
         local result = vim.treesitter.get_captures_at_cursor(0)

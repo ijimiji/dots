@@ -31,7 +31,6 @@ ui.setup({
 dap_go.setup({
 	dap_configurations = {
 		{
-			-- Must be "go" or it will be ignored by the plugin
 			type = "go",
 			name = "Attach remote",
 			mode = "remote",
@@ -53,36 +52,4 @@ vim.keymap.set({ "n", "i" }, "<F17>", function()
 	ui.toggle({})
 end)
 
-vim.keymap.set("n", "<Space>du", ui.toggle)
-local hl = vim.api.nvim_set_hl
-
--- hl(0, "DapUIVariable", { link = "Normal" })
--- hl(0, "DapUIScope", { link = "Normal" })
--- hl(0, "DapUIType", { link = "Normal" })
--- hl(0, "DapUIValue", { link = "Normal" })
--- hl(0, "DapUIModifiedValue", { link = "Normal" })
--- hl(0, "DapUIDecoration", { link = "Normal" })
--- hl(0, "DapUIThread", { link = "Normal" })
--- hl(0, "DapUIStoppedThread", { link = "Normal" })
--- hl(0, "DapUIFrameName", { link = "Normal" })
--- hl(0, "DapUISource", { link = "Normal" })
--- hl(0, "DapUILineNumber", { link = "Normal" })
--- hl(0, "DapUIFloatNormal", { link = "Normal" })
--- hl(0, "DapUIFloatBorder", { link = "Normal" })
--- hl(0, "DapUIWatchesEmpty", { link = "Normal" })
--- hl(0, "DapUIWatchesValue", { link = "Normal" })
--- hl(0, "DapUIWatchesError", { link = "Normal" })
--- hl(0, "DapUIBreakpointsPath", { link = "Normal" })
--- hl(0, "DapUIBreakpointsInfo", { link = "Normal" })
--- hl(0, "DapUIBreakpointsCurrentLine", { link = "Normal" })
--- hl(0, "DapUIBreakpointsLine", { link = "Normal" })
--- hl(0, "DapUIBreakpointsDisabledLine", { link = "Normal" })
--- hl(0, "DapUICurrentFrameName", { link = "Normal" })
--- hl(0, "DapUIStepOver", { link = "Normal" })
--- hl(0, "DapUIStepInto", { link = "Normal" })
--- hl(0, "DapUIStepBack", { link = "Normal" })
--- hl(0, "DapUIStepOut", { link = "Normal" })
--- hl(0, "DapUIStop", { link = "Normal" })
--- hl(0, "DapUIPlayPause", { link = "Normal" })
--- hl(0, "DapUIRestart", { link = "Normal" })
--- hl(0, "DapUIUnavailable", { link = "Normal" })
+vim.keymap.set("n", "<leader>du", ui.toggle)
