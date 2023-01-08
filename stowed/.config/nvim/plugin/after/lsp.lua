@@ -33,7 +33,6 @@ mason_tools.setup({
 		"delve",
 	},
 	run_on_start = true,
-	start_delay = 0,
 })
 
 mason_lspconfig.setup({
@@ -60,7 +59,7 @@ end
 
 function goto_next_error()
 	if #vim.fn.getqflist() == 0 then
-		vim.diagnostic.goto_next({ float = { border = "single" } })
+		vim.diagnostic.goto_next()
 	else
 		vim.cmd("try | cnext | catch | cfirst | catch | endtry")
 	end
@@ -68,7 +67,8 @@ end
 
 function goto_prev_error()
 	if #vim.fn.getqflist() == 0 then
-		vim.diagnostic.goto_prev({ float = { border = "single" } })
+		-- vim.diagnostic.goto_prev({ float = { border = "single" } })
+		vim.diagnostic.goto_prev()
 	else
 		vim.cmd("try | cprev | catch | clast | catch | endtry")
 	end

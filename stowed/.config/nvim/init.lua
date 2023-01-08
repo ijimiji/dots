@@ -46,7 +46,7 @@ require("packer").startup(function(use)
 	use "mfussenegger/nvim-dap"
 	use "leoluz/nvim-dap-go"
 	use "rcarriga/nvim-dap-ui"
-	use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+	use "nvim-treesitter/nvim-treesitter"
 	use "nvim-treesitter/nvim-treesitter-textobjects"
 end)
 
@@ -74,6 +74,7 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("v", "K",          ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", "J",          ":m '>+1<CR>gv=gv")
 
+vim.o.guifont = "FantasqueSansMono Nerd Font:h20:b"
 vim.o.autochdir      = false
 vim.o.cmdheight      = 1
 vim.o.cursorline     = false
@@ -100,6 +101,7 @@ vim.o.inccommand     = "nosplit"
 vim.o.clipboard      = "unnamedplus,unnamed"
 vim.o.colorcolumn    = "80"
 vim.o.wildignorecase = true
+vim.o.signcolumn     = "yes"
 
 pcall(vim.cmd, "color nordfox")
 vim.api.nvim_set_hl(0, "IncSearch", {bg = vim.g.terminal_color_3, fg = vim.g.terminal_color_0, bold = true})
