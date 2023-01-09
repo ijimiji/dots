@@ -2,6 +2,7 @@ set shell zsh
 set shellopts '-eu'
 set ifs "\n"
 set scrolloff 10
+# set icons
 map . set hidden!
 
 # dedicated keys for file opener actions
