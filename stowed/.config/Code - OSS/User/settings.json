@@ -2,9 +2,8 @@
   // Builtin settings
   "terminal.integrated.fontSize": 20,
   "editor.fontSize": 25,
-  "editor.fontFamily": "FiraCode Nerd Font Mono",
   "editor.minimap.enabled": false,
-  "editor.cursorSmoothCaretAnimation": true,
+  "editor.cursorSmoothCaretAnimation": "on",
   "editor.smoothScrolling": true,
   "editor.mouseWheelZoom": true,
   "editor.fontLigatures": true,
@@ -226,6 +225,6 @@
 
   "workbench.sideBar.location": "right",
   "window.menuBarVisibility": "hidden",
-  "window.zoomLevel": -2,
   "editor.renderWhitespace": "none",
+  "window.zoomLevel": 1,
 }

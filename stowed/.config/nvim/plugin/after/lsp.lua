@@ -1,11 +1,21 @@
 local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
+local au = vim.api.nvim_create_augroup
+local augroup = au("LspFormatting", {})
+
 local map = vim.keymap.set
 
-local ok, null_ls = pcall(require, "null-ls")
-if not ok then
-	return
-end
+-- local ok, null_ls = pcall(require, "null-ls")
+-- if not ok then
+-- 	return
+-- end
+--
+-- null_ls.setup({
+-- 	sources = {
+-- 		null_ls.builtins.formatting.gofmt,
+-- 		null_ls.builtins.formatting.goimports,
+-- 		null_ls.builtins.formatting.golines,
+-- 	}
+-- })
 
 local ok, mason = pcall(require, "mason")
 if not ok then
@@ -48,7 +58,27 @@ mason_lspconfig.setup({
 
 mason_lspconfig.setup_handlers({
 	function(server)
-		require("lspconfig")[server].setup({})
+		require("lspconfig")[server].setup({
+			on_attach = function(client, bufnr)
+				vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = false, undercurl = true })
+				vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { underline = true, undercurl = false })
+				vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { underline = true, undercurl = false })
+				vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, undercurl = false })
+				vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = vim.g.terminal_color_3 })
+				vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = vim.g.terminal_color_3 })
+				vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = vim.g.terminal_color_3 })
+				if client.supports_method("textDocument/formatting") then
+					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+					vim.api.nvim_create_autocmd("BufWritePre", {
+						group = augroup,
+						buffer = bufnr,
+						callback = function()
+							vim.lsp.buf.format({ bufnr = bufnr })
+						end,
+					})
+				end
+			end,
+		})
 	end,
 })
 
@@ -78,7 +108,7 @@ map("n", "<C-j>", goto_next_error)
 map("n", "<C-k>", goto_prev_error)
 
 autocmd("LspAttach", {
-	group = augroup("lspmaps", { clear = true }),
+	group = au("lspmaps", { clear = true }),
 	callback = function(args)
 		map("n", "gD", vim.lsp.buf.declaration)
 		map("n", "gd", vim.lsp.buf.definition)
@@ -93,36 +123,4 @@ autocmd("LspAttach", {
 
 vim.fn.sign_define("LightBulbSign", { text = "■", texthl = "WarningMsg" })
 
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-null_ls.setup({
-	sources = {
-		null_ls.builtins.formatting.gofmt,
-		null_ls.builtins.formatting.goimports,
-		null_ls.builtins.formatting.golines,
-		-- null_ls.builtins.diagnostics.staticcheck.with({
-		-- 	diagnostics_postprocess = function(diagnostic)
-		-- 		diagnostic.severity = vim.diagnostic.severity["WARN"]
-		-- 	end,
-		-- 	method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-		-- }),
-	},
-	on_attach = function(client, bufnr)
-		vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { underline = false, undercurl = true })
-		vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { underline = true, undercurl = false })
-		vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { underline = true, undercurl = false })
-		vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, undercurl = false })
-		vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = vim.g.terminal_color_3 })
-		vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = vim.g.terminal_color_3 })
-		vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = vim.g.terminal_color_3 })
-		if client.supports_method("textDocument/formatting") then
-			vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-			vim.api.nvim_create_autocmd("BufWritePre", {
-				group = augroup,
-				buffer = bufnr,
-				callback = function()
-					vim.lsp.buf.format({ bufnr = bufnr })
-				end,
-			})
-		end
-	end,
-})
+

@@ -6,8 +6,7 @@ set scrolloff 10
 map . set hidden!
 
 # dedicated keys for file opener actions
-map o &mimeopen $f
-map O $mimeopen --ask $f
+map o &xdg-open $f
 
 %mkdir -p ~/.trash
 %export RED=\033[0;31m
@@ -26,7 +25,7 @@ cmd trash ${{
 
 map D trash
 
-cmd rename %[ -e $1 ] && printf "${RED}File exists${NC}" || mv $f $1
+cmd rename %[ -e $1 ] && printf "${RED}File exists!${NC}" || mv $f $1
 map r push :rename<space>
 
 cmd extract ${{

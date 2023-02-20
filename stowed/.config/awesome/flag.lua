@@ -1,5 +1,6 @@
 local wibox = require("wibox")
 local naughty = require("naughty")
+naughty.config.defaults['icon_size'] = 100
 
 local get_layout = function ()
     local handle = io.popen('xkblayout-state print "%s%v"')
