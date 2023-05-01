@@ -72,7 +72,7 @@ local ok, lualine = pcall(require, "lualine")
 if ok then
 	lualine.setup({
 		options = {
-			icons_enabled = icons,
+			icons_enabled = false,
 			theme = nord_theme,
 			component_separators = { left = "", right = "" },
 			section_separators = { left = "", right = "" },

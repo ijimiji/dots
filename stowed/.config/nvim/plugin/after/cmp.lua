@@ -16,9 +16,6 @@ local sources = {
 }
 
 
--- vim.keymap.set("c", "<C-n>", cmp.select_next_item)
--- vim.keymap.set("c", "<C-p>", cmp.select_prev_item)
-
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil

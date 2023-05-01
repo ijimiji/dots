@@ -50,7 +50,10 @@ require("packer").startup(function(use)
 	use "nvim-treesitter/nvim-treesitter-textobjects"
 end)
 
-pcall(require, "impatient")
+local ok = pcall(require, "impatient")
+if not ok then
+	require('packer').sync()
+end
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
@@ -104,6 +107,6 @@ vim.o.wildignorecase = true
 vim.o.signcolumn     = "yes"
 
 pcall(vim.cmd, "color nordfox")
-vim.api.nvim_set_hl(0, "IncSearch", {bg = vim.g.terminal_color_3, fg = vim.g.terminal_color_0, bold = true})
 
+vim.api.nvim_set_hl(0, "IncSearch", {bg = vim.g.terminal_color_3, fg = vim.g.terminal_color_0, bold = true})
 vim.keymap.set("n", "<leader>e", vim.cmd.Explore)

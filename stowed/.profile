@@ -23,6 +23,7 @@ alias dcr="docker compose restart"
 alias dc="docker compose"
 alias x="startx"
 alias please="sudo"
+alias drun="docker run --rm --name temp -it -v $PWD:/app -w /app "
 
 cd() {
     if [[ -o interactive ]]; then 

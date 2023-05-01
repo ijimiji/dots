@@ -28,6 +28,35 @@ ui.setup({
 	},
 })
 
+dap.adapters.cppdbg = {
+	id = "cppdbg",
+	type = "executable",
+	command = "OpenDebugAD7"
+}
+
+dap.configurations.cpp = {
+	{
+		name = "Launch file",
+		type = "cppdbg",
+		request = "launch",
+		program = function()
+			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/main", "file")
+		end,
+		cwd = "${workspaceFolder}",
+		stopAtEntry = true,
+		setupCommands = {
+			{
+				text = "-enable-pretty-printing",
+				description = "enable pretty printing",
+				ignoreFailures = true
+			},
+		},
+	},
+}
+
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
+
 dap_go.setup({
 	dap_configurations = {
 		{
@@ -43,7 +72,8 @@ dap_go.setup({
 	},
 })
 
-vim.fn.sign_define("DapBreakpoint", { text = "⏺", texthl = "ErrorMsg" })
+vim.fn.sign_define("DapBreakpoint", { text = "@", texthl = "ErrorMsg" })
+vim.fn.sign_define("DapStopped", { text = "->", texthl = "GitSignsAdd" })
 
 vim.keymap.set({ "n", "i" }, "<F9>", dap.toggle_breakpoint)
 vim.keymap.set({ "n", "i" }, "<F5>", dap.continue)
