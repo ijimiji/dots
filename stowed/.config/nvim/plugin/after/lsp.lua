@@ -117,8 +117,12 @@ autocmd("LspAttach", {
 		map("n", "gi", vim.lsp.buf.implementation)
 		map("n", "<leader>r", vim.lsp.buf.rename)
 		map("n", "<leader>lr", vim.cmd.LspRestart)
+		vim.keymap.set('n', '<space>F', function()
+			vim.lsp.buf.format { async = true }
+		end)
 		map("n", "<leader>ca", vim.lsp.buf.code_action)
 		map("n", "gr", require("fzf-lua").lsp_references)
+		vim.b.formatexpr = vim.lsp.formatexpr()
 	end,
 })
 
