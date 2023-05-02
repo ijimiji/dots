@@ -110,3 +110,9 @@ pcall(vim.cmd, "color nordfox")
 
 vim.api.nvim_set_hl(0, "IncSearch", {bg = vim.g.terminal_color_3, fg = vim.g.terminal_color_0, bold = true})
 vim.keymap.set("n", "<leader>e", vim.cmd.Explore)
+
+vim.keymap.set("n", "<leader>cd", function() 
+    local path = vim.fn.expand("%:h")
+    vim.api.nvim_echo({{string.format("Changed path to %s", path), "WarningMsg"}}, false, {})
+    vim.cmd(string.format("cd %s", path))
+end)

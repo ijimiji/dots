@@ -33,8 +33,8 @@ ts.setup({
 })
 
 vim.keymap.set("n", "<leader>hd",
-	function()
-		local result = vim.treesitter.get_captures_at_cursor(0)
-		print(vim.inspect(result))
-	end,
-	{ noremap = true, silent = false })
+function()
+	local result = vim.treesitter.get_captures_at_cursor(0)
+	print(vim.inspect(result))
+end,
+{ noremap = true, silent = false })
