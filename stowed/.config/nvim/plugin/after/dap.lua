@@ -36,7 +36,25 @@ dap.adapters.cppdbg = {
 
 dap.configurations.cpp = {
 	{
-		name = "Launch file",
+		name = "Just this file",
+		type = "cppdbg",
+		request = "launch",
+		program = function()
+			vim.fn.system("g++ " .. vim.fn.expand("%") .. " -g --std=c++20 -o main")
+			return "main"
+		end,
+		cwd = "${workspaceFolder}",
+		stopAtEntry = true,
+		setupCommands = {
+			{
+				text = "-enable-pretty-printing",
+				description = "enable pretty printing",
+				ignoreFailures = true
+			},
+		},
+	},
+	{
+		name = "Specific file (compile on your own)",
 		type = "cppdbg",
 		request = "launch",
 		program = function()
