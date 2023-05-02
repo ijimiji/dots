@@ -77,7 +77,7 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("v", "K",          ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", "J",          ":m '>+1<CR>gv=gv")
 
-vim.o.guifont = "FantasqueSansMono Nerd Font:h20:b"
+vim.o.guifont = "FantasqueSansM Nerd Font:h20:b"
 vim.o.autochdir      = false
 vim.o.cmdheight      = 1
 vim.o.cursorline     = false

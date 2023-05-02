@@ -1,5 +1,5 @@
 configuration {
-    font: "FantasqueSansMono Nerd Font 20";
+    font: "FantasqueSansM Nerd Font 20";
     terminal: "alacritty";
     timeout {
         action: "kb-cancel";

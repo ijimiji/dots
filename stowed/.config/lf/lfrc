@@ -8,19 +8,12 @@ map . set hidden!
 # dedicated keys for file opener actions
 map o &xdg-open $f
 
-%mkdir -p ~/.trash
-%export RED=\033[0;31m
-%export GREEN=\033[0;32m
-%export YELLOW=\033[0;33m
-%export NC=\033[0m
-
-
 cmd trash ${{
     set -f
     printf "$fx\n\n"
     printf "${RED}Move to trash?${NC} ${YELLOW}[y/n]${NC} "
     read ans
-    [ "$ans" = "y" ] && notify-send "Trashed" "$fx"; mv $fx ~/.trash || echo "${GREEN}Canceled${NC}"
+    [ "$ans" = "y" ] && notify-send "Trashed" "$fx"; echo $fx | xargs -d '\n' -I '{}' mv {} ~/.trash || echo "${GREEN}Canceled${NC}"
 }}
 
 map D trash
