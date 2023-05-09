@@ -41,7 +41,7 @@ mason_tools.setup({
 		"goimports",
 		"golines",
 		"delve",
-		"cpptools",
+		"codelldb",
 	},
 	run_on_start = true,
 })

@@ -28,47 +28,36 @@ ui.setup({
 	},
 })
 
-dap.adapters.cppdbg = {
-	id = "cppdbg",
-	type = "executable",
-	command = "OpenDebugAD7"
+dap.adapters.codelldb = {
+  type = 'server',
+  port = "${port}",
+  executable = {
+    command = 'codelldb',
+    args = {"--port", "${port}"},
+  }
 }
 
 dap.configurations.cpp = {
 	{
 		name = "Just this file",
-		type = "cppdbg",
+		type = "codelldb",
 		request = "launch",
+		cwd = '${workspaceFolder}',
 		program = function()
 			vim.fn.system("g++ " .. vim.fn.expand("%") .. " -g --std=c++20 -o main")
 			return "main"
 		end,
-		cwd = "${workspaceFolder}",
-		stopAtEntry = true,
-		setupCommands = {
-			{
-				text = "-enable-pretty-printing",
-				description = "enable pretty printing",
-				ignoreFailures = true
-			},
-		},
+		stopOnEntry = false,
 	},
 	{
 		name = "Specific file (compile on your own)",
-		type = "cppdbg",
+		type = "codelldb",
 		request = "launch",
+		cwd = "${workspaceFolder}",
 		program = function()
 			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/main", "file")
 		end,
-		cwd = "${workspaceFolder}",
 		stopAtEntry = true,
-		setupCommands = {
-			{
-				text = "-enable-pretty-printing",
-				description = "enable pretty printing",
-				ignoreFailures = true
-			},
-		},
 	},
 }
 
