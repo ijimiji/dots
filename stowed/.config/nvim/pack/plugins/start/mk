@@ -1,0 +1,38 @@
+#!/bin/sh
+
+plugins=(
+  "nvim-treesitter/nvim-treesitter"
+  "nvim-treesitter/nvim-treesitter-textobjects"
+  "RRethy/nvim-treesitter-textsubjects"
+  "lewis6991/impatient.nvim"
+  "ryvnf/readline.vim"
+  "nvim-lua/plenary.nvim"
+  "farmergreg/vim-lastplace"
+  "saadparwaiz1/cmp_luasnip"
+  "L3MON4D3/LuaSnip"
+  "rafamadriz/friendly-snippets"
+  "hrsh7th/nvim-cmp"
+  "hrsh7th/cmp-nvim-lsp"
+  "hrsh7th/cmp-buffer"
+  "hrsh7th/cmp-path"
+  "tpope/vim-sleuth"
+  "ibhagwan/fzf-lua"
+  "junegunn/vim-easy-align"
+  "windwp/nvim-autopairs"
+  "kylechui/nvim-surround"
+  "terrortylor/nvim-comment"
+  "ray-x/go.nvim"
+  "joerdav/templ.vim"
+  "RRethy/nvim-base16"
+  "mfussenegger/nvim-dap"
+  "rcarriga/nvim-dap-ui"
+  "abecodes/tabout.nvim"
+)
+
+for plugin in "${plugins[@]}"
+do
+  echo "https://github.com/$plugin"
+  name=$(echo "$plugin" | cut -d "/" -f 2)
+  git rm "$name" 2> /dev/null
+  [[ -d "$name" ]] || git submodule add --depth 1 --name "$name" "https://github.com/$plugin" 
+done

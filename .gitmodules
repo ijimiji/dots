@@ -1,0 +1,81 @@
+[submodule "nvim-treesitter"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter
+[submodule "nvim-treesitter-textobjects"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-treesitter-textobjects
+	url = https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+[submodule "nvim-treesitter-textsubjects"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-treesitter-textsubjects
+	url = https://github.com/RRethy/nvim-treesitter-textsubjects
+[submodule "readline.vim"]
+	path = stowed/.config/nvim/pack/plugins/start/readline.vim
+	url = https://github.com/ryvnf/readline.vim
+[submodule "plenary.nvim"]
+	path = stowed/.config/nvim/pack/plugins/start/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim
+[submodule "vim-lastplace"]
+	path = stowed/.config/nvim/pack/plugins/start/vim-lastplace
+	url = https://github.com/farmergreg/vim-lastplace
+[submodule "cmp_luasnip"]
+	path = stowed/.config/nvim/pack/plugins/start/cmp_luasnip
+	url = https://github.com/saadparwaiz1/cmp_luasnip
+[submodule "LuaSnip"]
+	path = stowed/.config/nvim/pack/plugins/start/LuaSnip
+	url = https://github.com/L3MON4D3/LuaSnip
+[submodule "friendly-snippets"]
+	path = stowed/.config/nvim/pack/plugins/start/friendly-snippets
+	url = https://github.com/rafamadriz/friendly-snippets
+[submodule "nvim-cmp"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-cmp
+	url = https://github.com/hrsh7th/nvim-cmp
+[submodule "cmp-nvim-lsp"]
+	path = stowed/.config/nvim/pack/plugins/start/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/cmp-nvim-lsp
+[submodule "cmp-buffer"]
+	path = stowed/.config/nvim/pack/plugins/start/cmp-buffer
+	url = https://github.com/hrsh7th/cmp-buffer
+[submodule "cmp-path"]
+	path = stowed/.config/nvim/pack/plugins/start/cmp-path
+	url = https://github.com/hrsh7th/cmp-path
+[submodule "vim-sleuth"]
+	path = stowed/.config/nvim/pack/plugins/start/vim-sleuth
+	url = https://github.com/tpope/vim-sleuth
+[submodule "fzf-lua"]
+	path = stowed/.config/nvim/pack/plugins/start/fzf-lua
+	url = https://github.com/ibhagwan/fzf-lua
+[submodule "vim-easy-align"]
+	path = stowed/.config/nvim/pack/plugins/start/vim-easy-align
+	url = https://github.com/junegunn/vim-easy-align
+[submodule "nvim-autopairs"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-autopairs
+	url = https://github.com/windwp/nvim-autopairs
+[submodule "nvim-surround"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-surround
+	url = https://github.com/kylechui/nvim-surround
+[submodule "nvim-comment"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-comment
+	url = https://github.com/terrortylor/nvim-comment
+[submodule "go.nvim"]
+	path = stowed/.config/nvim/pack/plugins/start/go.nvim
+	url = https://github.com/ray-x/go.nvim
+[submodule "templ.vim"]
+	path = stowed/.config/nvim/pack/plugins/start/templ.vim
+	url = https://github.com/joerdav/templ.vim
+[submodule "nvim-base16"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-base16
+	url = https://github.com/RRethy/nvim-base16
+[submodule "nvim-dap"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-dap
+	url = https://github.com/mfussenegger/nvim-dap
+[submodule "nvim-dap-ui"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-dap-ui
+	url = https://github.com/rcarriga/nvim-dap-ui
+[submodule "tabout.nvim"]
+	path = stowed/.config/nvim/pack/plugins/start/tabout.nvim
+	url = https://github.com/abecodes/tabout.nvim
+[submodule "stowed/.config/nvim/parser/tree-sitter-go"]
+	path = stowed/.config/nvim/parser/tree-sitter-go
+	url = https://github.com/tree-sitter/tree-sitter-go
+[submodule "stowed/.config/nvim/parser/tree-sitter-templ"]
+	path = stowed/.config/nvim/parser/tree-sitter-templ
+	url = https://github.com/vrischmann/tree-sitter-templ

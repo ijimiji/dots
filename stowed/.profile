@@ -6,7 +6,7 @@ export YELLOW='\033[0;33m'
 export GREEN='\033[0;32m'
 export NC='\033[0m'
 
-export PATH=~/.cargo/bin:~/bin:~/.local/bin:$PATH
+export PATH=~/neovim/build/bin:~/bin:~/.local/bin:$PATH
 export NAME=jahor
 export EDITOR=nvim
 
