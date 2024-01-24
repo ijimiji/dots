@@ -1,3 +1,9 @@
+[submodule "stowed/.config/nvim/parser/tree-sitter-go"]
+	path = stowed/.config/nvim/parser/tree-sitter-go
+	url = https://github.com/tree-sitter/tree-sitter-go
+[submodule "stowed/.config/nvim/parser/tree-sitter-templ"]
+	path = stowed/.config/nvim/parser/tree-sitter-templ
+	url = https://github.com/vrischmann/tree-sitter-templ
 [submodule "nvim-treesitter"]
 	path = stowed/.config/nvim/pack/plugins/start/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter
@@ -7,6 +13,9 @@
 [submodule "nvim-treesitter-textsubjects"]
 	path = stowed/.config/nvim/pack/plugins/start/nvim-treesitter-textsubjects
 	url = https://github.com/RRethy/nvim-treesitter-textsubjects
+[submodule "impatient.nvim"]
+	path = stowed/.config/nvim/pack/plugins/start/impatient.nvim
+	url = https://github.com/lewis6991/impatient.nvim
 [submodule "readline.vim"]
 	path = stowed/.config/nvim/pack/plugins/start/readline.vim
 	url = https://github.com/ryvnf/readline.vim
@@ -73,9 +82,6 @@
 [submodule "tabout.nvim"]
 	path = stowed/.config/nvim/pack/plugins/start/tabout.nvim
 	url = https://github.com/abecodes/tabout.nvim
-[submodule "stowed/.config/nvim/parser/tree-sitter-go"]
-	path = stowed/.config/nvim/parser/tree-sitter-go
-	url = https://github.com/tree-sitter/tree-sitter-go
-[submodule "stowed/.config/nvim/parser/tree-sitter-templ"]
-	path = stowed/.config/nvim/parser/tree-sitter-templ
-	url = https://github.com/vrischmann/tree-sitter-templ
+[submodule "nvim-lspconfig"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig

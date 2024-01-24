@@ -27,12 +27,13 @@ plugins=(
   "mfussenegger/nvim-dap"
   "rcarriga/nvim-dap-ui"
   "abecodes/tabout.nvim"
+  "neovim/nvim-lspconfig"
 )
 
 for plugin in "${plugins[@]}"
 do
   echo "https://github.com/$plugin"
   name=$(echo "$plugin" | cut -d "/" -f 2)
-  git rm "$name" 2> /dev/null
-  [[ -d "$name" ]] || git submodule add --depth 1 --name "$name" "https://github.com/$plugin" 
+  git rm --force "$name" 2> /dev/null
+  [[ -d "$name" ]] || git submodule add --force --depth 1 --name "$name" "https://github.com/$plugin" 
 done
