@@ -17,6 +17,8 @@ export NNN_FCOLORS="010104010203030808050505"
 [ $(uname) = Darwin ] && export LANG=ru_RU.UTF-8
 
 
+alias fzf="fzf --color=16"
+alias cdf="cd \$(find * -type d 2>/dev/null | fzf)"
 alias dcd="docker compose down"
 alias dcu="docker compose up -d"
 alias dcl="docker compose logs"
