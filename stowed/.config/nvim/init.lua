@@ -46,10 +46,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
   group = vim.api.nvim_create_augroup("highlight-on-yank", {clear = true}),
   callback = function()
-    require'vim.highlight'.on_yank{higroup="IncSearch", timeout=250}
+    require'vim.highlight'.on_yank{higroup="Search", timeout=250}
   end
 })
-
 
 vim.keymap.set("n", "<leader>e",  vim.cmd.Explore)
 vim.keymap.set("v", ">",          ">gv")
@@ -70,6 +69,5 @@ vim.keymap.set("n", "<C-d>",      "<C-d>zz")
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("v", "K",          ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", "J",          ":m '>+1<CR>gv=gv")
-
 
 vim.cmd [[color base16-nord]]
