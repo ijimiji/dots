@@ -51,6 +51,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.keymap.set("n", "<leader>e",  vim.cmd.Explore)
+vim.keymap.set("v", "<leader>e",  ":w !/bin/sh<CR>", {noremap = true})
 vim.keymap.set("v", ">",          ">gv")
 vim.keymap.set("v", "<",          "<gv")
 vim.keymap.set("n", "n",          "nzzzv")
