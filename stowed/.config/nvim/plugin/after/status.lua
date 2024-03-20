@@ -54,6 +54,8 @@ function status_line()
 
   statusline = statusline .. "%#default#"
 
+  statusline = statusline .. "%#RedFG#"
+
   statusline = statusline .. "%="
 
   statusline = statusline .. "%#GreenBG#"
