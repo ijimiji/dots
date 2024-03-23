@@ -52,3 +52,27 @@
 [submodule "base16.nvim"]
 	path = stowed/.config/nvim/pack/plugins/start/base16-nvim
 	url = https://github.com/RRethy/base16-nvim
+[submodule "stowed/.config/nvim/pack/plugins/start/nvim-cmp"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-cmp
+	url = https://github.com/hrsh7th/nvim-cmp
+[submodule "stowed/.config/nvim/pack/plugins/start/cmp-nvim-lsp"]
+	path = stowed/.config/nvim/pack/plugins/start/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/cmp-nvim-lsp
+[submodule "stowed/.config/nvim/pack/plugins/start/cmp-buffer"]
+	path = stowed/.config/nvim/pack/plugins/start/cmp-buffer
+	url = https://github.com/hrsh7th/cmp-buffer
+[submodule "stowed/.config/nvim/pack/plugins/start/cmp-path"]
+	path = stowed/.config/nvim/pack/plugins/start/cmp-path
+	url = https://github.com/hrsh7th/cmp-path
+[submodule "stowed/.config/nvim/pack/plugins/start/LuaSnip"]
+	path = stowed/.config/nvim/pack/plugins/start/LuaSnip
+	url = https://github.com/L3MON4D3/LuaSnip
+[submodule "stowed/.config/nvim/pack/plugins/start/cmp_luasnip"]
+	path = stowed/.config/nvim/pack/plugins/start/cmp_luasnip
+	url = https://github.com/saadparwaiz1/cmp_luasnip
+[submodule "stowed/.config/nvim/pack/plugins/start/friendly-snippets"]
+	path = stowed/.config/nvim/pack/plugins/start/friendly-snippets
+	url = https://github.com/rafamadriz/friendly-snippets
+[submodule "stowed/.config/nvim/pack/plugins/start/lsp_signature.nvim"]
+	path = stowed/.config/nvim/pack/plugins/start/lsp_signature.nvim
+	url = https://github.com/ray-x/lsp_signature.nvim
