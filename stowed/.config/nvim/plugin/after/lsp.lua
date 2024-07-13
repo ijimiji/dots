@@ -21,6 +21,7 @@ autocmd("LspAttach", {
         vim.b.formatexpr = vim.lsp.formatexpr()
         vim.keymap.set("n", "<C-j>", vim.diagnostic.goto_next)
         vim.keymap.set("n", "<C-k>", vim.diagnostic.goto_prev)
+        vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
     end,
 })
 
@@ -34,6 +35,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 
 local lspconfig = require("lspconfig")
+
+lspconfig.jsonls.setup {
+}
+
 lspconfig.gopls.setup {
     config = {
         --cmd = {"/Users/larynjahor/.ya/tools/v4/gopls-darwin-arm64/gopls"},
@@ -51,7 +56,7 @@ lspconfig.gopls.setup {
         settings = {
             gopls = {
                 expandWorkspaceToModule = false,
-                directoryFilters = filters,
+                directoryFilters = {"+thefeed/backend"},
                 analyses = {
                     atomic = true,
                     unusedparams = true, 
@@ -65,60 +70,3 @@ lspconfig.gopls.setup {
     }
 }
 
-local dap = require("dap")
-local dapui = require("dapui")
-
-dapui.setup({
-    layouts = {
-        {
-            elements = {
-                { id = "scopes", size = 0.25 },
-                "breakpoints",
-                "stacks",
-                "watches",
-            },
-            size = 40,
-            position = "right",
-        },
-    },
-})
-
-dap.adapters.go_remote = function(callback, config)
-    vim.defer_fn(
-    function()
-        callback({type = "server", host = config.host, port = config.port})
-    end,
-    100)
-end
-
-dap.adapters.go = {
-    type = "server",
-    port = "8080",
-    executable = {
-        command = "dlv",
-        args = { "dap", "-l", "127.0.0.1:8080" },
-    },
-}
-
-dap.configurations.go = {
-    {
-        type = "go",
-        name = "Debug",
-        request = "launch",
-        program = function()
-            local argument_string = vim.fn.input "Path to binary: "
-            vim.notify("Debugging binary: " .. argument_string)
-            return vim.fn.split(argument_string, " ", true)[1]
-        end,
-    },
-}
-
-vim.fn.sign_define("DapBreakpoint", { text = "@", texthl = "ErrorMsg" })
-vim.fn.sign_define("DapStopped", { text = "->", texthl = "GitSignsAdd" })
-
-vim.keymap.set("n", "<F9>",       dap.toggle_breakpoint)
-vim.keymap.set("n", "<F5>",       dap.continue)
-vim.keymap.set("n", "<F10>",      dap.step_over)
-vim.keymap.set("n", "<F11>",      dap.step_into)
-vim.keymap.set("n", "<F23>",      dap.step_out)
-vim.keymap.set("n", "<leader>du", dapui.toggle)

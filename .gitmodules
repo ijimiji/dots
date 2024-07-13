@@ -76,3 +76,9 @@
 [submodule "stowed/.config/nvim/pack/plugins/start/lsp_signature.nvim"]
 	path = stowed/.config/nvim/pack/plugins/start/lsp_signature.nvim
 	url = https://github.com/ray-x/lsp_signature.nvim
+[submodule "surround"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-surround
+	url = https://github.com/kylechui/nvim-surround
+[submodule "comment"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-comment
+	url =  https://github.com/terrortylor/nvim-comment
