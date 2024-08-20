@@ -82,3 +82,6 @@
 [submodule "comment"]
 	path = stowed/.config/nvim/pack/plugins/start/nvim-comment
 	url =  https://github.com/terrortylor/nvim-comment
+[submodule "stowed/.config/nvim/pack/plugins/start/nvim-nio"]
+	path = stowed/.config/nvim/pack/plugins/start/nvim-nio
+	url = https://github.com/nvim-neotest/nvim-nio

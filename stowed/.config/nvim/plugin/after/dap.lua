@@ -106,4 +106,3 @@ for _, hl in ipairs(control_hl_groups) do
     vim.api.nvim_set_hl(0, hl, {link = "Default"})
 end
 
-require("nvim-dap-virtual-text").setup()

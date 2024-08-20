@@ -26,8 +26,8 @@ if [[ $(uname -a | grep Ubuntu) ]] then
 fi
 
 if [[ $(uname -a | grep Darwin) ]] then
-    syntax_highligting=/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    autosuggestions=/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    syntax_highligting=/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    autosuggestions=/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 else
     syntax_highligting=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     autosuggestions=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
