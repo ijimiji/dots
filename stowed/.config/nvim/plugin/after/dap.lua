@@ -53,7 +53,7 @@ dap.configurations.go = {
         substitutePath = {
             {
                 to = "/-S", 
-                from = "/Users/larynjahor/arcadia",
+                from = os.getenv("HOME").."/arcadia",
             }, 
         },
 	host = "shedevrum-dev-larynjahor.sas.yp-c.yandex.net",

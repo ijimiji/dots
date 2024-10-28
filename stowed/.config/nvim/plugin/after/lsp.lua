@@ -36,37 +36,32 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 local lspconfig = require("lspconfig")
 
-lspconfig.jsonls.setup {
-}
+lspconfig.jsonls.setup {}
 
 lspconfig.gopls.setup {
-    config = {
-        --cmd = {"/Users/larynjahor/.ya/tools/v4/gopls-darwin-arm64/gopls"},
-        build = {
-            expandWorkspaceToModule = false,
-            env  = {
+    cmd = {os.getenv("HOME").."/.ya/tools/v4/gopls-darwin-arm64/gopls", "serve"},
+    settings = {
+        gopls = {
+            env = {
                 CGO_ENABLED = "0",
                 GOFLAGS = "-mod=vendor",
-                GOPRIVATE = "*.yandex-team.ru,*.yandexcloud.net"
-            }
-        },
-        formatting = {
-            ["local"] =  "a.yandex-team.ru",
-        },
-        settings = {
-            gopls = {
-                expandWorkspaceToModule = false,
-                directoryFilters = {"+thefeed/backend"},
-                analyses = {
-                    atomic = true,
-                    unusedparams = true, 
-                    unusedwrite = true, 
-                    shadow = true,
-                    defer = true,
-                },
+                GOPRIVATE = "*.yandex-team.ru,*.yandexcloud.net",
+            },
+            arcadiaIndexDirs = {
+                os.getenv("HOME").."/arcadia/thefeed/backend",
+                --os.getenv("HOME").."/arcadia/yy/backend",
+            },
+            analyses = {
+                atomic = true,
+                unusedparams = true, 
+                unusedwrite = true, 
+                shadow = true,
+                defer = true,
                 staticcheck = true,
             },
         },
-    }
+    },
 }
 
+
+lspconfig.zls.setup {}

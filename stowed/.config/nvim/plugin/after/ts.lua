@@ -19,7 +19,7 @@
 
 local configs = require("nvim-treesitter.configs")
 configs.setup({
-  ensure_installed = { "go", "templ", "vimdoc", "bash" },
+  ensure_installed = { "go", "templ", "vimdoc", "bash", "zig" },
   sync_install = false,
   highlight = { enable = true },
   indent = {
